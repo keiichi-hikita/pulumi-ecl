@@ -29,14 +29,14 @@ const (
 	// packages:
 	eclPkg = "ecl"
 	// modules:
-	computeMod       = "compute"       // Compute
-	dnsMod           = "dns"           // DNS
-	identityMod      = "identity"      // Identity
+	computeMod = "compute" // Compute
+	dnsMod     = "dns"     // DNS
+	// identityMod      = "identity"      // Identity
 	imagestoragesMod = "imagestorages" // Image Storages
 	networkMod       = "network"       // Network
-	osMod            = "objectstorage" // Object Storage
-	sssMod           = "sss"           // SSS
-	storageMod       = "storage"       // Block Storage
+	// osMod            = "objectstorage" // Object Storage
+	sssMod     = "sss"     // SSS
+	storageMod = "storage" // Block Storage
 )
 
 func eclMember(mod string, mem string) tokens.ModuleMember {
