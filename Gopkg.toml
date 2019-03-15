@@ -6,14 +6,6 @@
   branch = "master"
   name = "github.com/pulumi/pulumi-terraform"
 
-[[constraint]]
-  name = "github.com/terraform-providers/terraform-provider-openstack"
-  version = "v1.15.1"
-
-  [constraint.metadata]
-    govendor-exclude-prefixes = ["github.com/golang/protobuf"]
-    govendor-override = true
-
 # NOTE: the following overrides were injected by govendor-override. It may be necessary to
 # remove some of these overrides in order to produce a buildable vendor tree.
 [[override]]

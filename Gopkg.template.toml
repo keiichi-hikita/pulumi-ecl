@@ -7,7 +7,7 @@
   branch = "master"
 
 [[constraint]]
-  name = "github.com/terraform-providers/terraform-provider-openstack"
+  name = "github.com/terraform-providers/terraform-provider-ecl"
   version = "v1.15.1"
 
   [constraint.metadata]

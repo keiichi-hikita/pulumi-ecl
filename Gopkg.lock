@@ -237,109 +237,6 @@
   version = "v1.2.0"
 
 [[projects]]
-  digest = "1:e5e9d63c9349bdacf0df4cd84b1d4d07deebd2f9efe8dde07438b5449624b176"
-  name = "github.com/gophercloud/gophercloud"
-  packages = [
-    ".",
-    "internal",
-    "openstack",
-    "openstack/blockstorage/extensions/volumeactions",
-    "openstack/blockstorage/v1/volumes",
-    "openstack/blockstorage/v2/snapshots",
-    "openstack/blockstorage/v2/volumes",
-    "openstack/blockstorage/v3/snapshots",
-    "openstack/blockstorage/v3/volumes",
-    "openstack/compute/v2/extensions/attachinterfaces",
-    "openstack/compute/v2/extensions/availabilityzones",
-    "openstack/compute/v2/extensions/bootfromvolume",
-    "openstack/compute/v2/extensions/floatingips",
-    "openstack/compute/v2/extensions/keypairs",
-    "openstack/compute/v2/extensions/schedulerhints",
-    "openstack/compute/v2/extensions/secgroups",
-    "openstack/compute/v2/extensions/servergroups",
-    "openstack/compute/v2/extensions/startstop",
-    "openstack/compute/v2/extensions/tenantnetworks",
-    "openstack/compute/v2/extensions/volumeattach",
-    "openstack/compute/v2/flavors",
-    "openstack/compute/v2/images",
-    "openstack/compute/v2/servers",
-    "openstack/containerinfra/v1/clusters",
-    "openstack/containerinfra/v1/clustertemplates",
-    "openstack/db/v1/configurations",
-    "openstack/db/v1/databases",
-    "openstack/db/v1/datastores",
-    "openstack/db/v1/instances",
-    "openstack/db/v1/users",
-    "openstack/dns/v2/recordsets",
-    "openstack/dns/v2/zones",
-    "openstack/identity/v2/tenants",
-    "openstack/identity/v2/tokens",
-    "openstack/identity/v3/endpoints",
-    "openstack/identity/v3/groups",
-    "openstack/identity/v3/projects",
-    "openstack/identity/v3/roles",
-    "openstack/identity/v3/services",
-    "openstack/identity/v3/tokens",
-    "openstack/identity/v3/users",
-    "openstack/imageservice/v2/imagedata",
-    "openstack/imageservice/v2/images",
-    "openstack/networking/v2/extensions/attributestags",
-    "openstack/networking/v2/extensions/external",
-    "openstack/networking/v2/extensions/extradhcpopts",
-    "openstack/networking/v2/extensions/fwaas/firewalls",
-    "openstack/networking/v2/extensions/fwaas/policies",
-    "openstack/networking/v2/extensions/fwaas/routerinsertion",
-    "openstack/networking/v2/extensions/fwaas/rules",
-    "openstack/networking/v2/extensions/layer3/addressscopes",
-    "openstack/networking/v2/extensions/layer3/floatingips",
-    "openstack/networking/v2/extensions/layer3/routers",
-    "openstack/networking/v2/extensions/lbaas/members",
-    "openstack/networking/v2/extensions/lbaas/monitors",
-    "openstack/networking/v2/extensions/lbaas/pools",
-    "openstack/networking/v2/extensions/lbaas/vips",
-    "openstack/networking/v2/extensions/lbaas_v2/l7policies",
-    "openstack/networking/v2/extensions/lbaas_v2/listeners",
-    "openstack/networking/v2/extensions/lbaas_v2/loadbalancers",
-    "openstack/networking/v2/extensions/lbaas_v2/monitors",
-    "openstack/networking/v2/extensions/lbaas_v2/pools",
-    "openstack/networking/v2/extensions/provider",
-    "openstack/networking/v2/extensions/security/groups",
-    "openstack/networking/v2/extensions/security/rules",
-    "openstack/networking/v2/extensions/subnetpools",
-    "openstack/networking/v2/extensions/trunks",
-    "openstack/networking/v2/extensions/vlantransparent",
-    "openstack/networking/v2/extensions/vpnaas/endpointgroups",
-    "openstack/networking/v2/extensions/vpnaas/ikepolicies",
-    "openstack/networking/v2/extensions/vpnaas/ipsecpolicies",
-    "openstack/networking/v2/extensions/vpnaas/services",
-    "openstack/networking/v2/extensions/vpnaas/siteconnections",
-    "openstack/networking/v2/networks",
-    "openstack/networking/v2/ports",
-    "openstack/networking/v2/subnets",
-    "openstack/objectstorage/v1/accounts",
-    "openstack/objectstorage/v1/containers",
-    "openstack/objectstorage/v1/objects",
-    "openstack/objectstorage/v1/swauth",
-    "openstack/sharedfilesystems/v2/errors",
-    "openstack/sharedfilesystems/v2/messages",
-    "openstack/sharedfilesystems/v2/securityservices",
-    "openstack/sharedfilesystems/v2/sharenetworks",
-    "openstack/sharedfilesystems/v2/shares",
-    "openstack/sharedfilesystems/v2/snapshots",
-    "openstack/utils",
-    "pagination",
-  ]
-  pruneopts = ""
-  revision = "bb1ef8ce758cba00104a697a03ab07c77940f87e"
-
-[[projects]]
-  digest = "1:eb0e823da4b39fb70ab49f85146fcb7e94a32e05a5f56e14c4ba3899a95ab308"
-  name = "github.com/gophercloud/utils"
-  packages = ["openstack/clientconfig"]
-  pruneopts = ""
-  revision = "fbb6ab446f0167dfa4d25b8eb0c0d2f873924516"
-
-[[projects]]
   branch = "master"
   digest = "1:0c93b4970c254d3f8f76c3e8eb72571d6f24a15415f9c418ecb0801ba5765a90"
   name = "github.com/grpc-ecosystem/grpc-opentracing"
@@ -619,6 +516,84 @@
   revision = "63d60e9d0dbc60cf9164e6510889b0db6683d98c"
 
 [[projects]]
+  branch = "develop"
+  digest = "1:4cd7aebfa55fea1150e1348b8325a08c895d3e36244f216fb7a955649d0b059b"
+  name = "github.com/ngpf-public/eclcloud"
+  packages = [
+    ".",
+    "ecl",
+    "ecl/compute/v2/extensions/availabilityzones",
+    "ecl/compute/v2/extensions/bootfromvolume",
+    "ecl/compute/v2/extensions/keypairs",
+    "ecl/compute/v2/extensions/startstop",
+    "ecl/compute/v2/extensions/volumeattach",
+    "ecl/compute/v2/flavors",
+    "ecl/compute/v2/images",
+    "ecl/compute/v2/servers",
+    "ecl/computevolume/v2/volumes",
+    "ecl/db/v1/configurations",
+    "ecl/db/v1/databases",
+    "ecl/db/v1/datastores",
+    "ecl/db/v1/instances",
+    "ecl/db/v1/users",
+    "ecl/dns/v2/recordsets",
+    "ecl/dns/v2/zones",
+    "ecl/identity/v3/endpoints",
+    "ecl/identity/v3/groups",
+    "ecl/identity/v3/projects",
+    "ecl/identity/v3/roles",
+    "ecl/identity/v3/services",
+    "ecl/identity/v3/tokens",
+    "ecl/identity/v3/users",
+    "ecl/imagestorage/v2/imagedata",
+    "ecl/imagestorage/v2/images",
+    "ecl/imagestorage/v2/members",
+    "ecl/network/v2/common_function_gateways",
+    "ecl/network/v2/extensions/fwaas/firewalls",
+    "ecl/network/v2/extensions/fwaas/policies",
+    "ecl/network/v2/extensions/fwaas/routerinsertion",
+    "ecl/network/v2/extensions/fwaas/rules",
+    "ecl/network/v2/extensions/layer3/floatingips",
+    "ecl/network/v2/extensions/layer3/routers",
+    "ecl/network/v2/extensions/vpnaas/endpointgroups",
+    "ecl/network/v2/extensions/vpnaas/ikepolicies",
+    "ecl/network/v2/extensions/vpnaas/ipsecpolicies",
+    "ecl/network/v2/extensions/vpnaas/services",
+    "ecl/network/v2/extensions/vpnaas/siteconnections",
+    "ecl/network/v2/gateway_interfaces",
+    "ecl/network/v2/internet_gateways",
+    "ecl/network/v2/networks",
+    "ecl/network/v2/ports",
+    "ecl/network/v2/public_ips",
+    "ecl/network/v2/static_routes",
+    "ecl/network/v2/subnets",
+    "ecl/objectstorage/v1/accounts",
+    "ecl/objectstorage/v1/containers",
+    "ecl/objectstorage/v1/objects",
+    "ecl/objectstorage/v1/swauth",
+    "ecl/sss/v1/tenants",
+    "ecl/storage/v1/virtualstorages",
+    "ecl/storage/v1/volumes",
+    "ecl/storage/v1/volumetypes",
+    "ecl/utils",
+    "internal",
+    "pagination",
+  ]
+  pruneopts = ""
+  revision = "69f975513e88e82d3a15e7d7c8af33aa6e8770ba"
+
+[[projects]]
+  branch = "develop"
+  digest = "1:2ac362fc8f99cf4fdcbbf9b593739caf1f5d09d5cdc27843e5f09a212ae4b91a"
+  name = "github.com/ngpf-public/terraform-provider-ecl"
+  packages = [
+    "ecl",
+    "ecl/clientconfig",
+  ]
+  pruneopts = ""
+  revision = "f3977d89ed4cb2a178234e9dc4402e64bfb7a476"
+
+[[projects]]
   digest = "1:78fb99d6011c2ae6c72f3293a83951311147b12b06a5ffa43abf750c4fab6ac5"
   name = "github.com/opentracing/opentracing-go"
   packages = [
@@ -793,14 +768,6 @@
   packages = ["assert"]
   pruneopts = ""
   revision = "8019298d9fa5a04fc2ad10ae03349df3483096a6"
-
-[[projects]]
-  digest = "1:31522f985c873016f5a3a80f4e3544ecae37d395189acacb5982b3ea14f9cf26"
-  name = "github.com/terraform-providers/terraform-provider-openstack"
-  packages = ["openstack"]
-  pruneopts = ""
-  revision = "87fa8c913b6bb002ad8b761fa4bf83f908c50a5c"
-  version = "v1.15.1"
 
 [[projects]]
   branch = "master"
@@ -1087,6 +1054,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/hashicorp/terraform/helper/schema",
+    "github.com/ngpf-public/terraform-provider-ecl/ecl",
     "github.com/pkg/errors",
     "github.com/pulumi/pulumi-terraform/pkg/tfbridge",
     "github.com/pulumi/pulumi-terraform/pkg/tfgen",
@@ -1096,7 +1064,6 @@
     "github.com/pulumi/pulumi/sdk/go/pulumi",
     "github.com/pulumi/pulumi/sdk/go/pulumi/config",
     "github.com/stretchr/testify/assert",
-    "github.com/terraform-providers/terraform-provider-openstack/openstack",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
