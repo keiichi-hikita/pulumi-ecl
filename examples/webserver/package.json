@@ -1,5 +1,5 @@
 {
-    "name": "openstacktest",
+    "name": "ecltest",
     "main": "bin/index.js",
     "typings": "bin/index.d.ts",
     "scripts": {
@@ -13,6 +13,6 @@
         "@pulumi/pulumi": "^0.15.1"
     },
     "peerDependencies": {
-        "@pulumi/openstack": "latest"
+        "@pulumi/ecl": "latest"
     }
 }

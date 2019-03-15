@@ -5,18 +5,11 @@
 export * from "./provider";
 
 // Export sub-modules:
-import * as blockstorage from "./blockstorage/index";
 import * as compute from "./compute/index";
 import * as config from "./config/index";
-import * as containerinfra from "./containerinfra/index";
-import * as database from "./database/index";
 import * as dns from "./dns/index";
-import * as firewall from "./firewall/index";
-import * as identity from "./identity/index";
-import * as images from "./images/index";
-import * as loadbalancer from "./loadbalancer/index";
-import * as networking from "./networking/index";
-import * as objectstorage from "./objectstorage/index";
-import * as sharedfilesystem from "./sharedfilesystem/index";
-import * as vpnaas from "./vpnaas/index";
-export {blockstorage, compute, config, containerinfra, database, dns, firewall, identity, images, loadbalancer, networking, objectstorage, sharedfilesystem, vpnaas};
+import * as imagestorages from "./imagestorages/index";
+import * as network from "./network/index";
+import * as sss from "./sss/index";
+import * as storage from "./storage/index";
+export {compute, config, dns, imagestorages, network, sss, storage};

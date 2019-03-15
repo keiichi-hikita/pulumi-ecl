@@ -1,13 +1,13 @@
 {
-    "name": "@pulumi/openstack",
+    "name": "@pulumi/ecl",
     "version": "${VERSION}",
-    "description": "A Pulumi package for creating and managing OpenStack cloud resources.",
+    "description": "A Pulumi package for creating and managing Enterprise Cloud resources.",
     "keywords": [
         "pulumi",
-        "openstack"
+        "ecl"
     ],
     "homepage": "https://pulumi.io",
-    "repository": "https://github.com/pulumi/pulumi-openstack",
+    "repository": "https://github.com/keiichi-hikita/pulumi-ecl",
     "license": "Apache-2.0",
     "scripts": {
         "build": "tsc"

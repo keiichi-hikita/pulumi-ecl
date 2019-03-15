@@ -8,23 +8,23 @@ from subprocess import check_call
 class InstallPluginCommand(install):
     def run(self):
         install.run(self)
-        check_call(['pulumi', 'plugin', 'install', 'resource', 'openstack', '${PLUGIN_VERSION}'])
+        check_call(['pulumi', 'plugin', 'install', 'resource', 'ecl', '${PLUGIN_VERSION}'])
 
 def readme():
     with open('README.rst') as f:
         return f.read()
 
-setup(name='pulumi_openstack',
+setup(name='pulumi_ecl',
       version='${VERSION}',
-      description='A Pulumi package for creating and managing OpenStack cloud resources.',
+      description='A Pulumi package for creating and managing Enterprise Cloud resources.',
       long_description=readme(),
       cmdclass={
           'install': InstallPluginCommand,
       },
-      keywords='pulumi openstack',
+      keywords='pulumi ecl',
       url='https://pulumi.io',
       project_urls={
-          'Repository': 'https://github.com/pulumi/pulumi-openstack'
+          'Repository': 'https://github.com/keiichi-hikita/pulumi-ecl'
       },
       license='Apache-2.0',
       packages=find_packages(),

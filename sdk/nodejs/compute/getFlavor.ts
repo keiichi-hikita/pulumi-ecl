@@ -5,15 +5,15 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Use this data source to get the ID of an available OpenStack flavor.
+ * Use this data source to get the ID of an available Enterprise Cloud flavor.
  * 
  * ## Example Usage
  * 
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
+ * import * as ecl from "@pulumi/ecl";
  * 
- * const small = pulumi.output(openstack.compute.getFlavor({
+ * const small = pulumi.output(ecl.compute.getFlavor({
  *     ram: 512,
  *     vcpus: 1,
  * }));
@@ -21,9 +21,8 @@ import * as utilities from "../utilities";
  */
 export function getFlavor(args?: GetFlavorArgs, opts?: pulumi.InvokeOptions): Promise<GetFlavorResult> {
     args = args || {};
-    return pulumi.runtime.invoke("openstack:compute/getFlavor:getFlavor", {
+    return pulumi.runtime.invoke("ecl:compute/getFlavor:getFlavor", {
         "disk": args.disk,
-        "flavorId": args.flavorId,
         "minDisk": args.minDisk,
         "minRam": args.minRam,
         "name": args.name,
@@ -44,22 +43,15 @@ export interface GetFlavorArgs {
      */
     readonly disk?: number;
     /**
-     * The ID of the flavor. Conflicts with the `name`,
-     * `min_ram` and `min_disk`
-     */
-    readonly flavorId?: string;
-    /**
-     * The minimum amount of disk (in gigabytes). Conflicts
-     * with the `flavor_id`.
+     * The minimum amount of disk (in gigabytes).
      */
     readonly minDisk?: number;
     /**
-     * The minimum amount of RAM (in megabytes). Conflicts
-     * with the `flavor_id`.
+     * The minimum amount of RAM (in megabytes).
      */
     readonly minRam?: number;
     /**
-     * The name of the flavor. Conflicts with the `flavor_id`.
+     * The name of the flavor.
      */
     readonly name?: string;
     /**
@@ -89,10 +81,6 @@ export interface GetFlavorArgs {
  * A collection of values returned by getFlavor.
  */
 export interface GetFlavorResult {
-    /**
-     * Key/Value pairs of metadata for the flavor.
-     */
-    readonly extraSpecs: {[key: string]: any};
     /**
      * Whether the flavor is public or private.
      */

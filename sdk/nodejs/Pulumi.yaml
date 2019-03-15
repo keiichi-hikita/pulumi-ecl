@@ -1,3 +1,3 @@
-name: openstack
-description: A Pulumi resource provider for openstack.
+name: ecl
+description: A Pulumi resource provider for ecl.
 language: nodejs

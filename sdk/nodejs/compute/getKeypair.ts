@@ -5,21 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Use this data source to get the ID and public key of an OpenStack keypair.
+ * Use this data source to get the ID and public key of an Enterprise Cloud keypair.
  * 
  * ## Example Usage
  * 
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
+ * import * as ecl from "@pulumi/ecl";
  * 
- * const kp = pulumi.output(openstack.compute.getKeypair({
+ * const kp = pulumi.output(ecl.compute.getKeypair({
  *     name: "sand",
  * }));
  * ```
  */
 export function getKeypair(args: GetKeypairArgs, opts?: pulumi.InvokeOptions): Promise<GetKeypairResult> {
-    return pulumi.runtime.invoke("openstack:compute/getKeypair:getKeypair", {
+    return pulumi.runtime.invoke("ecl:compute/getKeypair:getKeypair", {
         "name": args.name,
         "region": args.region,
     }, opts);
@@ -44,10 +44,6 @@ export interface GetKeypairArgs {
  * A collection of values returned by getKeypair.
  */
 export interface GetKeypairResult {
-    /**
-     * The fingerprint of the OpenSSH key.
-     */
-    readonly fingerprint: string;
     /**
      * The OpenSSH-formatted public key of the keypair.
      */

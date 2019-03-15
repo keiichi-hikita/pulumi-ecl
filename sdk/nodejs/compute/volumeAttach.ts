@@ -4,122 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-/**
- * Attaches a Block Storage Volume to an Instance using the OpenStack
- * Compute (Nova) v2 API.
- * 
- * ## Example Usage
- * 
- * ### Basic attachment of a single volume to a single instance
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
- * 
- * const volume1 = new openstack.blockstorage.VolumeV2("volume_1", {
- *     size: 1,
- * });
- * const instance1 = new openstack.compute.Instance("instance_1", {
- *     securityGroups: ["default"],
- * });
- * const va1 = new openstack.compute.VolumeAttach("va_1", {
- *     instanceId: instance1.id,
- *     volumeId: volume1.id,
- * });
- * ```
- * 
- * ### Attaching multiple volumes to a single instance
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
- * 
- * const volumes: openstack.blockstorage.VolumeV2[] = [];
- * for (let i = 0; i < 2; i++) {
- *     volumes.push(new openstack.blockstorage.VolumeV2(`volumes-${i}`, {
- *         size: 1,
- *     }));
- * }
- * const instance1 = new openstack.compute.Instance("instance_1", {
- *     securityGroups: ["default"],
- * });
- * const attachments: openstack.compute.VolumeAttach[] = [];
- * for (let i = 0; i < 2; i++) {
- *     attachments.push(new openstack.compute.VolumeAttach(`attachments-${i}`, {
- *         instanceId: instance1.id,
- *         volumeId: pulumi.all(volumes.map(v => v.id)).apply(id => id.map(v => v)[i]),
- *     }));
- * }
- * 
- * export const volume_devices = attachments.map(v => v.device);
- * ```
- * 
- * Note that the above example will not guarantee that the volumes are attached in
- * a deterministic manner. The volumes will be attached in a seemingly random
- * order.
- * 
- * If you want to ensure that the volumes are attached in a given order, create
- * explicit dependencies between the volumes, such as:
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
- * 
- * const volumes: openstack.blockstorage.VolumeV2[] = [];
- * for (let i = 0; i < 2; i++) {
- *     volumes.push(new openstack.blockstorage.VolumeV2(`volumes-${i}`, {
- *         size: 1,
- *     }));
- * }
- * const instance1 = new openstack.compute.Instance("instance_1", {
- *     securityGroups: ["default"],
- * });
- * const attach1 = new openstack.compute.VolumeAttach("attach_1", {
- *     instanceId: instance1.id,
- *     volumeId: volumes[0].id,
- * });
- * const attach2 = new openstack.compute.VolumeAttach("attach_2", {
- *     instanceId: instance1.id,
- *     volumeId: volumes[1].id,
- * }, {dependsOn: [attach1]});
- * 
- * export const volume_devices = openstack_compute_volume_attach_v2_attachments.map(v => v.device);
- * ```
- * 
- * ### Using Multiattach-enabled volumes
- * 
- * Multiattach Volumes are dependent upon your OpenStack cloud and not all
- * clouds support multiattach.
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
- * 
- * const volume1 = new openstack.blockstorage.Volume("volume_1", {
- *     multiattach: true,
- *     size: 1,
- * });
- * const instance1 = new openstack.compute.Instance("instance_1", {
- *     securityGroups: ["default"],
- * });
- * const instance2 = new openstack.compute.Instance("instance_2", {
- *     securityGroups: ["default"],
- * });
- * const va1 = new openstack.compute.VolumeAttach("va_1", {
- *     instanceId: instance1.id,
- *     multiattach: true,
- *     volumeId: openstack_blockstorage_volume_v2_volume_1.id,
- * });
- * const va2 = new openstack.compute.VolumeAttach("va_2", {
- *     instanceId: instance2.id,
- *     multiattach: true,
- *     volumeId: openstack_blockstorage_volume_v2_volume_1.id,
- * }, {dependsOn: [va1]});
- * ```
- * 
- * It is recommended to use `depends_on` for the attach resources
- * to enforce the volume attachments to happen one at a time.
- */
 export class VolumeAttach extends pulumi.CustomResource {
     /**
      * Get an existing VolumeAttach resource's state with the given name, ID, and optional extra
@@ -133,33 +17,9 @@ export class VolumeAttach extends pulumi.CustomResource {
         return new VolumeAttach(name, <any>state, { ...opts, id: id });
     }
 
-    /**
-     * The device of the volume attachment (ex: `/dev/vdc`).
-     * _NOTE_: Being able to specify a device is dependent upon the hypervisor in
-     * use. There is a chance that the device specified in Terraform will not be
-     * the same device the hypervisor chose. If this happens, Terraform will wish
-     * to update the device upon subsequent applying which will cause the volume
-     * to be detached and reattached indefinitely. Please use with caution.
-     */
     public readonly device: pulumi.Output<string>;
-    /**
-     * The ID of the Instance to attach the Volume to.
-     */
-    public readonly instanceId: pulumi.Output<string>;
-    /**
-     * Enable attachment of multiattach-capable volumes.
-     */
-    public readonly multiattach: pulumi.Output<boolean | undefined>;
-    /**
-     * The region in which to obtain the V2 Compute client.
-     * A Compute client is needed to create a volume attachment. If omitted, the
-     * `region` argument of the provider is used. Changing this creates a
-     * new volume attachment.
-     */
     public readonly region: pulumi.Output<string>;
-    /**
-     * The ID of the Volume to attach to an Instance.
-     */
+    public readonly serverId: pulumi.Output<string>;
     public readonly volumeId: pulumi.Output<string>;
 
     /**
@@ -175,25 +35,23 @@ export class VolumeAttach extends pulumi.CustomResource {
         if (opts && opts.id) {
             const state: VolumeAttachState = argsOrState as VolumeAttachState | undefined;
             inputs["device"] = state ? state.device : undefined;
-            inputs["instanceId"] = state ? state.instanceId : undefined;
-            inputs["multiattach"] = state ? state.multiattach : undefined;
             inputs["region"] = state ? state.region : undefined;
+            inputs["serverId"] = state ? state.serverId : undefined;
             inputs["volumeId"] = state ? state.volumeId : undefined;
         } else {
             const args = argsOrState as VolumeAttachArgs | undefined;
-            if (!args || args.instanceId === undefined) {
-                throw new Error("Missing required property 'instanceId'");
+            if (!args || args.serverId === undefined) {
+                throw new Error("Missing required property 'serverId'");
             }
             if (!args || args.volumeId === undefined) {
                 throw new Error("Missing required property 'volumeId'");
             }
             inputs["device"] = args ? args.device : undefined;
-            inputs["instanceId"] = args ? args.instanceId : undefined;
-            inputs["multiattach"] = args ? args.multiattach : undefined;
             inputs["region"] = args ? args.region : undefined;
+            inputs["serverId"] = args ? args.serverId : undefined;
             inputs["volumeId"] = args ? args.volumeId : undefined;
         }
-        super("openstack:compute/volumeAttach:VolumeAttach", name, inputs, opts);
+        super("ecl:compute/volumeAttach:VolumeAttach", name, inputs, opts);
     }
 }
 
@@ -201,33 +59,9 @@ export class VolumeAttach extends pulumi.CustomResource {
  * Input properties used for looking up and filtering VolumeAttach resources.
  */
 export interface VolumeAttachState {
-    /**
-     * The device of the volume attachment (ex: `/dev/vdc`).
-     * _NOTE_: Being able to specify a device is dependent upon the hypervisor in
-     * use. There is a chance that the device specified in Terraform will not be
-     * the same device the hypervisor chose. If this happens, Terraform will wish
-     * to update the device upon subsequent applying which will cause the volume
-     * to be detached and reattached indefinitely. Please use with caution.
-     */
     readonly device?: pulumi.Input<string>;
-    /**
-     * The ID of the Instance to attach the Volume to.
-     */
-    readonly instanceId?: pulumi.Input<string>;
-    /**
-     * Enable attachment of multiattach-capable volumes.
-     */
-    readonly multiattach?: pulumi.Input<boolean>;
-    /**
-     * The region in which to obtain the V2 Compute client.
-     * A Compute client is needed to create a volume attachment. If omitted, the
-     * `region` argument of the provider is used. Changing this creates a
-     * new volume attachment.
-     */
     readonly region?: pulumi.Input<string>;
-    /**
-     * The ID of the Volume to attach to an Instance.
-     */
+    readonly serverId?: pulumi.Input<string>;
     readonly volumeId?: pulumi.Input<string>;
 }
 
@@ -235,32 +69,8 @@ export interface VolumeAttachState {
  * The set of arguments for constructing a VolumeAttach resource.
  */
 export interface VolumeAttachArgs {
-    /**
-     * The device of the volume attachment (ex: `/dev/vdc`).
-     * _NOTE_: Being able to specify a device is dependent upon the hypervisor in
-     * use. There is a chance that the device specified in Terraform will not be
-     * the same device the hypervisor chose. If this happens, Terraform will wish
-     * to update the device upon subsequent applying which will cause the volume
-     * to be detached and reattached indefinitely. Please use with caution.
-     */
     readonly device?: pulumi.Input<string>;
-    /**
-     * The ID of the Instance to attach the Volume to.
-     */
-    readonly instanceId: pulumi.Input<string>;
-    /**
-     * Enable attachment of multiattach-capable volumes.
-     */
-    readonly multiattach?: pulumi.Input<boolean>;
-    /**
-     * The region in which to obtain the V2 Compute client.
-     * A Compute client is needed to create a volume attachment. If omitted, the
-     * `region` argument of the provider is used. Changing this creates a
-     * new volume attachment.
-     */
     readonly region?: pulumi.Input<string>;
-    /**
-     * The ID of the Volume to attach to an Instance.
-     */
+    readonly serverId: pulumi.Input<string>;
     readonly volumeId: pulumi.Input<string>;
 }

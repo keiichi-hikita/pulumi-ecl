@@ -5,28 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Manages a DNS record set in the OpenStack DNS Service.
+ * Manages a V2 recordset resource within Enterprise Cloud.
  * 
  * ## Example Usage
  * 
- * ### Automatically detect the correct network
+ * ### Basic RecordSet
  * 
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
+ * import * as ecl from "@pulumi/ecl";
  * 
- * const exampleZone = new openstack.dns.Zone("example_zone", {
- *     description: "a zone",
- *     email: "email2@example.com",
+ * const recordset1 = new ecl.dns.RecordSet("recordset_1", {
+ *     record: "192.0.2.1",
  *     ttl: 6000,
- *     type: "PRIMARY",
- * });
- * const rsExampleCom = new openstack.dns.RecordSet("rs_example_com", {
- *     description: "An example record set",
- *     records: ["10.0.0.1"],
- *     ttl: 3000,
  *     type: "A",
- *     zoneId: exampleZone.id,
+ *     zoneId: "cebb1607-40c2-466b-b76b-9fcc7a356bff",
  * });
  * ```
  */
@@ -44,43 +37,28 @@ export class RecordSet extends pulumi.CustomResource {
     }
 
     /**
-     * A description of the  record set.
+     * Description for the recordset.
      */
     public readonly description: pulumi.Output<string | undefined>;
     /**
-     * The name of the record set. Note the `.` at the end of the name.
-     * Changing this creates a new DNS  record set.
+     * DNS Name for the recordset.
      */
     public readonly name: pulumi.Output<string>;
     /**
-     * An array of DNS records. _Note:_ if an IPv6 address
-     * contains brackets (`[ ]`), the brackets will be stripped and the modified
-     * address will be recorded in the state.
+     * Data for the recordset.
      */
-    public readonly records: pulumi.Output<string[] | undefined>;
+    public readonly record: pulumi.Output<string>;
     /**
-     * The region in which to obtain the V2 DNS client.
-     * If omitted, the `region` argument of the provider is used.
-     * Changing this creates a new DNS  record set.
-     */
-    public readonly region: pulumi.Output<string>;
-    /**
-     * The time to live (TTL) of the record set.
+     * TTL (Time to Live) for the recordset.
      */
     public readonly ttl: pulumi.Output<number>;
     /**
-     * The type of record set. Examples: "A", "MX".
-     * Changing this creates a new DNS  record set.
+     * RRTYPE of the recordset. 
+     * Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
      */
     public readonly type: pulumi.Output<string>;
     /**
-     * Map of additional options. Changing this creates a
-     * new record set.
-     */
-    public readonly valueSpecs: pulumi.Output<{[key: string]: any} | undefined>;
-    /**
-     * The ID of the zone in which to create the record set.
-     * Changing this creates a new DNS  record set.
+     * Zone ID for the recordset.
      */
     public readonly zoneId: pulumi.Output<string>;
 
@@ -98,27 +76,32 @@ export class RecordSet extends pulumi.CustomResource {
             const state: RecordSetState = argsOrState as RecordSetState | undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["name"] = state ? state.name : undefined;
-            inputs["records"] = state ? state.records : undefined;
-            inputs["region"] = state ? state.region : undefined;
+            inputs["record"] = state ? state.record : undefined;
             inputs["ttl"] = state ? state.ttl : undefined;
             inputs["type"] = state ? state.type : undefined;
-            inputs["valueSpecs"] = state ? state.valueSpecs : undefined;
             inputs["zoneId"] = state ? state.zoneId : undefined;
         } else {
             const args = argsOrState as RecordSetArgs | undefined;
+            if (!args || args.record === undefined) {
+                throw new Error("Missing required property 'record'");
+            }
+            if (!args || args.ttl === undefined) {
+                throw new Error("Missing required property 'ttl'");
+            }
+            if (!args || args.type === undefined) {
+                throw new Error("Missing required property 'type'");
+            }
             if (!args || args.zoneId === undefined) {
                 throw new Error("Missing required property 'zoneId'");
             }
             inputs["description"] = args ? args.description : undefined;
             inputs["name"] = args ? args.name : undefined;
-            inputs["records"] = args ? args.records : undefined;
-            inputs["region"] = args ? args.region : undefined;
+            inputs["record"] = args ? args.record : undefined;
             inputs["ttl"] = args ? args.ttl : undefined;
             inputs["type"] = args ? args.type : undefined;
-            inputs["valueSpecs"] = args ? args.valueSpecs : undefined;
             inputs["zoneId"] = args ? args.zoneId : undefined;
         }
-        super("openstack:dns/recordSet:RecordSet", name, inputs, opts);
+        super("ecl:dns/recordSet:RecordSet", name, inputs, opts);
     }
 }
 
@@ -127,43 +110,28 @@ export class RecordSet extends pulumi.CustomResource {
  */
 export interface RecordSetState {
     /**
-     * A description of the  record set.
+     * Description for the recordset.
      */
     readonly description?: pulumi.Input<string>;
     /**
-     * The name of the record set. Note the `.` at the end of the name.
-     * Changing this creates a new DNS  record set.
+     * DNS Name for the recordset.
      */
     readonly name?: pulumi.Input<string>;
     /**
-     * An array of DNS records. _Note:_ if an IPv6 address
-     * contains brackets (`[ ]`), the brackets will be stripped and the modified
-     * address will be recorded in the state.
+     * Data for the recordset.
      */
-    readonly records?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly record?: pulumi.Input<string>;
     /**
-     * The region in which to obtain the V2 DNS client.
-     * If omitted, the `region` argument of the provider is used.
-     * Changing this creates a new DNS  record set.
-     */
-    readonly region?: pulumi.Input<string>;
-    /**
-     * The time to live (TTL) of the record set.
+     * TTL (Time to Live) for the recordset.
      */
     readonly ttl?: pulumi.Input<number>;
     /**
-     * The type of record set. Examples: "A", "MX".
-     * Changing this creates a new DNS  record set.
+     * RRTYPE of the recordset. 
+     * Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
      */
     readonly type?: pulumi.Input<string>;
     /**
-     * Map of additional options. Changing this creates a
-     * new record set.
-     */
-    readonly valueSpecs?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * The ID of the zone in which to create the record set.
-     * Changing this creates a new DNS  record set.
+     * Zone ID for the recordset.
      */
     readonly zoneId?: pulumi.Input<string>;
 }
@@ -173,43 +141,28 @@ export interface RecordSetState {
  */
 export interface RecordSetArgs {
     /**
-     * A description of the  record set.
+     * Description for the recordset.
      */
     readonly description?: pulumi.Input<string>;
     /**
-     * The name of the record set. Note the `.` at the end of the name.
-     * Changing this creates a new DNS  record set.
+     * DNS Name for the recordset.
      */
     readonly name?: pulumi.Input<string>;
     /**
-     * An array of DNS records. _Note:_ if an IPv6 address
-     * contains brackets (`[ ]`), the brackets will be stripped and the modified
-     * address will be recorded in the state.
+     * Data for the recordset.
      */
-    readonly records?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly record: pulumi.Input<string>;
     /**
-     * The region in which to obtain the V2 DNS client.
-     * If omitted, the `region` argument of the provider is used.
-     * Changing this creates a new DNS  record set.
+     * TTL (Time to Live) for the recordset.
      */
-    readonly region?: pulumi.Input<string>;
+    readonly ttl: pulumi.Input<number>;
     /**
-     * The time to live (TTL) of the record set.
+     * RRTYPE of the recordset. 
+     * Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
      */
-    readonly ttl?: pulumi.Input<number>;
+    readonly type: pulumi.Input<string>;
     /**
-     * The type of record set. Examples: "A", "MX".
-     * Changing this creates a new DNS  record set.
-     */
-    readonly type?: pulumi.Input<string>;
-    /**
-     * Map of additional options. Changing this creates a
-     * new record set.
-     */
-    readonly valueSpecs?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * The ID of the zone in which to create the record set.
-     * Changing this creates a new DNS  record set.
+     * Zone ID for the recordset.
      */
     readonly zoneId: pulumi.Input<string>;
 }

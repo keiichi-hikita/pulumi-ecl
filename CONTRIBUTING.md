@@ -17,9 +17,9 @@ provider are installed by running `make ensure` in the root of the repository.
 
 ## Running Integration Tests
 
-The examples and integration tests in this repository will create and destroy real OpenStack
+The examples and integration tests in this repository will create and destroy real Enterprise Cloud
 cloud resources while running. Before running these tests, make sure that you have
-configured environment variables for deploying to your target OpenStack cloud provider.  For example, you can use the following as created by an "OpenStack configuration file" provided by your OpenStack provider:
+configured environment variables for deploying to your target Enterprise Cloud cloud provider.  For example, you can use the following as created by an "Enterprise Cloud configuration file" provided by your Enterprise Cloud provider:
 
 * `OS_AUTH_URL`
 * `OS_IDENTITY_API_VERSION`

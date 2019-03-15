@@ -5,7 +5,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * The provider type for the openstack package. By default, resources use package-wide configuration
+ * The provider type for the ecl package. By default, resources use package-wide configuration
  * settings, however an explicit `Provider` instance may be created and passed during resource
  * construction to achieve fine-grained programmatic control over provider settings. See the
  * [documentation](https://pulumi.io/reference/programming-model.html#providers) for more information.
@@ -22,9 +22,6 @@ export class Provider extends pulumi.ProviderResource {
     constructor(name: string, args?: ProviderArgs, opts?: pulumi.ResourceOptions) {
         let inputs: pulumi.Inputs = {};
         {
-            inputs["applicationCredentialId"] = args ? args.applicationCredentialId : undefined;
-            inputs["applicationCredentialName"] = args ? args.applicationCredentialName : undefined;
-            inputs["applicationCredentialSecret"] = args ? args.applicationCredentialSecret : undefined;
             inputs["authUrl"] = (args ? args.authUrl : undefined) || utilities.getEnv("OS_AUTH_URL");
             inputs["cacertFile"] = (args ? args.cacertFile : undefined) || utilities.getEnv("OS_CACERT");
             inputs["cert"] = (args ? args.cert : undefined) || utilities.getEnv("OS_CERT");
@@ -32,11 +29,10 @@ export class Provider extends pulumi.ProviderResource {
             inputs["defaultDomain"] = (args ? args.defaultDomain : undefined) || (utilities.getEnv("OS_DEFAULT_DOMAIN") || "default");
             inputs["domainId"] = (args ? args.domainId : undefined) || utilities.getEnv("OS_DOMAIN_ID");
             inputs["domainName"] = (args ? args.domainName : undefined) || utilities.getEnv("OS_DOMAIN_NAME");
-            inputs["endpointOverrides"] = pulumi.output(args ? args.endpointOverrides : undefined).apply(JSON.stringify);
             inputs["endpointType"] = (args ? args.endpointType : undefined) || utilities.getEnv("OS_ENDPOINT_TYPE");
+            inputs["forceSssEndpoint"] = args ? args.forceSssEndpoint : undefined;
             inputs["insecure"] = pulumi.output((args ? args.insecure : undefined) || utilities.getEnvBoolean("OS_INSECURE")).apply(JSON.stringify);
             inputs["key"] = (args ? args.key : undefined) || utilities.getEnv("OS_KEY");
-            inputs["maxRetries"] = pulumi.output(args ? args.maxRetries : undefined).apply(JSON.stringify);
             inputs["password"] = (args ? args.password : undefined) || utilities.getEnv("OS_PASSWORD");
             inputs["projectDomainId"] = (args ? args.projectDomainId : undefined) || utilities.getEnv("OS_PROJECT_DOMAIN_ID");
             inputs["projectDomainName"] = (args ? args.projectDomainName : undefined) || utilities.getEnv("OS_PROJECT_DOMAIN_NAME");
@@ -45,13 +41,12 @@ export class Provider extends pulumi.ProviderResource {
             inputs["tenantId"] = (args ? args.tenantId : undefined) || utilities.getEnv("OS_TENANT_ID", "OS_PROJECT_ID");
             inputs["tenantName"] = (args ? args.tenantName : undefined) || utilities.getEnv("OS_TENANT_NAME", "OS_PROJECT_NAME");
             inputs["token"] = (args ? args.token : undefined) || utilities.getEnv("OS_TOKEN", "OS_AUTH_TOKEN");
-            inputs["useOctavia"] = pulumi.output((args ? args.useOctavia : undefined) || utilities.getEnvBoolean("OS_USE_OCTAVIA")).apply(JSON.stringify);
             inputs["userDomainId"] = (args ? args.userDomainId : undefined) || utilities.getEnv("OS_USER_DOMAIN_ID");
             inputs["userDomainName"] = (args ? args.userDomainName : undefined) || utilities.getEnv("OS_USER_DOMAIN_NAME");
             inputs["userId"] = (args ? args.userId : undefined) || utilities.getEnv("OS_USER_ID");
             inputs["userName"] = (args ? args.userName : undefined) || utilities.getEnv("OS_USERNAME");
         }
-        super("openstack", name, inputs, opts);
+        super("ecl", name, inputs, opts);
     }
 }
 
@@ -59,18 +54,6 @@ export class Provider extends pulumi.ProviderResource {
  * The set of arguments for constructing a Provider resource.
  */
 export interface ProviderArgs {
-    /**
-     * Application Credential ID to login with.
-     */
-    readonly applicationCredentialId?: pulumi.Input<string>;
-    /**
-     * Application Credential name to login with.
-     */
-    readonly applicationCredentialName?: pulumi.Input<string>;
-    /**
-     * Application Credential secret to login with.
-     */
-    readonly applicationCredentialSecret?: pulumi.Input<string>;
     /**
      * The Identity authentication URL.
      */
@@ -99,11 +82,11 @@ export interface ProviderArgs {
      * The name of the Domain to scope to (Identity v3).
      */
     readonly domainName?: pulumi.Input<string>;
-    /**
-     * A map of services with an endpoint to override what was from the Keystone catalog
-     */
-    readonly endpointOverrides?: pulumi.Input<{[key: string]: any}>;
     readonly endpointType?: pulumi.Input<string>;
+    /**
+     * The SSS Endpoint URL to send API.
+     */
+    readonly forceSssEndpoint?: pulumi.Input<string>;
     /**
      * Trust self-signed certificates.
      */
@@ -112,10 +95,6 @@ export interface ProviderArgs {
      * A client private key to authenticate with.
      */
     readonly key?: pulumi.Input<string>;
-    /**
-     * How many times HTTP connection should be retried until giving up.
-     */
-    readonly maxRetries?: pulumi.Input<number>;
     /**
      * Password to login with.
      */
@@ -148,11 +127,6 @@ export interface ProviderArgs {
      * Authentication token to use as an alternative to username/password.
      */
     readonly token?: pulumi.Input<string>;
-    /**
-     * If set to `true`, API requests will go the Load Balancer service (Octavia) instead of the Networking service
-     * (Neutron).
-     */
-    readonly useOctavia?: pulumi.Input<boolean>;
     /**
      * The ID of the domain where the user resides (Identity v3).
      */

@@ -5,22 +5,17 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Manages a DNS zone in the OpenStack DNS Service.
+ * Manages a V2 zone resource of Enterprise Cloud.
  * 
  * ## Example Usage
  * 
- * ### Automatically detect the correct network
+ * ### Basic Zone
  * 
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
+ * import * as ecl from "@pulumi/ecl";
  * 
- * const example_com = new openstack.dns.Zone("example.com", {
- *     description: "An example zone",
- *     email: "jdoe@example.com",
- *     ttl: 3000,
- *     type: "PRIMARY",
- * });
+ * const zone1 = new ecl.dns.Zone("zone_1", {});
  * ```
  */
 export class Zone extends pulumi.CustomResource {
@@ -37,49 +32,40 @@ export class Zone extends pulumi.CustomResource {
     }
 
     /**
-     * Attributes for the DNS Service scheduler.
-     * Changing this creates a new zone.
-     */
-    public readonly attributes: pulumi.Output<{[key: string]: any} | undefined>;
-    /**
-     * A description of the zone.
+     * Description for this zone.
      */
     public readonly description: pulumi.Output<string | undefined>;
     /**
-     * The email contact for the zone record.
+     * E-mail for the zone.
+     * Used in SOA records for the zone.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
-    public readonly email: pulumi.Output<string | undefined>;
+    public readonly email: pulumi.Output<string>;
     /**
-     * An array of master DNS servers. For when `type` is
-     * `SECONDARY`.
+     * For secondary zones. 
+     * The servers to slave from to get DNS information.
      */
-    public readonly masters: pulumi.Output<string[] | undefined>;
+    public readonly masters: pulumi.Output<string[]>;
     /**
-     * The name of the zone. Note the `.` at the end of the name.
-     * Changing this creates a new DNS zone.
+     * DNS Name for the zone.
      */
     public readonly name: pulumi.Output<string>;
     /**
-     * The region in which to obtain the V2 Compute client.
-     * Keypairs are associated with accounts, but a Compute client is needed to
-     * create one. If omitted, the `region` argument of the provider is used.
-     * Changing this creates a new DNS zone.
-     */
-    public readonly region: pulumi.Output<string>;
-    /**
-     * The time to live (TTL) of the zone.
+     * TTL (Time to Live) for the zone.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     public readonly ttl: pulumi.Output<number>;
     /**
-     * The type of zone. Can either be `PRIMARY` or `SECONDARY`.
-     * Changing this creates a new zone.
+     * Type of zone.
+     * PRIMARY is controlled by ECL2.0 DNS,
+     * SECONDARY zones are slaved from another DNS Server.
+     * Defaults to PRIMARY.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     public readonly type: pulumi.Output<string>;
-    /**
-     * Map of additional options. Changing this creates a
-     * new zone.
-     */
-    public readonly valueSpecs: pulumi.Output<{[key: string]: any} | undefined>;
 
     /**
      * Create a Zone resource with the given unique name, arguments, and options.
@@ -93,28 +79,22 @@ export class Zone extends pulumi.CustomResource {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
             const state: ZoneState = argsOrState as ZoneState | undefined;
-            inputs["attributes"] = state ? state.attributes : undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["email"] = state ? state.email : undefined;
             inputs["masters"] = state ? state.masters : undefined;
             inputs["name"] = state ? state.name : undefined;
-            inputs["region"] = state ? state.region : undefined;
             inputs["ttl"] = state ? state.ttl : undefined;
             inputs["type"] = state ? state.type : undefined;
-            inputs["valueSpecs"] = state ? state.valueSpecs : undefined;
         } else {
             const args = argsOrState as ZoneArgs | undefined;
-            inputs["attributes"] = args ? args.attributes : undefined;
             inputs["description"] = args ? args.description : undefined;
             inputs["email"] = args ? args.email : undefined;
             inputs["masters"] = args ? args.masters : undefined;
             inputs["name"] = args ? args.name : undefined;
-            inputs["region"] = args ? args.region : undefined;
             inputs["ttl"] = args ? args.ttl : undefined;
             inputs["type"] = args ? args.type : undefined;
-            inputs["valueSpecs"] = args ? args.valueSpecs : undefined;
         }
-        super("openstack:dns/zone:Zone", name, inputs, opts);
+        super("ecl:dns/zone:Zone", name, inputs, opts);
     }
 }
 
@@ -123,49 +103,40 @@ export class Zone extends pulumi.CustomResource {
  */
 export interface ZoneState {
     /**
-     * Attributes for the DNS Service scheduler.
-     * Changing this creates a new zone.
-     */
-    readonly attributes?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * A description of the zone.
+     * Description for this zone.
      */
     readonly description?: pulumi.Input<string>;
     /**
-     * The email contact for the zone record.
+     * E-mail for the zone.
+     * Used in SOA records for the zone.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     readonly email?: pulumi.Input<string>;
     /**
-     * An array of master DNS servers. For when `type` is
-     * `SECONDARY`.
+     * For secondary zones. 
+     * The servers to slave from to get DNS information.
      */
     readonly masters?: pulumi.Input<pulumi.Input<string>[]>;
     /**
-     * The name of the zone. Note the `.` at the end of the name.
-     * Changing this creates a new DNS zone.
+     * DNS Name for the zone.
      */
     readonly name?: pulumi.Input<string>;
     /**
-     * The region in which to obtain the V2 Compute client.
-     * Keypairs are associated with accounts, but a Compute client is needed to
-     * create one. If omitted, the `region` argument of the provider is used.
-     * Changing this creates a new DNS zone.
-     */
-    readonly region?: pulumi.Input<string>;
-    /**
-     * The time to live (TTL) of the zone.
+     * TTL (Time to Live) for the zone.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     readonly ttl?: pulumi.Input<number>;
     /**
-     * The type of zone. Can either be `PRIMARY` or `SECONDARY`.
-     * Changing this creates a new zone.
+     * Type of zone.
+     * PRIMARY is controlled by ECL2.0 DNS,
+     * SECONDARY zones are slaved from another DNS Server.
+     * Defaults to PRIMARY.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     readonly type?: pulumi.Input<string>;
-    /**
-     * Map of additional options. Changing this creates a
-     * new zone.
-     */
-    readonly valueSpecs?: pulumi.Input<{[key: string]: any}>;
 }
 
 /**
@@ -173,47 +144,38 @@ export interface ZoneState {
  */
 export interface ZoneArgs {
     /**
-     * Attributes for the DNS Service scheduler.
-     * Changing this creates a new zone.
-     */
-    readonly attributes?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * A description of the zone.
+     * Description for this zone.
      */
     readonly description?: pulumi.Input<string>;
     /**
-     * The email contact for the zone record.
+     * E-mail for the zone.
+     * Used in SOA records for the zone.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     readonly email?: pulumi.Input<string>;
     /**
-     * An array of master DNS servers. For when `type` is
-     * `SECONDARY`.
+     * For secondary zones. 
+     * The servers to slave from to get DNS information.
      */
     readonly masters?: pulumi.Input<pulumi.Input<string>[]>;
     /**
-     * The name of the zone. Note the `.` at the end of the name.
-     * Changing this creates a new DNS zone.
+     * DNS Name for the zone.
      */
     readonly name?: pulumi.Input<string>;
     /**
-     * The region in which to obtain the V2 Compute client.
-     * Keypairs are associated with accounts, but a Compute client is needed to
-     * create one. If omitted, the `region` argument of the provider is used.
-     * Changing this creates a new DNS zone.
-     */
-    readonly region?: pulumi.Input<string>;
-    /**
-     * The time to live (TTL) of the zone.
+     * TTL (Time to Live) for the zone.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     readonly ttl?: pulumi.Input<number>;
     /**
-     * The type of zone. Can either be `PRIMARY` or `SECONDARY`.
-     * Changing this creates a new zone.
+     * Type of zone.
+     * PRIMARY is controlled by ECL2.0 DNS,
+     * SECONDARY zones are slaved from another DNS Server.
+     * Defaults to PRIMARY.
+     * This parameter is not currently supported.
+     * Even if you set this parameter, it will be ignored.
      */
     readonly type?: pulumi.Input<string>;
-    /**
-     * Map of additional options. Changing this creates a
-     * new zone.
-     */
-    readonly valueSpecs?: pulumi.Input<{[key: string]: any}>;
 }

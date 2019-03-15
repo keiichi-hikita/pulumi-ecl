@@ -4,20 +4,8 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-let __config = new pulumi.Config("openstack");
+let __config = new pulumi.Config("ecl");
 
-/**
- * Application Credential ID to login with.
- */
-export let applicationCredentialId: string | undefined = __config.get("applicationCredentialId");
-/**
- * Application Credential name to login with.
- */
-export let applicationCredentialName: string | undefined = __config.get("applicationCredentialName");
-/**
- * Application Credential secret to login with.
- */
-export let applicationCredentialSecret: string | undefined = __config.get("applicationCredentialSecret");
 /**
  * The Identity authentication URL.
  */
@@ -46,11 +34,11 @@ export let domainId: string | undefined = __config.get("domainId") || utilities.
  * The name of the Domain to scope to (Identity v3).
  */
 export let domainName: string | undefined = __config.get("domainName") || utilities.getEnv("OS_DOMAIN_NAME");
-/**
- * A map of services with an endpoint to override what was from the Keystone catalog
- */
-export let endpointOverrides: {[key: string]: any} | undefined = __config.getObject<{[key: string]: any}>("endpointOverrides");
 export let endpointType: string | undefined = __config.get("endpointType") || utilities.getEnv("OS_ENDPOINT_TYPE");
+/**
+ * The SSS Endpoint URL to send API.
+ */
+export let forceSssEndpoint: string | undefined = __config.get("forceSssEndpoint");
 /**
  * Trust self-signed certificates.
  */
@@ -59,10 +47,6 @@ export let insecure: boolean | undefined = __config.getObject<boolean>("insecure
  * A client private key to authenticate with.
  */
 export let key: string | undefined = __config.get("key") || utilities.getEnv("OS_KEY");
-/**
- * How many times HTTP connection should be retried until giving up.
- */
-export let maxRetries: number | undefined = __config.getObject<number>("maxRetries");
 /**
  * Password to login with.
  */
@@ -95,10 +79,6 @@ export let tenantName: string | undefined = __config.get("tenantName") || utilit
  * Authentication token to use as an alternative to username/password.
  */
 export let token: string | undefined = __config.get("token") || utilities.getEnv("OS_TOKEN", "OS_AUTH_TOKEN");
-/**
- * If set to `true`, API requests will go the Load Balancer service (Octavia) instead of the Networking service (Neutron).
- */
-export let useOctavia: boolean | undefined = __config.getObject<boolean>("useOctavia") || utilities.getEnvBoolean("OS_USE_OCTAVIA");
 /**
  * The ID of the domain where the user resides (Identity v3).
  */

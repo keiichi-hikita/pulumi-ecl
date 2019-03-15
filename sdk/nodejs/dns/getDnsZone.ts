@@ -5,25 +5,27 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Use this data source to get the ID of an available OpenStack DNS zone.
+ * Use this data source to get the ID of an Enterprise Cloud zone.
+ * Manages a V2 zone resource within Enterprise Cloud.
  * 
  * ## Example Usage
  * 
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as openstack from "@pulumi/openstack";
+ * import * as ecl from "@pulumi/ecl";
  * 
- * const zone1 = pulumi.output(openstack.dns.getDnsZone({
- *     name: "example.com",
+ * const zone1 = pulumi.output(ecl.dns.getDnsZone({
+ *     domainName: "terraform-example.com.",
  * }));
  * ```
  */
 export function getDnsZone(args?: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): Promise<GetDnsZoneResult> {
     args = args || {};
-    return pulumi.runtime.invoke("openstack:dns/getDnsZone:getDnsZone", {
+    return pulumi.runtime.invoke("ecl:dns/getDnsZone:getDnsZone", {
         "attributes": args.attributes,
         "createdAt": args.createdAt,
         "description": args.description,
+        "domainName": args.domainName,
         "email": args.email,
         "masters": args.masters,
         "name": args.name,
@@ -45,43 +47,75 @@ export function getDnsZone(args?: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): 
  */
 export interface GetDnsZoneArgs {
     readonly attributes?: {[key: string]: any};
+    /**
+     * Date / Time when zone was created.
+     */
     readonly createdAt?: string;
     /**
-     * A description of the zone.
+     * The description of the zone.
      */
     readonly description?: string;
     /**
-     * The email contact for the zone record.
+     * Domain name of the zone.
+     */
+    readonly domainName?: string;
+    /**
+     * e-mail for the zone.
+     * Used in SOA records for the zone.
      */
     readonly email?: string;
+    /**
+     * For secondary zones.
+     * The servers to slave from to get DNS information.
+     */
     readonly masters?: string[];
     /**
-     * The name of the zone.
+     * DNS Name for the zone.
      */
     readonly name?: string;
+    /**
+     * ID for the pool hosting this zone. 
+     */
     readonly poolId?: string;
+    /**
+     * ID for the project(tenant) that owns the zone.
+     */
     readonly projectId?: string;
     /**
-     * The region in which to obtain the V2 DNS client.
-     * A DNS client is needed to retrieve zone ids. If omitted, the
-     * `region` argument of the provider is used.
+     * The region of the zone.
      */
     readonly region?: string;
+    /**
+     * Current serial number for the zone.
+     */
     readonly serial?: number;
     /**
-     * The zone's status.
+     * Status of the zone.
      */
     readonly status?: string;
+    /**
+     * For secondary zones.
+     * The last time an update was retrieved from the master servers.
+     */
     readonly transferredAt?: string;
     /**
-     * The time to live (TTL) of the zone.
+     * TTL (Time to Live) for the zone.
      */
     readonly ttl?: number;
     /**
-     * The type of the zone. Can either be `PRIMARY` or `SECONDARY`.
+     * Type of zone.
+     * PRIMARY is controlled by ECL2.0 DNS,
+     * SECONDARY zones are slaved from another DNS Server.
+     * Defaults to PRIMARY.
      */
     readonly type?: string;
+    /**
+     * Date / Time when zone last updated.
+     */
     readonly updatedAt?: string;
+    /**
+     * Version of the zone.
+     */
     readonly version?: number;
 }
 
@@ -90,23 +124,45 @@ export interface GetDnsZoneArgs {
  */
 export interface GetDnsZoneResult {
     /**
-     * Attributes of the DNS Service scheduler.
+     * (Optional) See Argument Reference above.
      */
     readonly attributes: {[key: string]: any};
     /**
-     * The time the zone was created.
+     * See Argument Reference above.
      */
     readonly createdAt: string;
     /**
-     * An array of master DNS servers. When `type` is  `SECONDARY`.
+     * See Argument Reference above.
+     */
+    readonly description: string;
+    /**
+     * See Argument Reference above.
+     */
+    readonly domainName: string;
+    /**
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns an empty string.
+     */
+    readonly email: string;
+    /**
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns an empty string.
      */
     readonly masters: string[];
     /**
-     * The ID of the pool hosting the zone.
+     * See Argument Reference above.
+     */
+    readonly name: string;
+    /**
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns an empty string.
      */
     readonly poolId: string;
     /**
-     * The project ID that owns the zone.
+     * See Argument Reference above.
      */
     readonly projectId: string;
     /**
@@ -114,19 +170,41 @@ export interface GetDnsZoneResult {
      */
     readonly region: string;
     /**
-     * The serial number of the zone.
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns zero.
      */
     readonly serial: number;
     /**
-     * The time the zone was transferred.
+     * See Argument Reference above.
+     */
+    readonly status: string;
+    /**
+     * (Optional)	See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns null.
      */
     readonly transferredAt: string;
     /**
-     * The time the zone was last updated.
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns zero.
+     */
+    readonly ttl: number;
+    /**
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns an empty string.
+     */
+    readonly type: string;
+    /**
+     * See Argument Reference above.
      */
     readonly updatedAt: string;
     /**
-     * The version of the zone.
+     * See Argument Reference above.
+     * This parameter is not currently supported.
+     * It always returns 1.
      */
     readonly version: number;
     /**
