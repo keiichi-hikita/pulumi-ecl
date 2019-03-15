@@ -6,4 +6,5 @@ Pulumi.*.yaml
 yarn.lock
 
 .idea/
+.vscode/
 *.iml
