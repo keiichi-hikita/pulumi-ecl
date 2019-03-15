@@ -29,9 +29,8 @@ const (
 	// packages:
 	eclPkg = "ecl"
 	// modules:
-	storageMod       = "storage"       // Block Storage
 	computeMod       = "compute"       // Compute
-	databaseMod      = "database"      // Database
+	dnsMod           = "dns"           // DNS
 	identityMod      = "identity"      // Identity
 	imagestoragesMod = "imagestorages" // Image Storages
 	networkMod       = "network"       // Network
@@ -206,14 +205,14 @@ func Provider() tfbridge.ProviderInfo {
 			"ecl_dns_zone_v2": {Tok: eclDataSource(dnsMod, "getDnsZone")},
 
 			// Images
-			"ecl_imagestorages_image_v2": {Tok: eclDataSource(imagesMod, "getImage")},
+			"ecl_imagestorages_image_v2": {Tok: eclDataSource(imagestoragesMod, "getImage")},
 
 			// network
 			"ecl_network_common_function_gateway_v2": {Tok: eclDataSource(networkMod, "getCommonFunctionGatway")},
 			"ecl_network_gateway_interface_v2":       {Tok: eclDataSource(networkMod, "getGatewayInterface")},
 			"ecl_network_internet_gateway_v2":        {Tok: eclDataSource(networkMod, "getInternetGateway")},
 			"ecl_network_network_v2":                 {Tok: eclDataSource(networkMod, "getNetwork")},
-			"ecl_network_port_v2":                    {Tok: eclDataSource(networkMod, "getPort")},
+			"ecl_network_public_ip_v2":               {Tok: eclDataSource(networkMod, "getPublicIP")},
 			"ecl_network_static_route_v2":            {Tok: eclDataSource(networkMod, "getStaticRoute")},
 			"ecl_network_subnet_v2":                  {Tok: eclDataSource(networkMod, "getSubnet")},
 
@@ -221,8 +220,9 @@ func Provider() tfbridge.ProviderInfo {
 			"ecl_sss_tenant_v1": {Tok: eclDataSource(sssMod, "getTenant")},
 
 			// Storage
-			"ecl_storage_volume_v1":         {Tok: eclDataSource(storageMod, "getVolume")},
 			"ecl_storage_virtualstorage_v1": {Tok: eclDataSource(storageMod, "getVirtualStorage")},
+			"ecl_storage_volume_v1":         {Tok: eclDataSource(storageMod, "getVolume")},
+			"ecl_storage_volumetype_v1":     {Tok: eclDataSource(storageMod, "getVolumeType")},
 		},
 		Resources: map[string]*tfbridge.ResourceInfo{
 			// Compute
@@ -236,19 +236,19 @@ func Provider() tfbridge.ProviderInfo {
 			"ecl_dns_zone_v2":      {Tok: eclResource(dnsMod, "Zone")},
 
 			// Images
-			"ecl_imagestorages_image_v2":                 {Tok: eclResource(imagestoragesMod, "Image")},
-			"ecl_imagestorages_image_member_accepter_v2": {Tok: eclResource(imagestoragesMod, "ImageMemberAccepter")},
-			"ecl_imagestorages_image_member_v2":          {Tok: eclResource(imagestoragesMod, "ImageMember")},
+			"ecl_imagestorages_image_v2":           {Tok: eclResource(imagestoragesMod, "Image")},
+			"ecl_imagestorages_member_accepter_v2": {Tok: eclResource(imagestoragesMod, "ImageMemberAccepter")},
+			"ecl_imagestorages_member_v2":          {Tok: eclResource(imagestoragesMod, "ImageMember")},
 
 			// Network
-			"ecl_network_common_function_gateway_v2":  {Tok: eclResource(networkMod, "CommonFunctionGateway")},
-			"ecl_network_gateway_interface_v2":        {Tok: eclResource(networkMod, "GatewayInterface")},
-			"ecl_network_gateway_internet_gateway_v2": {Tok: eclResource(networkMod, "InternetGateway")},
-			"ecl_network_network_v2":                  {Tok: eclResource(networkMod, "Network")},
-			"ecl_network_port_v2":                     {Tok: eclResource(networkMod, "Port")},
-			"ecl_network_public_ip_v2":                {Tok: eclResource(networkMod, "PublicIP")},
-			"ecl_network_static_route_v2":             {Tok: eclResource(networkMod, "StaticRoute")},
-			"ecl_network_subnet_v2":                   {Tok: eclResource(networkMod, "Subnet")},
+			"ecl_network_common_function_gateway_v2": {Tok: eclResource(networkMod, "CommonFunctionGateway")},
+			"ecl_network_gateway_interface_v2":       {Tok: eclResource(networkMod, "GatewayInterface")},
+			"ecl_network_internet_gateway_v2":        {Tok: eclResource(networkMod, "InternetGateway")},
+			"ecl_network_network_v2":                 {Tok: eclResource(networkMod, "Network")},
+			"ecl_network_port_v2":                    {Tok: eclResource(networkMod, "Port")},
+			"ecl_network_public_ip_v2":               {Tok: eclResource(networkMod, "PublicIP")},
+			"ecl_network_static_route_v2":            {Tok: eclResource(networkMod, "StaticRoute")},
+			"ecl_network_subnet_v2":                  {Tok: eclResource(networkMod, "Subnet")},
 
 			// SSS
 			"ecl_sss_tenant_v1": {Tok: eclResource(sssMod, "Tenant")},
