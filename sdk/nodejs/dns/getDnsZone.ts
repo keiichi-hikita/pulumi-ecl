@@ -7,6 +7,17 @@ import * as utilities from "../utilities";
 /**
  * Use this data source to get the ID of an Enterprise Cloud zone.
  * Manages a V2 zone resource within Enterprise Cloud.
+ * 
+ * ## Example Usage
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const zone1 = pulumi.output(ecl.dns.getDnsZone({
+ *     domainName: "terraform-example.com.",
+ * }));
+ * ```
  */
 export function getDnsZone(args?: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): Promise<GetDnsZoneResult> {
     args = args || {};

@@ -3,5 +3,5 @@
 # *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 # Export this package's modules as members:
-from tenant import *
-from get_tenant import *
+from .tenant import *
+from .get_tenant import *

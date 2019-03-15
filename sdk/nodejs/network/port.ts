@@ -13,8 +13,8 @@ export class Port extends pulumi.CustomResource {
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param state Any extra arguments used during the lookup.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: PortState): Port {
-        return new Port(name, <any>state, { id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: PortState, opts?: pulumi.CustomResourceOptions): Port {
+        return new Port(name, <any>state, { ...opts, id: id });
     }
 
     public readonly adminStateUp: pulumi.Output<boolean>;
@@ -29,7 +29,7 @@ export class Port extends pulumi.CustomResource {
     public readonly networkId: pulumi.Output<string>;
     public readonly noFixedIp: pulumi.Output<boolean | undefined>;
     public readonly region: pulumi.Output<string>;
-    public readonly segmentationId: pulumi.Output<number | undefined>;
+    public readonly segmentationId: pulumi.Output<string | undefined>;
     public readonly segmentationType: pulumi.Output<string | undefined>;
     public readonly status: pulumi.Output<string>;
     public readonly tags: pulumi.Output<{[key: string]: any} | undefined>;
@@ -107,7 +107,7 @@ export interface PortState {
     readonly networkId?: pulumi.Input<string>;
     readonly noFixedIp?: pulumi.Input<boolean>;
     readonly region?: pulumi.Input<string>;
-    readonly segmentationId?: pulumi.Input<number>;
+    readonly segmentationId?: pulumi.Input<string>;
     readonly segmentationType?: pulumi.Input<string>;
     readonly status?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
@@ -129,7 +129,7 @@ export interface PortArgs {
     readonly networkId: pulumi.Input<string>;
     readonly noFixedIp?: pulumi.Input<boolean>;
     readonly region?: pulumi.Input<string>;
-    readonly segmentationId?: pulumi.Input<number>;
+    readonly segmentationId?: pulumi.Input<string>;
     readonly segmentationType?: pulumi.Input<string>;
     readonly status?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;

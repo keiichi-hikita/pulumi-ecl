@@ -6,6 +6,22 @@ import * as utilities from "../utilities";
 
 /**
  * Manages a V2 recordset resource within Enterprise Cloud.
+ * 
+ * ## Example Usage
+ * 
+ * ### Basic RecordSet
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const recordset1 = new ecl.dns.RecordSet("recordset_1", {
+ *     record: "192.0.2.1",
+ *     ttl: 6000,
+ *     type: "A",
+ *     zoneId: "cebb1607-40c2-466b-b76b-9fcc7a356bff",
+ * });
+ * ```
  */
 export class RecordSet extends pulumi.CustomResource {
     /**
@@ -16,8 +32,8 @@ export class RecordSet extends pulumi.CustomResource {
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param state Any extra arguments used during the lookup.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: RecordSetState): RecordSet {
-        return new RecordSet(name, <any>state, { id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: RecordSetState, opts?: pulumi.CustomResourceOptions): RecordSet {
+        return new RecordSet(name, <any>state, { ...opts, id: id });
     }
 
     /**

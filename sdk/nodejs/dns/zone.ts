@@ -6,6 +6,17 @@ import * as utilities from "../utilities";
 
 /**
  * Manages a V2 zone resource of Enterprise Cloud.
+ * 
+ * ## Example Usage
+ * 
+ * ### Basic Zone
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const zone1 = new ecl.dns.Zone("zone_1", {});
+ * ```
  */
 export class Zone extends pulumi.CustomResource {
     /**
@@ -16,8 +27,8 @@ export class Zone extends pulumi.CustomResource {
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param state Any extra arguments used during the lookup.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: ZoneState): Zone {
-        return new Zone(name, <any>state, { id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: ZoneState, opts?: pulumi.CustomResourceOptions): Zone {
+        return new Zone(name, <any>state, { ...opts, id: id });
     }
 
     /**

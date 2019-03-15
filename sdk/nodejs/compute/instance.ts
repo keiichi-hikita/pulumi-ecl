@@ -6,6 +6,159 @@ import * as utilities from "../utilities";
 
 /**
  * Manages a V2 VM instance resource within Enterprise Cloud.
+ * 
+ * ## Example Usage
+ * 
+ * ### Basic Instance
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const basic = new ecl.compute.Instance("basic", {
+ *     flavorId: "3",
+ *     imageId: "ad091b52-742f-469e-8f3c-fd81cadf0743",
+ *     keyPair: "my_key_pair_name",
+ *     networks: [{
+ *         uuid: "my_network-id",
+ *     }],
+ * });
+ * ```
+ * 
+ * ### Instance With Attached Volume
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const myvol = new ecl.BlockstorageVolumeV2("myvol", {
+ *     size: 1,
+ * });
+ * const myinstance = new ecl.compute.Instance("myinstance", {
+ *     flavorId: "3",
+ *     imageId: "ad091b52-742f-469e-8f3c-fd81cadf0743",
+ *     keyPair: "my_key_pair_name",
+ *     networks: [{
+ *         uuid: "my_network-id",
+ *     }],
+ * });
+ * const attached = new ecl.compute.VolumeAttach("attached", {
+ *     serverId: myinstance.id,
+ *     volumeId: myvol.id,
+ * });
+ * ```
+ * 
+ * ### Boot From Volume
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const boot_from_volume = new ecl.compute.Instance("boot-from-volume", {
+ *     blockDevices: [{
+ *         bootIndex: 0,
+ *         deleteOnTermination: true,
+ *         destinationType: "volume",
+ *         sourceType: "image",
+ *         uuid: "<image-id>",
+ *         volumeSize: 5,
+ *     }],
+ *     flavorId: "3",
+ *     keyPair: "my_key_pair_name",
+ *     networks: [{
+ *         uuid: "my_network-id",
+ *     }],
+ * });
+ * ```
+ * 
+ * ### Boot From an Existing Volume
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * import * as openstack from "@pulumi/openstack";
+ * 
+ * const myvol = new ecl.ComputeVolumeV1("myvol", {
+ *     imageId: "<image-id>",
+ *     size: 5,
+ * });
+ * const boot_from_volume = new openstack.compute.Instance("boot-from-volume", {
+ *     blockDevices: [{
+ *         bootIndex: 0,
+ *         deleteOnTermination: true,
+ *         destinationType: "volume",
+ *         sourceType: "volume",
+ *         uuid: ecl_blockstorage_volume_v1_myvol.id,
+ *     }],
+ *     flavorId: "3",
+ *     keyPair: "my_key_pair_name",
+ *     networks: [{
+ *         uuid: "my_network-id",
+ *     }],
+ *     securityGroups: ["default"],
+ * });
+ * ```
+ * 
+ * ### Boot Instance, Create Volume, and Attach Volume as a Block Device
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const instance1 = new ecl.compute.Instance("instance_1", {
+ *     blockDevices: [
+ *         {
+ *             bootIndex: 0,
+ *             deleteOnTermination: true,
+ *             destinationType: "local",
+ *             sourceType: "image",
+ *             uuid: "<image-id>",
+ *         },
+ *         {
+ *             bootIndex: 1,
+ *             deleteOnTermination: true,
+ *             destinationType: "volume",
+ *             sourceType: "blank",
+ *             volumeSize: 1,
+ *         },
+ *     ],
+ *     flavorId: "3",
+ *     imageId: "<image-id>",
+ *     keyPair: "my_key_pair_name",
+ * });
+ * ```
+ * 
+ * ### Boot Instance and Attach Existing Volume as a Block Device
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const volume1 = new ecl.BlockstorageVolumeV2("volume_1", {
+ *     size: 1,
+ * });
+ * const instance1 = new ecl.compute.Instance("instance_1", {
+ *     blockDevices: [
+ *         {
+ *             bootIndex: 0,
+ *             deleteOnTermination: true,
+ *             destinationType: "local",
+ *             sourceType: "image",
+ *             uuid: "<image-id>",
+ *         },
+ *         {
+ *             bootIndex: 1,
+ *             deleteOnTermination: true,
+ *             destinationType: "volume",
+ *             sourceType: "volume",
+ *             uuid: volume1.id,
+ *         },
+ *     ],
+ *     flavorId: "3",
+ *     imageId: "<image-id>",
+ *     keyPair: "my_key_pair_name",
+ * });
+ * ```
  */
 export class Instance extends pulumi.CustomResource {
     /**
@@ -16,8 +169,8 @@ export class Instance extends pulumi.CustomResource {
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param state Any extra arguments used during the lookup.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: InstanceState): Instance {
-        return new Instance(name, <any>state, { id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: InstanceState, opts?: pulumi.CustomResourceOptions): Instance {
+        return new Instance(name, <any>state, { ...opts, id: id });
     }
 
     /**

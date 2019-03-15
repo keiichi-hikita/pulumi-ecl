@@ -30,16 +30,23 @@ func LookupImage(ctx *pulumi.Context, args *GetImageArgs) (*GetImageResult, erro
 	return &GetImageResult{
 		Checksum: outputs["checksum"],
 		ContainerFormat: outputs["containerFormat"],
+		CreatedAt: outputs["createdAt"],
 		DiskFormat: outputs["diskFormat"],
 		File: outputs["file"],
+		MemberStatus: outputs["memberStatus"],
 		Metadata: outputs["metadata"],
 		MinDiskGb: outputs["minDiskGb"],
 		MinRamMb: outputs["minRamMb"],
+		Name: outputs["name"],
+		Owner: outputs["owner"],
+		Properties: outputs["properties"],
 		Protected: outputs["protected"],
 		Region: outputs["region"],
 		Schema: outputs["schema"],
 		SizeBytes: outputs["sizeBytes"],
+		Tag: outputs["tag"],
 		UpdatedAt: outputs["updatedAt"],
+		Visibility: outputs["visibility"],
 		Id: outputs["id"],
 	}, nil
 }
@@ -64,16 +71,23 @@ type GetImageArgs struct {
 type GetImageResult struct {
 	Checksum interface{}
 	ContainerFormat interface{}
+	CreatedAt interface{}
 	DiskFormat interface{}
 	File interface{}
+	MemberStatus interface{}
 	Metadata interface{}
 	MinDiskGb interface{}
 	MinRamMb interface{}
+	Name interface{}
+	Owner interface{}
+	Properties interface{}
 	Protected interface{}
 	Region interface{}
 	Schema interface{}
 	SizeBytes interface{}
+	Tag interface{}
 	UpdatedAt interface{}
+	Visibility interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}
 }

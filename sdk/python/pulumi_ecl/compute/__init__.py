@@ -3,9 +3,9 @@
 # *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 # Export this package's modules as members:
-from instance import *
-from keypair import *
-from volume_attach import *
-from volume import *
-from get_flavor import *
-from get_keypair import *
+from .instance import *
+from .keypair import *
+from .volume_attach import *
+from .volume import *
+from .get_flavor import *
+from .get_keypair import *

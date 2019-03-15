@@ -13,8 +13,8 @@ export class StaticRoute extends pulumi.CustomResource {
      * @param id The _unique_ provider ID of the resource to lookup.
      * @param state Any extra arguments used during the lookup.
      */
-    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: StaticRouteState): StaticRoute {
-        return new StaticRoute(name, <any>state, { id });
+    public static get(name: string, id: pulumi.Input<pulumi.ID>, state?: StaticRouteState, opts?: pulumi.CustomResourceOptions): StaticRoute {
+        return new StaticRoute(name, <any>state, { ...opts, id: id });
     }
 
     public readonly awsGwId: pulumi.Output<string | undefined>;

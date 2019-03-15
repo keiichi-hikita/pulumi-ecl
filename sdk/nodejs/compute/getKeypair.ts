@@ -6,6 +6,17 @@ import * as utilities from "../utilities";
 
 /**
  * Use this data source to get the ID and public key of an Enterprise Cloud keypair.
+ * 
+ * ## Example Usage
+ * 
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as ecl from "@pulumi/ecl";
+ * 
+ * const kp = pulumi.output(ecl.compute.getKeypair({
+ *     name: "sand",
+ * }));
+ * ```
  */
 export function getKeypair(args: GetKeypairArgs, opts?: pulumi.InvokeOptions): Promise<GetKeypairResult> {
     return pulumi.runtime.invoke("ecl:compute/getKeypair:getKeypair", {

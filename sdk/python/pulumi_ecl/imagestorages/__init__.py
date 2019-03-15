@@ -3,7 +3,7 @@
 # *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 # Export this package's modules as members:
-from image import *
-from image_member_accepter import *
-from image_member import *
-from get_image import *
+from .image import *
+from .image_member_accepter import *
+from .image_member import *
+from .get_image import *

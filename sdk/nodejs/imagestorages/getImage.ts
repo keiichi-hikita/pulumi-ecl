@@ -46,16 +46,23 @@ export interface GetImageArgs {
 export interface GetImageResult {
     readonly checksum: string;
     readonly containerFormat: string;
+    readonly createdAt: string;
     readonly diskFormat: string;
     readonly file: string;
+    readonly memberStatus: string;
     readonly metadata: {[key: string]: any};
     readonly minDiskGb: number;
     readonly minRamMb: number;
+    readonly name: string;
+    readonly owner: string;
+    readonly properties: {[key: string]: any};
     readonly protected: boolean;
     readonly region: string;
     readonly schema: string;
     readonly sizeBytes: number;
+    readonly tag: string;
     readonly updatedAt: string;
+    readonly visibility: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

@@ -95,12 +95,12 @@ func GetPort(ctx *pulumi.Context,
 
 // URN is this resource's unique name assigned by Pulumi.
 func (r *Port) URN() *pulumi.URNOutput {
-	return r.s.URN
+	return r.s.URN()
 }
 
 // ID is this resource's unique identifier assigned by its provider.
 func (r *Port) ID() *pulumi.IDOutput {
-	return r.s.ID
+	return r.s.ID()
 }
 
 func (r *Port) AdminStateUp() *pulumi.BoolOutput {
@@ -151,8 +151,8 @@ func (r *Port) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
-func (r *Port) SegmentationId() *pulumi.IntOutput {
-	return (*pulumi.IntOutput)(r.s.State["segmentationId"])
+func (r *Port) SegmentationId() *pulumi.StringOutput {
+	return (*pulumi.StringOutput)(r.s.State["segmentationId"])
 }
 
 func (r *Port) SegmentationType() *pulumi.StringOutput {

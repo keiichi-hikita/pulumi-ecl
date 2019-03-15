@@ -5,7 +5,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * The provider type for the ecl package
+ * The provider type for the ecl package. By default, resources use package-wide configuration
+ * settings, however an explicit `Provider` instance may be created and passed during resource
+ * construction to achieve fine-grained programmatic control over provider settings. See the
+ * [documentation](https://pulumi.io/reference/programming-model.html#providers) for more information.
  */
 export class Provider extends pulumi.ProviderResource {
 
@@ -28,13 +31,13 @@ export class Provider extends pulumi.ProviderResource {
             inputs["domainName"] = (args ? args.domainName : undefined) || utilities.getEnv("OS_DOMAIN_NAME");
             inputs["endpointType"] = (args ? args.endpointType : undefined) || utilities.getEnv("OS_ENDPOINT_TYPE");
             inputs["forceSssEndpoint"] = args ? args.forceSssEndpoint : undefined;
-            inputs["insecure"] = pulumi.output(utilities.unwrap((args ? args.insecure : undefined) || utilities.getEnvBoolean("OS_INSECURE"))).apply(JSON.stringify);
+            inputs["insecure"] = pulumi.output((args ? args.insecure : undefined) || utilities.getEnvBoolean("OS_INSECURE")).apply(JSON.stringify);
             inputs["key"] = (args ? args.key : undefined) || utilities.getEnv("OS_KEY");
             inputs["password"] = (args ? args.password : undefined) || utilities.getEnv("OS_PASSWORD");
             inputs["projectDomainId"] = (args ? args.projectDomainId : undefined) || utilities.getEnv("OS_PROJECT_DOMAIN_ID");
             inputs["projectDomainName"] = (args ? args.projectDomainName : undefined) || utilities.getEnv("OS_PROJECT_DOMAIN_NAME");
             inputs["region"] = (args ? args.region : undefined) || utilities.getEnv("OS_REGION_NAME");
-            inputs["swauth"] = pulumi.output(utilities.unwrap((args ? args.swauth : undefined) || utilities.getEnvBoolean("OS_SWAUTH"))).apply(JSON.stringify);
+            inputs["swauth"] = pulumi.output((args ? args.swauth : undefined) || utilities.getEnvBoolean("OS_SWAUTH")).apply(JSON.stringify);
             inputs["tenantId"] = (args ? args.tenantId : undefined) || utilities.getEnv("OS_TENANT_ID", "OS_PROJECT_ID");
             inputs["tenantName"] = (args ? args.tenantName : undefined) || utilities.getEnv("OS_TENANT_NAME", "OS_PROJECT_NAME");
             inputs["token"] = (args ? args.token : undefined) || utilities.getEnv("OS_TOKEN", "OS_AUTH_TOKEN");

@@ -3,8 +3,8 @@
 # *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 # Export this package's modules as members:
-from virtual_storage import *
-from volume import *
-from get_virtual_storage import *
-from get_volume import *
-from get_volume_type import *
+from .virtual_storage import *
+from .volume import *
+from .get_virtual_storage import *
+from .get_volume import *
+from .get_volume_type import *

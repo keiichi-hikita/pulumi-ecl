@@ -4,3 +4,6 @@
 
 # Make subpackages available:
 __all__ = ['compute', 'config', 'dns', 'imagestorages', 'network', 'sss', 'storage']
+
+# Export this package's modules as members:
+from .provider import *
