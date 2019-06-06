@@ -10,29 +10,70 @@ from .. import utilities, tables
 
 class VirtualStorage(pulumi.CustomResource):
     description: pulumi.Output[str]
+    """
+    Description of Virtual Storage.
+    """
     error_message: pulumi.Output[str]
+    """
+    Error message of Virtual Storage.
+    """
     host_routes: pulumi.Output[list]
+    """
+    List of static routes to be set to this Virtual Storage.
+    The host_routes structure is documented below.
+    """
     ip_addr_pool: pulumi.Output[dict]
+    """
+    IP address pool which specifies IP address range 
+    used by the Virtual Storage.
+    The ip_addr_pool structure is documented below.
+    """
     name: pulumi.Output[str]
+    """
+    Name of Virtual Storage.
+    """
     network_id: pulumi.Output[str]
+    """
+    ID(UUID) for network to be connected to the Virtual Storage.
+    """
     subnet_id: pulumi.Output[str]
+    """
+    ID(UUID) for subnet to be connected to the Virtual Storage.
+    """
     volume_type_id: pulumi.Output[str]
+    """
+    ID of volume type used for this Virtual Storage (UUID).
+    User must specify either volume_type_id or volume_type_name.
+    This parameter conflicts with `volume_type_name` .
+    """
     volume_type_name: pulumi.Output[str]
+    """
+    Name of volume type used for this Virtual Storage.
+    User must specify either volume_type_id or volume_type_name.
+    This parameter conflicts with `volume_type_id` .
+    """
     def __init__(__self__, resource_name, opts=None, description=None, error_message=None, host_routes=None, ip_addr_pool=None, name=None, network_id=None, subnet_id=None, volume_type_id=None, volume_type_name=None, __name__=None, __opts__=None):
         """
-        Create a VirtualStorage resource with the given unique name, props, and options.
+        Manages a V1 virtual storage resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] error_message
-        :param pulumi.Input[list] host_routes
-        :param pulumi.Input[dict] ip_addr_pool
-        :param pulumi.Input[str] name
-        :param pulumi.Input[str] network_id
-        :param pulumi.Input[str] subnet_id
-        :param pulumi.Input[str] volume_type_id
-        :param pulumi.Input[str] volume_type_name
+        :param pulumi.Input[str] description: Description of Virtual Storage.
+        :param pulumi.Input[str] error_message: Error message of Virtual Storage.
+        :param pulumi.Input[list] host_routes: List of static routes to be set to this Virtual Storage.
+               The host_routes structure is documented below.
+        :param pulumi.Input[dict] ip_addr_pool: IP address pool which specifies IP address range 
+               used by the Virtual Storage.
+               The ip_addr_pool structure is documented below.
+        :param pulumi.Input[str] name: Name of Virtual Storage.
+        :param pulumi.Input[str] network_id: ID(UUID) for network to be connected to the Virtual Storage.
+        :param pulumi.Input[str] subnet_id: ID(UUID) for subnet to be connected to the Virtual Storage.
+        :param pulumi.Input[str] volume_type_id: ID of volume type used for this Virtual Storage (UUID).
+               User must specify either volume_type_id or volume_type_name.
+               This parameter conflicts with `volume_type_name` .
+        :param pulumi.Input[str] volume_type_name: Name of volume type used for this Virtual Storage.
+               User must specify either volume_type_id or volume_type_name.
+               This parameter conflicts with `volume_type_id` .
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -56,17 +97,17 @@ class VirtualStorage(pulumi.CustomResource):
         __props__['host_routes'] = host_routes
 
         if ip_addr_pool is None:
-            raise TypeError('Missing required property ip_addr_pool')
+            raise TypeError("Missing required property 'ip_addr_pool'")
         __props__['ip_addr_pool'] = ip_addr_pool
 
         __props__['name'] = name
 
         if network_id is None:
-            raise TypeError('Missing required property network_id')
+            raise TypeError("Missing required property 'network_id'")
         __props__['network_id'] = network_id
 
         if subnet_id is None:
-            raise TypeError('Missing required property subnet_id')
+            raise TypeError("Missing required property 'subnet_id'")
         __props__['subnet_id'] = subnet_id
 
         __props__['volume_type_id'] = volume_type_id

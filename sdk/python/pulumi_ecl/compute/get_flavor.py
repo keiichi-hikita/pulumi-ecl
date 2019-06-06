@@ -8,28 +8,79 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetFlavorResult(object):
+class GetFlavorResult:
     """
     A collection of values returned by getFlavor.
     """
-    def __init__(__self__, is_public=None, region=None, id=None):
+    def __init__(__self__, disk=None, is_public=None, min_disk=None, min_ram=None, name=None, ram=None, region=None, rx_tx_factor=None, swap=None, vcpus=None, id=None):
+        if disk and not isinstance(disk, float):
+            raise TypeError("Expected argument 'disk' to be a float")
+        __self__.disk = disk
+        """
+        See Argument Reference above.
+        """
         if is_public and not isinstance(is_public, bool):
-            raise TypeError('Expected argument is_public to be a bool')
+            raise TypeError("Expected argument 'is_public' to be a bool")
         __self__.is_public = is_public
         """
         Whether the flavor is public or private.
         """
+        if min_disk and not isinstance(min_disk, float):
+            raise TypeError("Expected argument 'min_disk' to be a float")
+        __self__.min_disk = min_disk
+        """
+        See Argument Reference above.
+        """
+        if min_ram and not isinstance(min_ram, float):
+            raise TypeError("Expected argument 'min_ram' to be a float")
+        __self__.min_ram = min_ram
+        """
+        See Argument Reference above.
+        """
+        if name and not isinstance(name, str):
+            raise TypeError("Expected argument 'name' to be a str")
+        __self__.name = name
+        """
+        See Argument Reference above.
+        """
+        if ram and not isinstance(ram, float):
+            raise TypeError("Expected argument 'ram' to be a float")
+        __self__.ram = ram
+        """
+        See Argument Reference above.
+        """
         if region and not isinstance(region, str):
-            raise TypeError('Expected argument region to be a str')
+            raise TypeError("Expected argument 'region' to be a str")
         __self__.region = region
+        """
+        See Argument Reference above.
+        """
+        if rx_tx_factor and not isinstance(rx_tx_factor, float):
+            raise TypeError("Expected argument 'rx_tx_factor' to be a float")
+        __self__.rx_tx_factor = rx_tx_factor
+        """
+        See Argument Reference above.
+        """
+        if swap and not isinstance(swap, float):
+            raise TypeError("Expected argument 'swap' to be a float")
+        __self__.swap = swap
+        """
+        See Argument Reference above.
+        """
+        if vcpus and not isinstance(vcpus, float):
+            raise TypeError("Expected argument 'vcpus' to be a float")
+        __self__.vcpus = vcpus
+        """
+        See Argument Reference above.
+        """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_flavor(disk=None, min_disk=None, min_ram=None, name=None, ram=None, region=None, rx_tx_factor=None, swap=None, vcpus=None):
+async def get_flavor(disk=None,min_disk=None,min_ram=None,name=None,ram=None,region=None,rx_tx_factor=None,swap=None,vcpus=None,opts=None):
     """
     Use this data source to get the ID of an available Enterprise Cloud flavor.
     """
@@ -44,9 +95,17 @@ async def get_flavor(disk=None, min_disk=None, min_ram=None, name=None, ram=None
     __args__['rxTxFactor'] = rx_tx_factor
     __args__['swap'] = swap
     __args__['vcpus'] = vcpus
-    __ret__ = await pulumi.runtime.invoke('ecl:compute/getFlavor:getFlavor', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:compute/getFlavor:getFlavor', __args__, opts=opts)
 
     return GetFlavorResult(
+        disk=__ret__.get('disk'),
         is_public=__ret__.get('isPublic'),
+        min_disk=__ret__.get('minDisk'),
+        min_ram=__ret__.get('minRam'),
+        name=__ret__.get('name'),
+        ram=__ret__.get('ram'),
         region=__ret__.get('region'),
+        rx_tx_factor=__ret__.get('rxTxFactor'),
+        swap=__ret__.get('swap'),
+        vcpus=__ret__.get('vcpus'),
         id=__ret__.get('id'))

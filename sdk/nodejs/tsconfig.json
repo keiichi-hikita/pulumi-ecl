@@ -5,7 +5,12 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
     },
     "files": [
         "compute/getFlavor.ts",
@@ -32,7 +37,9 @@
         "network/getCommonFunctionGatway.ts",
         "network/getGatewayInterface.ts",
         "network/getInternetGateway.ts",
+        "network/getInternetService.ts",
         "network/getNetwork.ts",
+        "network/getPort.ts",
         "network/getPublicIP.ts",
         "network/getStaticRoute.ts",
         "network/getSubnet.ts",
@@ -47,6 +54,7 @@
         "sss/getTenant.ts",
         "sss/index.ts",
         "sss/tenant.ts",
+        "sss/user.ts",
         "storage/getVirtualStorage.ts",
         "storage/getVolume.ts",
         "storage/getVolumeType.ts",

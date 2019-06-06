@@ -10,21 +10,45 @@ from .. import utilities, tables
 
 class Tenant(pulumi.CustomResource):
     contract_id: pulumi.Output[str]
+    """
+    Contract which new tenant belongs to.
+    If this parameter is not designated, API user's contract
+    implicitly designated.
+    """
     description: pulumi.Output[str]
+    """
+    Description for this tenant.
+    """
     start_time: pulumi.Output[str]
+    """
+    Tenant created time.
+    """
     tenant_id: pulumi.Output[str]
+    """
+    ID of the tenant.
+    """
     tenant_name: pulumi.Output[str]
+    """
+    Name of new tenant.
+    This name need to be unique globally.
+    """
     tenant_region: pulumi.Output[str]
+    """
+    Region this tenant belongs to.
+    """
     def __init__(__self__, resource_name, opts=None, contract_id=None, description=None, tenant_name=None, tenant_region=None, __name__=None, __opts__=None):
         """
-        Create a Tenant resource with the given unique name, props, and options.
+        Manages a V1 tenant resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] contract_id
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] tenant_name
-        :param pulumi.Input[str] tenant_region
+        :param pulumi.Input[str] contract_id: Contract which new tenant belongs to.
+               If this parameter is not designated, API user's contract
+               implicitly designated.
+        :param pulumi.Input[str] description: Description for this tenant.
+        :param pulumi.Input[str] tenant_name: Name of new tenant.
+               This name need to be unique globally.
+        :param pulumi.Input[str] tenant_region: Region this tenant belongs to.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -44,15 +68,15 @@ class Tenant(pulumi.CustomResource):
         __props__['contract_id'] = contract_id
 
         if description is None:
-            raise TypeError('Missing required property description')
+            raise TypeError("Missing required property 'description'")
         __props__['description'] = description
 
         if tenant_name is None:
-            raise TypeError('Missing required property tenant_name')
+            raise TypeError("Missing required property 'tenant_name'")
         __props__['tenant_name'] = tenant_name
 
         if tenant_region is None:
-            raise TypeError('Missing required property tenant_region')
+            raise TypeError("Missing required property 'tenant_region'")
         __props__['tenant_region'] = tenant_region
 
         __props__['start_time'] = None

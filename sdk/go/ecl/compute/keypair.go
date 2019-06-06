@@ -26,12 +26,10 @@ func NewKeypair(ctx *pulumi.Context,
 		inputs["name"] = nil
 		inputs["publicKey"] = nil
 		inputs["region"] = nil
-		inputs["valueSpecs"] = nil
 	} else {
 		inputs["name"] = args.Name
 		inputs["publicKey"] = args.PublicKey
 		inputs["region"] = args.Region
-		inputs["valueSpecs"] = args.ValueSpecs
 	}
 	inputs["fingerprint"] = nil
 	inputs["privateKey"] = nil
@@ -53,7 +51,6 @@ func GetKeypair(ctx *pulumi.Context,
 		inputs["privateKey"] = state.PrivateKey
 		inputs["publicKey"] = state.PublicKey
 		inputs["region"] = state.Region
-		inputs["valueSpecs"] = state.ValueSpecs
 	}
 	s, err := ctx.ReadResource("ecl:compute/keypair:Keypair", name, id, inputs, opts...)
 	if err != nil {
@@ -105,11 +102,6 @@ func (r *Keypair) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
-// Map of additional options.
-func (r *Keypair) ValueSpecs() *pulumi.MapOutput {
-	return (*pulumi.MapOutput)(r.s.State["valueSpecs"])
-}
-
 // Input properties used for looking up and filtering Keypair resources.
 type KeypairState struct {
 	// The fingerprint of the public key.
@@ -130,8 +122,6 @@ type KeypairState struct {
 	// create one. If omitted, the `region` argument of the provider is used.
 	// Changing this creates a new keypair.
 	Region interface{}
-	// Map of additional options.
-	ValueSpecs interface{}
 }
 
 // The set of arguments for constructing a Keypair resource.
@@ -150,6 +140,4 @@ type KeypairArgs struct {
 	// create one. If omitted, the `region` argument of the provider is used.
 	// Changing this creates a new keypair.
 	Region interface{}
-	// Map of additional options.
-	ValueSpecs interface{}
 }

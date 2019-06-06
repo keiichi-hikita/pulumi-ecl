@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 image resource within Enterprise Cloud.
 type Image struct {
 	s *pulumi.ResourceState
 }
@@ -116,50 +117,62 @@ func (r *Image) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// md5 hash of image contents.
 func (r *Image) Checksum() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["checksum"])
 }
 
+// Format of the container. Must be "bare".
 func (r *Image) ContainerFormat() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["containerFormat"])
 }
 
+// Date and time of image registration.
 func (r *Image) CreatedAt() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["createdAt"])
 }
 
+// Format of the disk. Must be one of "raw", "qcow2", "iso".
 func (r *Image) DiskFormat() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["diskFormat"])
 }
 
+// URL for the virtual machine image file.
 func (r *Image) File() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["file"])
 }
 
+// Switch destination of the license type. Must be one of "WindowsServer_2012R2_Standard_64bit_ComLicense", "WindowsServer_2012_Standard_64bit_ComLicense", "WindowsServer_2008R2_Enterprise_64bit_ComLicense", "WindowsServer_2008R2_Standard_64bit_ComLicense", "WindowsServer_2008_Enterprise_64bit_ComLicense", "WindowsServer_2008_Standard_64bit_ComLicense", "Red_Hat_Enterprise_Linux_6_64bit_BYOL".
 func (r *Image) LicenseSwitch() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["licenseSwitch"])
 }
 
+// This is the filepath of the raw image file that will be uploaded to Glance.
 func (r *Image) LocalFilePath() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["localFilePath"])
 }
 
+// The location metadata.
 func (r *Image) Metadata() *pulumi.MapOutput {
 	return (*pulumi.MapOutput)(r.s.State["metadata"])
 }
 
+// Amount of disk space (in GB) required to boot image. Defaults to 0.
 func (r *Image) MinDiskGb() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["minDiskGb"])
 }
 
+// Amount of ram (in MB) required to boot image. Defaults to 0.
 func (r *Image) MinRamMb() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["minRamMb"])
 }
 
+// Descriptive name for the image.
 func (r *Image) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// Owner of the image.
 func (r *Image) Owner() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["owner"])
 }
@@ -168,26 +181,35 @@ func (r *Image) Properties() *pulumi.MapOutput {
 	return (*pulumi.MapOutput)(r.s.State["properties"])
 }
 
+// If true, image will not be deletable. Defaults to false.
 func (r *Image) Protected() *pulumi.BoolOutput {
 	return (*pulumi.BoolOutput)(r.s.State["protected"])
 }
 
+// The region in which to obtain the V2 Imagestorage client.
+// Images are associated with accounts, but a Imagestroage client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new image.
 func (r *Image) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// URL for schema of the virtual machine image.
 func (r *Image) Schema() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["schema"])
 }
 
+// Size of image file in bytes.
 func (r *Image) SizeBytes() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["sizeBytes"])
 }
 
+// Status of the image.
 func (r *Image) Status() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["status"])
 }
 
+// String related to the image.
 func (r *Image) Tags() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["tags"])
 }
@@ -196,53 +218,93 @@ func (r *Image) UpdateAt() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["updateAt"])
 }
 
+// If false, the checksum will not be verified once the image is finished uploading. Defaults to true.
 func (r *Image) VerifyChecksum() *pulumi.BoolOutput {
 	return (*pulumi.BoolOutput)(r.s.State["verifyChecksum"])
 }
 
+// Scope of image accessibility. Must be one of "public", "private". Defaults to "private".
 func (r *Image) Visibility() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["visibility"])
 }
 
 // Input properties used for looking up and filtering Image resources.
 type ImageState struct {
+	// md5 hash of image contents.
 	Checksum interface{}
+	// Format of the container. Must be "bare".
 	ContainerFormat interface{}
+	// Date and time of image registration.
 	CreatedAt interface{}
+	// Format of the disk. Must be one of "raw", "qcow2", "iso".
 	DiskFormat interface{}
+	// URL for the virtual machine image file.
 	File interface{}
+	// Switch destination of the license type. Must be one of "WindowsServer_2012R2_Standard_64bit_ComLicense", "WindowsServer_2012_Standard_64bit_ComLicense", "WindowsServer_2008R2_Enterprise_64bit_ComLicense", "WindowsServer_2008R2_Standard_64bit_ComLicense", "WindowsServer_2008_Enterprise_64bit_ComLicense", "WindowsServer_2008_Standard_64bit_ComLicense", "Red_Hat_Enterprise_Linux_6_64bit_BYOL".
 	LicenseSwitch interface{}
+	// This is the filepath of the raw image file that will be uploaded to Glance.
 	LocalFilePath interface{}
+	// The location metadata.
 	Metadata interface{}
+	// Amount of disk space (in GB) required to boot image. Defaults to 0.
 	MinDiskGb interface{}
+	// Amount of ram (in MB) required to boot image. Defaults to 0.
 	MinRamMb interface{}
+	// Descriptive name for the image.
 	Name interface{}
+	// Owner of the image.
 	Owner interface{}
 	Properties interface{}
+	// If true, image will not be deletable. Defaults to false.
 	Protected interface{}
+	// The region in which to obtain the V2 Imagestorage client.
+	// Images are associated with accounts, but a Imagestroage client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new image.
 	Region interface{}
+	// URL for schema of the virtual machine image.
 	Schema interface{}
+	// Size of image file in bytes.
 	SizeBytes interface{}
+	// Status of the image.
 	Status interface{}
+	// String related to the image.
 	Tags interface{}
 	UpdateAt interface{}
+	// If false, the checksum will not be verified once the image is finished uploading. Defaults to true.
 	VerifyChecksum interface{}
+	// Scope of image accessibility. Must be one of "public", "private". Defaults to "private".
 	Visibility interface{}
 }
 
 // The set of arguments for constructing a Image resource.
 type ImageArgs struct {
+	// Format of the container. Must be "bare".
 	ContainerFormat interface{}
+	// Format of the disk. Must be one of "raw", "qcow2", "iso".
 	DiskFormat interface{}
+	// Switch destination of the license type. Must be one of "WindowsServer_2012R2_Standard_64bit_ComLicense", "WindowsServer_2012_Standard_64bit_ComLicense", "WindowsServer_2008R2_Enterprise_64bit_ComLicense", "WindowsServer_2008R2_Standard_64bit_ComLicense", "WindowsServer_2008_Enterprise_64bit_ComLicense", "WindowsServer_2008_Standard_64bit_ComLicense", "Red_Hat_Enterprise_Linux_6_64bit_BYOL".
 	LicenseSwitch interface{}
+	// This is the filepath of the raw image file that will be uploaded to Glance.
 	LocalFilePath interface{}
+	// Amount of disk space (in GB) required to boot image. Defaults to 0.
 	MinDiskGb interface{}
+	// Amount of ram (in MB) required to boot image. Defaults to 0.
 	MinRamMb interface{}
+	// Descriptive name for the image.
 	Name interface{}
 	Properties interface{}
+	// If true, image will not be deletable. Defaults to false.
 	Protected interface{}
+	// The region in which to obtain the V2 Imagestorage client.
+	// Images are associated with accounts, but a Imagestroage client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new image.
 	Region interface{}
+	// String related to the image.
 	Tags interface{}
+	// If false, the checksum will not be verified once the image is finished uploading. Defaults to true.
 	VerifyChecksum interface{}
+	// Scope of image accessibility. Must be one of "public", "private". Defaults to "private".
 	Visibility interface{}
 }

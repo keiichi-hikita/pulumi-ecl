@@ -8,22 +8,88 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetNetworkResult(object):
+class GetNetworkResult:
     """
     A collection of values returned by getNetwork.
     """
-    def __init__(__self__, admin_state_up=None, id=None):
-        if admin_state_up and not isinstance(admin_state_up, str):
-            raise TypeError('Expected argument admin_state_up to be a str')
+    def __init__(__self__, admin_state_up=None, description=None, matching_subnet_cidr=None, name=None, network_id=None, plane=None, region=None, status=None, subnets=None, tags=None, tenant_id=None, id=None):
+        if admin_state_up and not isinstance(admin_state_up, bool):
+            raise TypeError("Expected argument 'admin_state_up' to be a bool")
         __self__.admin_state_up = admin_state_up
+        """
+        The administrative state of the network.
+        """
+        if description and not isinstance(description, str):
+            raise TypeError("Expected argument 'description' to be a str")
+        __self__.description = description
+        """
+        See Argument Reference above.
+        """
+        if matching_subnet_cidr and not isinstance(matching_subnet_cidr, str):
+            raise TypeError("Expected argument 'matching_subnet_cidr' to be a str")
+        __self__.matching_subnet_cidr = matching_subnet_cidr
+        """
+        See Argument Reference above.
+        """
+        if name and not isinstance(name, str):
+            raise TypeError("Expected argument 'name' to be a str")
+        __self__.name = name
+        """
+        See Argument Reference above.
+        """
+        if network_id and not isinstance(network_id, str):
+            raise TypeError("Expected argument 'network_id' to be a str")
+        __self__.network_id = network_id
+        """
+        ID of network.
+        """
+        if plane and not isinstance(plane, str):
+            raise TypeError("Expected argument 'plane' to be a str")
+        __self__.plane = plane
+        """
+        See Argument Reference above.
+        """
+        if region and not isinstance(region, str):
+            raise TypeError("Expected argument 'region' to be a str")
+        __self__.region = region
+        """
+        See Argument Reference above.
+        """
+        if status and not isinstance(status, str):
+            raise TypeError("Expected argument 'status' to be a str")
+        __self__.status = status
+        """
+        The network status.
+        """
+        if subnets and not isinstance(subnets, list):
+            raise TypeError("Expected argument 'subnets' to be a list")
+        __self__.subnets = subnets
+        """
+        The subnets of the network.
+        """
+        if tags and not isinstance(tags, dict):
+            raise TypeError("Expected argument 'tags' to be a dict")
+        __self__.tags = tags
+        """
+        The network tags.
+        """
+        if tenant_id and not isinstance(tenant_id, str):
+            raise TypeError("Expected argument 'tenant_id' to be a str")
+        __self__.tenant_id = tenant_id
+        """
+        See Argument Reference above.
+        """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_network(description=None, matching_subnet_cidr=None, name=None, network_id=None, plane=None, status=None, subnets=None, tags=None, tenant_id=None):
+async def get_network(description=None,matching_subnet_cidr=None,name=None,network_id=None,plane=None,region=None,opts=None):
+    """
+    Use this data source to get the ID of an available Enterprise Cloud network.
+    """
     __args__ = dict()
 
     __args__['description'] = description
@@ -31,12 +97,19 @@ async def get_network(description=None, matching_subnet_cidr=None, name=None, ne
     __args__['name'] = name
     __args__['networkId'] = network_id
     __args__['plane'] = plane
-    __args__['status'] = status
-    __args__['subnets'] = subnets
-    __args__['tags'] = tags
-    __args__['tenantId'] = tenant_id
-    __ret__ = await pulumi.runtime.invoke('ecl:network/getNetwork:getNetwork', __args__)
+    __args__['region'] = region
+    __ret__ = await pulumi.runtime.invoke('ecl:network/getNetwork:getNetwork', __args__, opts=opts)
 
     return GetNetworkResult(
         admin_state_up=__ret__.get('adminStateUp'),
+        description=__ret__.get('description'),
+        matching_subnet_cidr=__ret__.get('matchingSubnetCidr'),
+        name=__ret__.get('name'),
+        network_id=__ret__.get('networkId'),
+        plane=__ret__.get('plane'),
+        region=__ret__.get('region'),
+        status=__ret__.get('status'),
+        subnets=__ret__.get('subnets'),
+        tags=__ret__.get('tags'),
+        tenant_id=__ret__.get('tenantId'),
         id=__ret__.get('id'))

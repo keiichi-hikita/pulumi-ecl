@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID and Details of an Enterprise Cloud Public ip.
 func LookupPublicIP(ctx *pulumi.Context, args *GetPublicIPArgs) (*GetPublicIPResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -40,27 +41,45 @@ func LookupPublicIP(ctx *pulumi.Context, args *GetPublicIPArgs) (*GetPublicIPRes
 
 // A collection of arguments for invoking getPublicIP.
 type GetPublicIPArgs struct {
+	// The IP address of the block (assigned automatically).
 	Cidr interface{}
+	// Description of the Public IPs.
 	Description interface{}
+	// Unique ID of the Public IPs.
 	InternetGwId interface{}
+	// Name of the Public IPs.
 	Name interface{}
+	// Unique ID of the Public IPs.	
 	PublicIpId interface{}
+	// The region in which to obtain the V2 Network client.
+	// If omitted, the `region` argument of the provider is used.
 	Region interface{}
+	// Public IP status.
 	Status interface{}
+	// Specifies the size of the block by the length of its subnetwork mask length.
 	SubmaskLength interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }
 
 // A collection of values returned by getPublicIP.
 type GetPublicIPResult struct {
+	// See Argument Reference above.
 	Cidr interface{}
+	// See Argument Reference above.
 	Description interface{}
+	// See Argument Reference above.
 	InternetGwId interface{}
+	// See Argument Reference above.
 	Name interface{}
 	PublicIpId interface{}
+	// See Argument Reference above.
 	Region interface{}
+	// See Argument Reference above.
 	Status interface{}
+	// See Argument Reference above.
 	SubmaskLength interface{}
+	// See Argument Reference above.
 	TenantId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

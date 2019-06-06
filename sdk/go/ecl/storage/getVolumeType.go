@@ -7,10 +7,10 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID of an Enterprise Cloud volume type.
 func LookupVolumeType(ctx *pulumi.Context, args *GetVolumeTypeArgs) (*GetVolumeTypeResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
-		inputs["extraSpecs"] = args.ExtraSpecs
 		inputs["name"] = args.Name
 		inputs["volumeTypeId"] = args.VolumeTypeId
 	}
@@ -20,20 +20,27 @@ func LookupVolumeType(ctx *pulumi.Context, args *GetVolumeTypeArgs) (*GetVolumeT
 	}
 	return &GetVolumeTypeResult{
 		ExtraSpecs: outputs["extraSpecs"],
+		Name: outputs["name"],
+		VolumeTypeId: outputs["volumeTypeId"],
 		Id: outputs["id"],
 	}, nil
 }
 
 // A collection of arguments for invoking getVolumeType.
 type GetVolumeTypeArgs struct {
-	ExtraSpecs interface{}
+	// Name of Volume Type.
 	Name interface{}
+	// ID of Volume Type.
 	VolumeTypeId interface{}
 }
 
 // A collection of values returned by getVolumeType.
 type GetVolumeTypeResult struct {
+	// Includes available_volume_size, and available_iops_per_gb or available_throughput.
+	// The extra_specs structure is documented below.
 	ExtraSpecs interface{}
+	Name interface{}
+	VolumeTypeId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}
 }

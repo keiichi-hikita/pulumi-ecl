@@ -17,23 +17,38 @@ export class Port extends pulumi.CustomResource {
         return new Port(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly adminStateUp: pulumi.Output<boolean>;
-    public /*out*/ readonly allFixedIps: pulumi.Output<string[]>;
-    public readonly allowedAddressPairs: pulumi.Output<{ ipAddress: string, macAddress?: string }[] | undefined>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly deviceId: pulumi.Output<string>;
-    public readonly deviceOwner: pulumi.Output<string>;
-    public readonly fixedIps: pulumi.Output<{ ipAddress?: string, subnetId: string }[] | undefined>;
-    public readonly macAddress: pulumi.Output<string>;
-    public readonly name: pulumi.Output<string>;
-    public readonly networkId: pulumi.Output<string>;
-    public readonly noFixedIp: pulumi.Output<boolean | undefined>;
-    public readonly region: pulumi.Output<string>;
-    public readonly segmentationId: pulumi.Output<string | undefined>;
-    public readonly segmentationType: pulumi.Output<string | undefined>;
-    public readonly status: pulumi.Output<string>;
-    public readonly tags: pulumi.Output<{[key: string]: any} | undefined>;
-    public readonly tenantId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/port:Port';
+
+    /**
+     * Returns true if the given object is an instance of Port.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Port {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Port.__pulumiType;
+    }
+
+    public readonly adminStateUp!: pulumi.Output<boolean>;
+    public /*out*/ readonly allFixedIps!: pulumi.Output<string[]>;
+    public readonly allowedAddressPairs!: pulumi.Output<{ ipAddress: string, macAddress?: string }[] | undefined>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly deviceId!: pulumi.Output<string>;
+    public readonly deviceOwner!: pulumi.Output<string>;
+    public readonly fixedIps!: pulumi.Output<{ ipAddress?: string, subnetId: string }[] | undefined>;
+    public readonly macAddress!: pulumi.Output<string>;
+    public /*out*/ readonly managedByService!: pulumi.Output<boolean>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly networkId!: pulumi.Output<string>;
+    public readonly noFixedIp!: pulumi.Output<boolean | undefined>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly segmentationId!: pulumi.Output<number>;
+    public readonly segmentationType!: pulumi.Output<string>;
+    public /*out*/ readonly status!: pulumi.Output<string>;
+    public readonly tags!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly tenantId!: pulumi.Output<string>;
 
     /**
      * Create a Port resource with the given unique name, arguments, and options.
@@ -46,7 +61,7 @@ export class Port extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: PortArgs | PortState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: PortState = argsOrState as PortState | undefined;
+            const state = argsOrState as PortState | undefined;
             inputs["adminStateUp"] = state ? state.adminStateUp : undefined;
             inputs["allFixedIps"] = state ? state.allFixedIps : undefined;
             inputs["allowedAddressPairs"] = state ? state.allowedAddressPairs : undefined;
@@ -55,6 +70,7 @@ export class Port extends pulumi.CustomResource {
             inputs["deviceOwner"] = state ? state.deviceOwner : undefined;
             inputs["fixedIps"] = state ? state.fixedIps : undefined;
             inputs["macAddress"] = state ? state.macAddress : undefined;
+            inputs["managedByService"] = state ? state.managedByService : undefined;
             inputs["name"] = state ? state.name : undefined;
             inputs["networkId"] = state ? state.networkId : undefined;
             inputs["noFixedIp"] = state ? state.noFixedIp : undefined;
@@ -82,12 +98,13 @@ export class Port extends pulumi.CustomResource {
             inputs["region"] = args ? args.region : undefined;
             inputs["segmentationId"] = args ? args.segmentationId : undefined;
             inputs["segmentationType"] = args ? args.segmentationType : undefined;
-            inputs["status"] = args ? args.status : undefined;
             inputs["tags"] = args ? args.tags : undefined;
             inputs["tenantId"] = args ? args.tenantId : undefined;
             inputs["allFixedIps"] = undefined /*out*/;
+            inputs["managedByService"] = undefined /*out*/;
+            inputs["status"] = undefined /*out*/;
         }
-        super("ecl:network/port:Port", name, inputs, opts);
+        super(Port.__pulumiType, name, inputs, opts);
     }
 }
 
@@ -103,11 +120,12 @@ export interface PortState {
     readonly deviceOwner?: pulumi.Input<string>;
     readonly fixedIps?: pulumi.Input<pulumi.Input<{ ipAddress?: pulumi.Input<string>, subnetId: pulumi.Input<string> }>[]>;
     readonly macAddress?: pulumi.Input<string>;
+    readonly managedByService?: pulumi.Input<boolean>;
     readonly name?: pulumi.Input<string>;
     readonly networkId?: pulumi.Input<string>;
     readonly noFixedIp?: pulumi.Input<boolean>;
     readonly region?: pulumi.Input<string>;
-    readonly segmentationId?: pulumi.Input<string>;
+    readonly segmentationId?: pulumi.Input<number>;
     readonly segmentationType?: pulumi.Input<string>;
     readonly status?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
@@ -129,9 +147,8 @@ export interface PortArgs {
     readonly networkId: pulumi.Input<string>;
     readonly noFixedIp?: pulumi.Input<boolean>;
     readonly region?: pulumi.Input<string>;
-    readonly segmentationId?: pulumi.Input<string>;
+    readonly segmentationId?: pulumi.Input<number>;
     readonly segmentationType?: pulumi.Input<string>;
-    readonly status?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
     readonly tenantId?: pulumi.Input<string>;
 }

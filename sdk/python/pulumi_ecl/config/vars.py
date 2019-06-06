@@ -79,12 +79,7 @@ The name of the domain where the project resides (Identity v3).
 
 region = __config__.get('region') or utilities.get_env('OS_REGION_NAME')
 """
-The OpenStack region to connect to.
-"""
-
-swauth = __config__.get('swauth') or utilities.get_env_bool('OS_SWAUTH')
-"""
-Use Swift's authentication system instead of Keystone. Only used for interaction with Swift.
+The Enterprise Cloud region to connect to.
 """
 
 tenant_id = __config__.get('tenantId') or utilities.get_env('OS_TENANT_ID', 'OS_PROJECT_ID')

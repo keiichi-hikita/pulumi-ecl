@@ -8,35 +8,84 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetVolumeResult(object):
+class GetVolumeResult:
     """
     A collection of values returned by getVolume.
     """
-    def __init__(__self__, availability_zone=None, id=None):
+    def __init__(__self__, availability_zone=None, description=None, initiator_iqns=None, iops_per_gb=None, name=None, size=None, throughput=None, virtual_storage_id=None, volume_id=None, id=None):
         if availability_zone and not isinstance(availability_zone, str):
-            raise TypeError('Expected argument availability_zone to be a str')
+            raise TypeError("Expected argument 'availability_zone' to be a str")
         __self__.availability_zone = availability_zone
+        """
+        Availability zone of volume.
+        """
+        if description and not isinstance(description, str):
+            raise TypeError("Expected argument 'description' to be a str")
+        __self__.description = description
+        """
+        Description of Volume.
+        """
+        if initiator_iqns and not isinstance(initiator_iqns, list):
+            raise TypeError("Expected argument 'initiator_iqns' to be a list")
+        __self__.initiator_iqns = initiator_iqns
+        """
+        List of initiator IQN who can access to this volume.
+        """
+        if iops_per_gb and not isinstance(iops_per_gb, str):
+            raise TypeError("Expected argument 'iops_per_gb' to be a str")
+        __self__.iops_per_gb = iops_per_gb
+        """
+        Provisioned IOPS/GB for volume.
+        """
+        if name and not isinstance(name, str):
+            raise TypeError("Expected argument 'name' to be a str")
+        __self__.name = name
+        if size and not isinstance(size, float):
+            raise TypeError("Expected argument 'size' to be a float")
+        __self__.size = size
+        """
+        Size of volume in Gigabyte.
+        """
+        if throughput and not isinstance(throughput, str):
+            raise TypeError("Expected argument 'throughput' to be a str")
+        __self__.throughput = throughput
+        """
+        Throughput for volume.
+        """
+        if virtual_storage_id and not isinstance(virtual_storage_id, str):
+            raise TypeError("Expected argument 'virtual_storage_id' to be a str")
+        __self__.virtual_storage_id = virtual_storage_id
+        """
+        Virtual Storage ID (UUID) which this volume belongs.
+        """
+        if volume_id and not isinstance(volume_id, str):
+            raise TypeError("Expected argument 'volume_id' to be a str")
+        __self__.volume_id = volume_id
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_volume(availability_zone=None, description=None, initiator_iqns=None, iops_per_gb=None, name=None, size=None, throughput=None, virtual_storage_id=None, volume_id=None):
+async def get_volume(name=None,volume_id=None,opts=None):
+    """
+    Use this data source to get the ID of an Enterprise Cloud volume.
+    """
     __args__ = dict()
 
-    __args__['availabilityZone'] = availability_zone
-    __args__['description'] = description
-    __args__['initiatorIqns'] = initiator_iqns
-    __args__['iopsPerGb'] = iops_per_gb
     __args__['name'] = name
-    __args__['size'] = size
-    __args__['throughput'] = throughput
-    __args__['virtualStorageId'] = virtual_storage_id
     __args__['volumeId'] = volume_id
-    __ret__ = await pulumi.runtime.invoke('ecl:storage/getVolume:getVolume', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:storage/getVolume:getVolume', __args__, opts=opts)
 
     return GetVolumeResult(
         availability_zone=__ret__.get('availabilityZone'),
+        description=__ret__.get('description'),
+        initiator_iqns=__ret__.get('initiatorIqns'),
+        iops_per_gb=__ret__.get('iopsPerGb'),
+        name=__ret__.get('name'),
+        size=__ret__.get('size'),
+        throughput=__ret__.get('throughput'),
+        virtual_storage_id=__ret__.get('virtualStorageId'),
+        volume_id=__ret__.get('volumeId'),
         id=__ret__.get('id'))

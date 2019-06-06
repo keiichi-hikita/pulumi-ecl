@@ -4,25 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-/**
- * Manages a V2 recordset resource within Enterprise Cloud.
- * 
- * ## Example Usage
- * 
- * ### Basic RecordSet
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const recordset1 = new ecl.dns.RecordSet("recordset_1", {
- *     record: "192.0.2.1",
- *     ttl: 6000,
- *     type: "A",
- *     zoneId: "cebb1607-40c2-466b-b76b-9fcc7a356bff",
- * });
- * ```
- */
 export class RecordSet extends pulumi.CustomResource {
     /**
      * Get an existing RecordSet resource's state with the given name, ID, and optional extra
@@ -36,31 +17,26 @@ export class RecordSet extends pulumi.CustomResource {
         return new RecordSet(name, <any>state, { ...opts, id: id });
     }
 
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:dns/recordSet:RecordSet';
+
     /**
-     * Description for the recordset.
+     * Returns true if the given object is an instance of RecordSet.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public readonly description: pulumi.Output<string | undefined>;
-    /**
-     * DNS Name for the recordset.
-     */
-    public readonly name: pulumi.Output<string>;
-    /**
-     * Data for the recordset.
-     */
-    public readonly record: pulumi.Output<string>;
-    /**
-     * TTL (Time to Live) for the recordset.
-     */
-    public readonly ttl: pulumi.Output<number>;
-    /**
-     * RRTYPE of the recordset. 
-     * Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
-     */
-    public readonly type: pulumi.Output<string>;
-    /**
-     * Zone ID for the recordset.
-     */
-    public readonly zoneId: pulumi.Output<string>;
+    public static isInstance(obj: any): obj is RecordSet {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === RecordSet.__pulumiType;
+    }
+
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly record!: pulumi.Output<string>;
+    public readonly ttl!: pulumi.Output<number>;
+    public readonly type!: pulumi.Output<string>;
+    public readonly zoneId!: pulumi.Output<string>;
 
     /**
      * Create a RecordSet resource with the given unique name, arguments, and options.
@@ -73,7 +49,7 @@ export class RecordSet extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: RecordSetArgs | RecordSetState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: RecordSetState = argsOrState as RecordSetState | undefined;
+            const state = argsOrState as RecordSetState | undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["name"] = state ? state.name : undefined;
             inputs["record"] = state ? state.record : undefined;
@@ -101,7 +77,7 @@ export class RecordSet extends pulumi.CustomResource {
             inputs["type"] = args ? args.type : undefined;
             inputs["zoneId"] = args ? args.zoneId : undefined;
         }
-        super("ecl:dns/recordSet:RecordSet", name, inputs, opts);
+        super(RecordSet.__pulumiType, name, inputs, opts);
     }
 }
 
@@ -109,30 +85,11 @@ export class RecordSet extends pulumi.CustomResource {
  * Input properties used for looking up and filtering RecordSet resources.
  */
 export interface RecordSetState {
-    /**
-     * Description for the recordset.
-     */
     readonly description?: pulumi.Input<string>;
-    /**
-     * DNS Name for the recordset.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * Data for the recordset.
-     */
     readonly record?: pulumi.Input<string>;
-    /**
-     * TTL (Time to Live) for the recordset.
-     */
     readonly ttl?: pulumi.Input<number>;
-    /**
-     * RRTYPE of the recordset. 
-     * Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
-     */
     readonly type?: pulumi.Input<string>;
-    /**
-     * Zone ID for the recordset.
-     */
     readonly zoneId?: pulumi.Input<string>;
 }
 
@@ -140,29 +97,10 @@ export interface RecordSetState {
  * The set of arguments for constructing a RecordSet resource.
  */
 export interface RecordSetArgs {
-    /**
-     * Description for the recordset.
-     */
     readonly description?: pulumi.Input<string>;
-    /**
-     * DNS Name for the recordset.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * Data for the recordset.
-     */
     readonly record: pulumi.Input<string>;
-    /**
-     * TTL (Time to Live) for the recordset.
-     */
     readonly ttl: pulumi.Input<number>;
-    /**
-     * RRTYPE of the recordset. 
-     * Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
-     */
     readonly type: pulumi.Input<string>;
-    /**
-     * Zone ID for the recordset.
-     */
     readonly zoneId: pulumi.Input<string>;
 }

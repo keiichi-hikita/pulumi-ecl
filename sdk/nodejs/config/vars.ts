@@ -60,13 +60,9 @@ export let projectDomainId: string | undefined = __config.get("projectDomainId")
  */
 export let projectDomainName: string | undefined = __config.get("projectDomainName") || utilities.getEnv("OS_PROJECT_DOMAIN_NAME");
 /**
- * The OpenStack region to connect to.
+ * The Enterprise Cloud region to connect to.
  */
 export let region: string | undefined = __config.get("region") || utilities.getEnv("OS_REGION_NAME");
-/**
- * Use Swift's authentication system instead of Keystone. Only used for interaction with Swift.
- */
-export let swauth: boolean | undefined = __config.getObject<boolean>("swauth") || utilities.getEnvBoolean("OS_SWAUTH");
 /**
  * The ID of the Tenant (Identity v2) or Project (Identity v3) to login with.
  */

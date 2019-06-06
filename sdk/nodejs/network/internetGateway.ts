@@ -17,12 +17,26 @@ export class InternetGateway extends pulumi.CustomResource {
         return new InternetGateway(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly internetServiceId: pulumi.Output<string>;
-    public readonly name: pulumi.Output<string>;
-    public readonly qosOptionId: pulumi.Output<string>;
-    public readonly region: pulumi.Output<string>;
-    public readonly tenantId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/internetGateway:InternetGateway';
+
+    /**
+     * Returns true if the given object is an instance of InternetGateway.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is InternetGateway {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === InternetGateway.__pulumiType;
+    }
+
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly internetServiceId!: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly qosOptionId!: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly tenantId!: pulumi.Output<string>;
 
     /**
      * Create a InternetGateway resource with the given unique name, arguments, and options.
@@ -35,7 +49,7 @@ export class InternetGateway extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: InternetGatewayArgs | InternetGatewayState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: InternetGatewayState = argsOrState as InternetGatewayState | undefined;
+            const state = argsOrState as InternetGatewayState | undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["internetServiceId"] = state ? state.internetServiceId : undefined;
             inputs["name"] = state ? state.name : undefined;
@@ -57,7 +71,7 @@ export class InternetGateway extends pulumi.CustomResource {
             inputs["region"] = args ? args.region : undefined;
             inputs["tenantId"] = args ? args.tenantId : undefined;
         }
-        super("ecl:network/internetGateway:InternetGateway", name, inputs, opts);
+        super(InternetGateway.__pulumiType, name, inputs, opts);
     }
 }
 

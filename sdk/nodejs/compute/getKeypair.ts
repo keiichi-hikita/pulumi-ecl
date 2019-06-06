@@ -4,20 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-/**
- * Use this data source to get the ID and public key of an Enterprise Cloud keypair.
- * 
- * ## Example Usage
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const kp = pulumi.output(ecl.compute.getKeypair({
- *     name: "sand",
- * }));
- * ```
- */
 export function getKeypair(args: GetKeypairArgs, opts?: pulumi.InvokeOptions): Promise<GetKeypairResult> {
     return pulumi.runtime.invoke("ecl:compute/getKeypair:getKeypair", {
         "name": args.name,
@@ -29,14 +15,7 @@ export function getKeypair(args: GetKeypairArgs, opts?: pulumi.InvokeOptions): P
  * A collection of arguments for invoking getKeypair.
  */
 export interface GetKeypairArgs {
-    /**
-     * The unique name of the keypair.
-     */
     readonly name: string;
-    /**
-     * The region in which to obtain the V2 Compute client.
-     * If omitted, the `region` argument of the provider is used.
-     */
     readonly region?: string;
 }
 
@@ -44,13 +23,8 @@ export interface GetKeypairArgs {
  * A collection of values returned by getKeypair.
  */
 export interface GetKeypairResult {
-    /**
-     * The OpenSSH-formatted public key of the keypair.
-     */
+    readonly name: string;
     readonly publicKey: string;
-    /**
-     * See Argument Reference above.
-     */
     readonly region: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.

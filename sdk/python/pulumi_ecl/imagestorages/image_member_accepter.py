@@ -10,17 +10,33 @@ from .. import utilities, tables
 
 class ImageMemberAccepter(pulumi.CustomResource):
     image_member_id: pulumi.Output[str]
+    """
+    An identifier for the image and member. You can refer it from ID of member resource. The format is "${image_id}/${member_id}", where member_id is accepter project ID.
+    """
     region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Imagestorage client.
+    Images are associated with accounts, but a Imagestroage client is needed to
+    create one. If omitted, the `region` argument of the provider is used.
+    Changing this creates a new image.
+    """
     status: pulumi.Output[str]
+    """
+    The status of this image member. Must be one of "pending", "accepted", "rejected".
+    """
     def __init__(__self__, resource_name, opts=None, image_member_id=None, region=None, status=None, __name__=None, __opts__=None):
         """
-        Create a ImageMemberAccepter resource with the given unique name, props, and options.
+        Manages a V2 Image member resource within Enterprise Cloud.
+        Accepter project handles this member accepter resource.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] image_member_id
-        :param pulumi.Input[str] region
-        :param pulumi.Input[str] status
+        :param pulumi.Input[str] image_member_id: An identifier for the image and member. You can refer it from ID of member resource. The format is "${image_id}/${member_id}", where member_id is accepter project ID.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Imagestorage client.
+               Images are associated with accounts, but a Imagestroage client is needed to
+               create one. If omitted, the `region` argument of the provider is used.
+               Changing this creates a new image.
+        :param pulumi.Input[str] status: The status of this image member. Must be one of "pending", "accepted", "rejected".
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -38,13 +54,13 @@ class ImageMemberAccepter(pulumi.CustomResource):
         __props__ = dict()
 
         if image_member_id is None:
-            raise TypeError('Missing required property image_member_id')
+            raise TypeError("Missing required property 'image_member_id'")
         __props__['image_member_id'] = image_member_id
 
         __props__['region'] = region
 
         if status is None:
-            raise TypeError('Missing required property status')
+            raise TypeError("Missing required property 'status'")
         __props__['status'] = status
 
         super(ImageMemberAccepter, __self__).__init__(

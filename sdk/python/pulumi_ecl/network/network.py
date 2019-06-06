@@ -9,28 +9,77 @@ import pulumi.runtime
 from .. import utilities, tables
 
 class Network(pulumi.CustomResource):
-    admin_state_up: pulumi.Output[str]
+    admin_state_up: pulumi.Output[bool]
+    """
+    The administrative state of the network.
+    Acceptable values are "true" and "false".
+    Changing this value updates the state of the existing network.
+    """
     description: pulumi.Output[str]
+    """
+    Network description.
+    """
     name: pulumi.Output[str]
+    """
+    The name of the network. Changing this updates the name of
+    the existing network.
+    """
     plane: pulumi.Output[str]
+    """
+    The plane of the network. 
+    Allowed values are "data" and "storage".
+    Changing this creates a new network.
+    """
+    region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Networking client.
+    A Networking client is needed to create a Neutron network. If omitted, the
+    `region` argument of the provider is used. Changing this creates a new
+    network.
+    """
+    shared: pulumi.Output[bool]
+    """
+    See Argument Reference above.
+    """
     status: pulumi.Output[str]
+    """
+    The network status.
+    """
     subnets: pulumi.Output[list]
+    """
+    The associated subnets.
+    """
     tags: pulumi.Output[dict]
+    """
+    Network tags.
+    """
     tenant_id: pulumi.Output[str]
-    def __init__(__self__, resource_name, opts=None, admin_state_up=None, description=None, name=None, plane=None, status=None, subnets=None, tags=None, tenant_id=None, __name__=None, __opts__=None):
+    """
+    The owner of the network. Required if admin wants to
+    create a network for another tenant. Changing this creates a new network.
+    """
+    def __init__(__self__, resource_name, opts=None, admin_state_up=None, description=None, name=None, plane=None, region=None, tags=None, tenant_id=None, __name__=None, __opts__=None):
         """
-        Create a Network resource with the given unique name, props, and options.
+        Manages a V2 network resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] admin_state_up
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] name
-        :param pulumi.Input[str] plane
-        :param pulumi.Input[str] status
-        :param pulumi.Input[list] subnets
-        :param pulumi.Input[dict] tags
-        :param pulumi.Input[str] tenant_id
+        :param pulumi.Input[bool] admin_state_up: The administrative state of the network.
+               Acceptable values are "true" and "false".
+               Changing this value updates the state of the existing network.
+        :param pulumi.Input[str] description: Network description.
+        :param pulumi.Input[str] name: The name of the network. Changing this updates the name of
+               the existing network.
+        :param pulumi.Input[str] plane: The plane of the network. 
+               Allowed values are "data" and "storage".
+               Changing this creates a new network.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Networking client.
+               A Networking client is needed to create a Neutron network. If omitted, the
+               `region` argument of the provider is used. Changing this creates a new
+               network.
+        :param pulumi.Input[dict] tags: Network tags.
+        :param pulumi.Input[str] tenant_id: The owner of the network. Required if admin wants to
+               create a network for another tenant. Changing this creates a new network.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -55,13 +104,15 @@ class Network(pulumi.CustomResource):
 
         __props__['plane'] = plane
 
-        __props__['status'] = status
-
-        __props__['subnets'] = subnets
+        __props__['region'] = region
 
         __props__['tags'] = tags
 
         __props__['tenant_id'] = tenant_id
+
+        __props__['shared'] = None
+        __props__['status'] = None
+        __props__['subnets'] = None
 
         super(Network, __self__).__init__(
             'ecl:network/network:Network',

@@ -21,7 +21,7 @@ class RecordSet(pulumi.CustomResource):
     """
     Data for the recordset.
     """
-    ttl: pulumi.Output[int]
+    ttl: pulumi.Output[float]
     """
     TTL (Time to Live) for the recordset.
     """
@@ -43,7 +43,7 @@ class RecordSet(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description for the recordset.
         :param pulumi.Input[str] name: DNS Name for the recordset.
         :param pulumi.Input[str] record: Data for the recordset.
-        :param pulumi.Input[int] ttl: TTL (Time to Live) for the recordset.
+        :param pulumi.Input[float] ttl: TTL (Time to Live) for the recordset.
         :param pulumi.Input[str] type: RRTYPE of the recordset. 
                Valid Values: A | AAAA | MX | CNAME | SRV | SPF | TXT | PTR | NS
         :param pulumi.Input[str] zone_id: Zone ID for the recordset.
@@ -68,19 +68,19 @@ class RecordSet(pulumi.CustomResource):
         __props__['name'] = name
 
         if record is None:
-            raise TypeError('Missing required property record')
+            raise TypeError("Missing required property 'record'")
         __props__['record'] = record
 
         if ttl is None:
-            raise TypeError('Missing required property ttl')
+            raise TypeError("Missing required property 'ttl'")
         __props__['ttl'] = ttl
 
         if type is None:
-            raise TypeError('Missing required property type')
+            raise TypeError("Missing required property 'type'")
         __props__['type'] = type
 
         if zone_id is None:
-            raise TypeError('Missing required property zone_id')
+            raise TypeError("Missing required property 'zone_id'")
         __props__['zone_id'] = zone_id
 
         super(RecordSet, __self__).__init__(

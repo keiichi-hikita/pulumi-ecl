@@ -168,25 +168,13 @@ func GetProjectDomainName(ctx *pulumi.Context) string {
 	return v
 }
 
-// The OpenStack region to connect to.
+// The Enterprise Cloud region to connect to.
 func GetRegion(ctx *pulumi.Context) string {
 	v, err := config.Try(ctx, "ecl:region")
 	if err == nil {
 		return v
 	}
 	if dv, ok := getEnvOrDefault("", nil, "OS_REGION_NAME").(string); ok {
-		return dv
-	}
-	return v
-}
-
-// Use Swift's authentication system instead of Keystone. Only used for interaction with Swift.
-func GetSwauth(ctx *pulumi.Context) bool {
-	v, err := config.TryBool(ctx, "ecl:swauth")
-	if err == nil {
-		return v
-	}
-	if dv, ok := getEnvOrDefault(false, parseEnvBool, "OS_SWAUTH").(bool); ok {
 		return dv
 	}
 	return v

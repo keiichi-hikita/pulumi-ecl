@@ -29,7 +29,7 @@ class Zone(pulumi.CustomResource):
     """
     DNS Name for the zone.
     """
-    ttl: pulumi.Output[int]
+    ttl: pulumi.Output[float]
     """
     TTL (Time to Live) for the zone.
     This parameter is not currently supported.
@@ -58,7 +58,7 @@ class Zone(pulumi.CustomResource):
         :param pulumi.Input[list] masters: For secondary zones. 
                The servers to slave from to get DNS information.
         :param pulumi.Input[str] name: DNS Name for the zone.
-        :param pulumi.Input[int] ttl: TTL (Time to Live) for the zone.
+        :param pulumi.Input[float] ttl: TTL (Time to Live) for the zone.
                This parameter is not currently supported.
                Even if you set this parameter, it will be ignored.
         :param pulumi.Input[str] type: Type of zone.

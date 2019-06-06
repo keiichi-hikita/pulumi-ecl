@@ -10,29 +10,64 @@ from .. import utilities, tables
 
 class Volume(pulumi.CustomResource):
     availability_zone: pulumi.Output[str]
+    """
+    Availability zone of volume.
+    """
     description: pulumi.Output[str]
+    """
+    Description of volume.
+    """
     error_message: pulumi.Output[str]
+    """
+    Error message of Volume.
+    """
     initiator_iqns: pulumi.Output[list]
+    """
+    List of initiator IQN who can access to this volume.
+    User can specify this parameter only in case block storage service.
+    """
     iops_per_gb: pulumi.Output[str]
+    """
+    Provisioned IOPS/GB for volume.
+    User can specify this parameter only in case block storage service.
+    """
     name: pulumi.Output[str]
-    size: pulumi.Output[int]
+    """
+    Name of volume.
+    """
+    size: pulumi.Output[float]
+    """
+    Size of volume in Gigabyte.
+    User can choice following volume sizes depending on storage service type.
+    """
     throughput: pulumi.Output[str]
+    """
+    Throughput for volume.
+    User can specify this parameter only in case file storage standard service.
+    """
     virtual_storage_id: pulumi.Output[str]
+    """
+    Virtual Storage ID (UUID) which this volume belongs.
+    """
     def __init__(__self__, resource_name, opts=None, availability_zone=None, description=None, error_message=None, initiator_iqns=None, iops_per_gb=None, name=None, size=None, throughput=None, virtual_storage_id=None, __name__=None, __opts__=None):
         """
-        Create a Volume resource with the given unique name, props, and options.
+        Manages a V1 volume resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] availability_zone
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] error_message
-        :param pulumi.Input[list] initiator_iqns
-        :param pulumi.Input[str] iops_per_gb
-        :param pulumi.Input[str] name
-        :param pulumi.Input[int] size
-        :param pulumi.Input[str] throughput
-        :param pulumi.Input[str] virtual_storage_id
+        :param pulumi.Input[str] availability_zone: Availability zone of volume.
+        :param pulumi.Input[str] description: Description of volume.
+        :param pulumi.Input[str] error_message: Error message of Volume.
+        :param pulumi.Input[list] initiator_iqns: List of initiator IQN who can access to this volume.
+               User can specify this parameter only in case block storage service.
+        :param pulumi.Input[str] iops_per_gb: Provisioned IOPS/GB for volume.
+               User can specify this parameter only in case block storage service.
+        :param pulumi.Input[str] name: Name of volume.
+        :param pulumi.Input[float] size: Size of volume in Gigabyte.
+               User can choice following volume sizes depending on storage service type.
+        :param pulumi.Input[str] throughput: Throughput for volume.
+               User can specify this parameter only in case file storage standard service.
+        :param pulumi.Input[str] virtual_storage_id: Virtual Storage ID (UUID) which this volume belongs.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -62,13 +97,13 @@ class Volume(pulumi.CustomResource):
         __props__['name'] = name
 
         if size is None:
-            raise TypeError('Missing required property size')
+            raise TypeError("Missing required property 'size'")
         __props__['size'] = size
 
         __props__['throughput'] = throughput
 
         if virtual_storage_id is None:
-            raise TypeError('Missing required property virtual_storage_id')
+            raise TypeError("Missing required property 'virtual_storage_id'")
         __props__['virtual_storage_id'] = virtual_storage_id
 
         super(Volume, __self__).__init__(

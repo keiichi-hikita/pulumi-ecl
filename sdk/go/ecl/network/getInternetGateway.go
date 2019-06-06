@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID and Details of an Enterprise Cloud Internet gateway.
 func LookupInternetGateway(ctx *pulumi.Context, args *GetInternetGatewayArgs) (*GetInternetGatewayResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -38,25 +39,41 @@ func LookupInternetGateway(ctx *pulumi.Context, args *GetInternetGatewayArgs) (*
 
 // A collection of arguments for invoking getInternetGateway.
 type GetInternetGatewayArgs struct {
+	// Description of the Internet Gateway resource.
 	Description interface{}
+	// Unique ID of the Internet Gateway resource.
 	InternetGatewayId interface{}
+	// Internet Service instantiated by this Gateway.
 	InternetServiceId interface{}
+	// Name of the Internet Gateway resource.
 	Name interface{}
+	// Quality of Service options selected for this Gateway.
 	QosOptionId interface{}
+	// The region in which to obtain the V2 Network client.
+	// If omitted, the `region` argument of the provider is used.
 	Region interface{}
+	// The Internet Gateway status.
 	Status interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }
 
 // A collection of values returned by getInternetGateway.
 type GetInternetGatewayResult struct {
+	// See Argument Reference above.
 	Description interface{}
 	InternetGatewayId interface{}
+	// See Argument Reference above.
 	InternetServiceId interface{}
+	// See Argument Reference above.
 	Name interface{}
+	// See Argument Reference above.
 	QosOptionId interface{}
+	// See Argument Reference above.
 	Region interface{}
+	// See Argument Reference above.
 	Status interface{}
+	// See Argument Reference above.
 	TenantId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

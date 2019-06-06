@@ -8,46 +8,73 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetPublicIPResult(object):
+class GetPublicIPResult:
     """
     A collection of values returned by getPublicIP.
     """
     def __init__(__self__, cidr=None, description=None, internet_gw_id=None, name=None, public_ip_id=None, region=None, status=None, submask_length=None, tenant_id=None, id=None):
         if cidr and not isinstance(cidr, str):
-            raise TypeError('Expected argument cidr to be a str')
+            raise TypeError("Expected argument 'cidr' to be a str")
         __self__.cidr = cidr
+        """
+        See Argument Reference above.
+        """
         if description and not isinstance(description, str):
-            raise TypeError('Expected argument description to be a str')
+            raise TypeError("Expected argument 'description' to be a str")
         __self__.description = description
+        """
+        See Argument Reference above.
+        """
         if internet_gw_id and not isinstance(internet_gw_id, str):
-            raise TypeError('Expected argument internet_gw_id to be a str')
+            raise TypeError("Expected argument 'internet_gw_id' to be a str")
         __self__.internet_gw_id = internet_gw_id
+        """
+        See Argument Reference above.
+        """
         if name and not isinstance(name, str):
-            raise TypeError('Expected argument name to be a str')
+            raise TypeError("Expected argument 'name' to be a str")
         __self__.name = name
+        """
+        See Argument Reference above.
+        """
         if public_ip_id and not isinstance(public_ip_id, str):
-            raise TypeError('Expected argument public_ip_id to be a str')
+            raise TypeError("Expected argument 'public_ip_id' to be a str")
         __self__.public_ip_id = public_ip_id
         if region and not isinstance(region, str):
-            raise TypeError('Expected argument region to be a str')
+            raise TypeError("Expected argument 'region' to be a str")
         __self__.region = region
+        """
+        See Argument Reference above.
+        """
         if status and not isinstance(status, str):
-            raise TypeError('Expected argument status to be a str')
+            raise TypeError("Expected argument 'status' to be a str")
         __self__.status = status
-        if submask_length and not isinstance(submask_length, int):
-            raise TypeError('Expected argument submask_length to be a int')
+        """
+        See Argument Reference above.
+        """
+        if submask_length and not isinstance(submask_length, float):
+            raise TypeError("Expected argument 'submask_length' to be a float")
         __self__.submask_length = submask_length
+        """
+        See Argument Reference above.
+        """
         if tenant_id and not isinstance(tenant_id, str):
-            raise TypeError('Expected argument tenant_id to be a str')
+            raise TypeError("Expected argument 'tenant_id' to be a str")
         __self__.tenant_id = tenant_id
+        """
+        See Argument Reference above.
+        """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_public_ip(cidr=None, description=None, internet_gw_id=None, name=None, public_ip_id=None, region=None, status=None, submask_length=None, tenant_id=None):
+async def get_public_ip(cidr=None,description=None,internet_gw_id=None,name=None,public_ip_id=None,region=None,status=None,submask_length=None,tenant_id=None,opts=None):
+    """
+    Use this data source to get the ID and Details of an Enterprise Cloud Public ip.
+    """
     __args__ = dict()
 
     __args__['cidr'] = cidr
@@ -59,7 +86,7 @@ async def get_public_ip(cidr=None, description=None, internet_gw_id=None, name=N
     __args__['status'] = status
     __args__['submaskLength'] = submask_length
     __args__['tenantId'] = tenant_id
-    __ret__ = await pulumi.runtime.invoke('ecl:network/getPublicIP:getPublicIP', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:network/getPublicIP:getPublicIP', __args__, opts=opts)
 
     return GetPublicIPResult(
         cidr=__ret__.get('cidr'),

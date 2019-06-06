@@ -10,23 +10,47 @@ from .. import utilities, tables
 
 class InternetGateway(pulumi.CustomResource):
     description: pulumi.Output[str]
+    """
+    Description of the Internet Gateway resource.
+    """
     internet_service_id: pulumi.Output[str]
+    """
+    Internet Service instantiated by Internet gateway.
+    """
     name: pulumi.Output[str]
+    """
+    Name of the Internet Gateway resource.
+    """
     qos_option_id: pulumi.Output[str]
+    """
+    Quality of Service options selected for Internet gateway.
+    """
     region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Network client.
+    Internet gateways are associated with accounts, but a Network client is needed to
+    create one. If omitted, the `region` argument of the provider is used.
+    Changing this creates a new internet gateway.
+    """
     tenant_id: pulumi.Output[str]
+    """
+    Tenant ID of the owner (UUID).
+    """
     def __init__(__self__, resource_name, opts=None, description=None, internet_service_id=None, name=None, qos_option_id=None, region=None, tenant_id=None, __name__=None, __opts__=None):
         """
-        Create a InternetGateway resource with the given unique name, props, and options.
+        Manages a V2 internet gateway resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] internet_service_id
-        :param pulumi.Input[str] name
-        :param pulumi.Input[str] qos_option_id
-        :param pulumi.Input[str] region
-        :param pulumi.Input[str] tenant_id
+        :param pulumi.Input[str] description: Description of the Internet Gateway resource.
+        :param pulumi.Input[str] internet_service_id: Internet Service instantiated by Internet gateway.
+        :param pulumi.Input[str] name: Name of the Internet Gateway resource.
+        :param pulumi.Input[str] qos_option_id: Quality of Service options selected for Internet gateway.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Network client.
+               Internet gateways are associated with accounts, but a Network client is needed to
+               create one. If omitted, the `region` argument of the provider is used.
+               Changing this creates a new internet gateway.
+        :param pulumi.Input[str] tenant_id: Tenant ID of the owner (UUID).
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -46,13 +70,13 @@ class InternetGateway(pulumi.CustomResource):
         __props__['description'] = description
 
         if internet_service_id is None:
-            raise TypeError('Missing required property internet_service_id')
+            raise TypeError("Missing required property 'internet_service_id'")
         __props__['internet_service_id'] = internet_service_id
 
         __props__['name'] = name
 
         if qos_option_id is None:
-            raise TypeError('Missing required property qos_option_id')
+            raise TypeError("Missing required property 'qos_option_id'")
         __props__['qos_option_id'] = qos_option_id
 
         __props__['region'] = region

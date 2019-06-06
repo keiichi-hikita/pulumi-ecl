@@ -7,14 +7,10 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID of an Enterprise Cloud tenant.
 func LookupTenant(ctx *pulumi.Context, args *GetTenantArgs) (*GetTenantResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
-		inputs["contractId"] = args.ContractId
-		inputs["description"] = args.Description
-		inputs["region"] = args.Region
-		inputs["startTime"] = args.StartTime
-		inputs["tenantId"] = args.TenantId
 		inputs["tenantName"] = args.TenantName
 	}
 	outputs, err := ctx.Invoke("ecl:sss/getTenant:getTenant", inputs)
@@ -22,22 +18,33 @@ func LookupTenant(ctx *pulumi.Context, args *GetTenantArgs) (*GetTenantResult, e
 		return nil, err
 	}
 	return &GetTenantResult{
+		ContractId: outputs["contractId"],
+		Description: outputs["description"],
+		Region: outputs["region"],
+		StartTime: outputs["startTime"],
+		TenantId: outputs["tenantId"],
+		TenantName: outputs["tenantName"],
 		Id: outputs["id"],
 	}, nil
 }
 
 // A collection of arguments for invoking getTenant.
 type GetTenantArgs struct {
-	ContractId interface{}
-	Description interface{}
-	Region interface{}
-	StartTime interface{}
-	TenantId interface{}
+	// Name of new tenant.
 	TenantName interface{}
 }
 
 // A collection of values returned by getTenant.
 type GetTenantResult struct {
+	ContractId interface{}
+	// Description for this tenant.
+	Description interface{}
+	Region interface{}
+	// Tenant created time.
+	StartTime interface{}
+	// ID of the tenant.
+	TenantId interface{}
+	TenantName interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}
 }

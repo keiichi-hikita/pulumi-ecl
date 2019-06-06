@@ -6,11 +6,6 @@ import * as utilities from "../utilities";
 
 export function getTenant(args: GetTenantArgs, opts?: pulumi.InvokeOptions): Promise<GetTenantResult> {
     return pulumi.runtime.invoke("ecl:sss/getTenant:getTenant", {
-        "contractId": args.contractId,
-        "description": args.description,
-        "region": args.region,
-        "startTime": args.startTime,
-        "tenantId": args.tenantId,
         "tenantName": args.tenantName,
     }, opts);
 }
@@ -19,11 +14,6 @@ export function getTenant(args: GetTenantArgs, opts?: pulumi.InvokeOptions): Pro
  * A collection of arguments for invoking getTenant.
  */
 export interface GetTenantArgs {
-    readonly contractId?: string;
-    readonly description?: string;
-    readonly region?: string;
-    readonly startTime?: string;
-    readonly tenantId?: string;
     readonly tenantName: string;
 }
 
@@ -31,6 +21,12 @@ export interface GetTenantArgs {
  * A collection of values returned by getTenant.
  */
 export interface GetTenantResult {
+    readonly contractId: string;
+    readonly description: string;
+    readonly region: string;
+    readonly startTime: string;
+    readonly tenantId: string;
+    readonly tenantName: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

@@ -9,7 +9,7 @@ import pulumi.runtime
 from . import utilities, tables
 
 class Provider(pulumi.ProviderResource):
-    def __init__(__self__, resource_name, opts=None, auth_url=None, cacert_file=None, cert=None, cloud=None, default_domain=None, domain_id=None, domain_name=None, endpoint_type=None, force_sss_endpoint=None, insecure=None, key=None, password=None, project_domain_id=None, project_domain_name=None, region=None, swauth=None, tenant_id=None, tenant_name=None, token=None, user_domain_id=None, user_domain_name=None, user_id=None, user_name=None, __name__=None, __opts__=None):
+    def __init__(__self__, resource_name, opts=None, auth_url=None, cacert_file=None, cert=None, cloud=None, default_domain=None, domain_id=None, domain_name=None, endpoint_type=None, force_sss_endpoint=None, insecure=None, key=None, password=None, project_domain_id=None, project_domain_name=None, region=None, tenant_id=None, tenant_name=None, token=None, user_domain_id=None, user_domain_name=None, user_id=None, user_name=None, __name__=None, __opts__=None):
         """
         The provider type for the ecl package. By default, resources use package-wide configuration
         settings, however an explicit `Provider` instance may be created and passed during resource
@@ -18,29 +18,6 @@ class Provider(pulumi.ProviderResource):
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] auth_url
-        :param pulumi.Input[str] cacert_file
-        :param pulumi.Input[str] cert
-        :param pulumi.Input[str] cloud
-        :param pulumi.Input[str] default_domain
-        :param pulumi.Input[str] domain_id
-        :param pulumi.Input[str] domain_name
-        :param pulumi.Input[str] endpoint_type
-        :param pulumi.Input[str] force_sss_endpoint
-        :param pulumi.Input[bool] insecure
-        :param pulumi.Input[str] key
-        :param pulumi.Input[str] password
-        :param pulumi.Input[str] project_domain_id
-        :param pulumi.Input[str] project_domain_name
-        :param pulumi.Input[str] region
-        :param pulumi.Input[bool] swauth
-        :param pulumi.Input[str] tenant_id
-        :param pulumi.Input[str] tenant_name
-        :param pulumi.Input[str] token
-        :param pulumi.Input[str] user_domain_id
-        :param pulumi.Input[str] user_domain_name
-        :param pulumi.Input[str] user_id
-        :param pulumi.Input[str] user_name
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -114,10 +91,6 @@ class Provider(pulumi.ProviderResource):
         if region is None:
             region = utilities.get_env('OS_REGION_NAME')
         __props__['region'] = region
-
-        if swauth is None:
-            swauth = utilities.get_env_bool('OS_SWAUTH')
-        __props__['swauth'] = pulumi.Output.from_input(swauth).apply(json.dumps) if swauth is not None else None
 
         if tenant_id is None:
             tenant_id = utilities.get_env('OS_TENANT_ID', 'OS_PROJECT_ID')

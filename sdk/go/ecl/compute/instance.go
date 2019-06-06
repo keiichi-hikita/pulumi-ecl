@@ -7,7 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
-// Manages a V2 VM instance resource within Enterprise Cloud.
+// Manages a V2 Instance resource within Enterprise Cloud.
 type Instance struct {
 	s *pulumi.ResourceState
 }
@@ -17,7 +17,6 @@ func NewInstance(ctx *pulumi.Context,
 	name string, args *InstanceArgs, opts ...pulumi.ResourceOpt) (*Instance, error) {
 	inputs := make(map[string]interface{})
 	if args == nil {
-		inputs["accessIpV4"] = nil
 		inputs["availabilityZone"] = nil
 		inputs["blockDevices"] = nil
 		inputs["flavorId"] = nil
@@ -33,7 +32,6 @@ func NewInstance(ctx *pulumi.Context,
 		inputs["stopBeforeDestroy"] = nil
 		inputs["userData"] = nil
 	} else {
-		inputs["accessIpV4"] = args.AccessIpV4
 		inputs["availabilityZone"] = args.AvailabilityZone
 		inputs["blockDevices"] = args.BlockDevices
 		inputs["flavorId"] = args.FlavorId
@@ -49,6 +47,7 @@ func NewInstance(ctx *pulumi.Context,
 		inputs["stopBeforeDestroy"] = args.StopBeforeDestroy
 		inputs["userData"] = args.UserData
 	}
+	inputs["accessIpV4"] = nil
 	inputs["allMetadata"] = nil
 	s, err := ctx.RegisterResource("ecl:compute/instance:Instance", name, true, inputs, opts...)
 	if err != nil {
@@ -97,8 +96,7 @@ func (r *Instance) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
-// The first detected Fixed IPv4 address _or_ the
-// Floating IP.
+// The first detected Fixed IPv4 address.
 func (r *Instance) AccessIpV4() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["accessIpV4"])
 }
@@ -119,8 +117,7 @@ func (r *Instance) AvailabilityZone() *pulumi.StringOutput {
 // structure is documented below. Changing this creates a new server.
 // You can specify multiple block devices which will create an instance with
 // multiple disks. This configuration is very flexible, so please see the
-// following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-// for more information.
+// above examples for more information.
 func (r *Instance) BlockDevices() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["blockDevices"])
 }
@@ -206,8 +203,7 @@ func (r *Instance) UserData() *pulumi.StringOutput {
 
 // Input properties used for looking up and filtering Instance resources.
 type InstanceState struct {
-	// The first detected Fixed IPv4 address _or_ the
-	// Floating IP.
+	// The first detected Fixed IPv4 address.
 	AccessIpV4 interface{}
 	// Contains all instance metadata, even metadata not set
 	// by Terraform.
@@ -219,8 +215,7 @@ type InstanceState struct {
 	// structure is documented below. Changing this creates a new server.
 	// You can specify multiple block devices which will create an instance with
 	// multiple disks. This configuration is very flexible, so please see the
-	// following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-	// for more information.
+	// above examples for more information.
 	BlockDevices interface{}
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.
@@ -269,9 +264,6 @@ type InstanceState struct {
 
 // The set of arguments for constructing a Instance resource.
 type InstanceArgs struct {
-	// The first detected Fixed IPv4 address _or_ the
-	// Floating IP.
-	AccessIpV4 interface{}
 	// The availability zone in which to create
 	// the server. Changing this creates a new server.
 	AvailabilityZone interface{}
@@ -279,8 +271,7 @@ type InstanceArgs struct {
 	// structure is documented below. Changing this creates a new server.
 	// You can specify multiple block devices which will create an instance with
 	// multiple disks. This configuration is very flexible, so please see the
-	// following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-	// for more information.
+	// above examples for more information.
 	BlockDevices interface{}
 	// The flavor ID of
 	// the desired flavor for the server. Changing this resizes the existing server.

@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 Image member resource within Enterprise Cloud.
 type ImageMember struct {
 	s *pulumi.ResourceState
 }
@@ -73,48 +74,74 @@ func (r *ImageMember) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// Date and time of image member creation.
 func (r *ImageMember) CreatedAt() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["createdAt"])
 }
 
+// An identifier for the image.
 func (r *ImageMember) ImageId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["imageId"])
 }
 
+// An identifier for the image member (projectID).
 func (r *ImageMember) MemberId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["memberId"])
 }
 
+// The region in which to obtain the V2 Imagestorage client.
+// Images are associated with accounts, but a Imagestroage client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new image.
 func (r *ImageMember) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// URL for schema of the member.
 func (r *ImageMember) Schema() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["schema"])
 }
 
+// The status of this image member.
 func (r *ImageMember) Status() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["status"])
 }
 
+// Date and time of last modification of image member.
 func (r *ImageMember) UpdatedAt() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["updatedAt"])
 }
 
 // Input properties used for looking up and filtering ImageMember resources.
 type ImageMemberState struct {
+	// Date and time of image member creation.
 	CreatedAt interface{}
+	// An identifier for the image.
 	ImageId interface{}
+	// An identifier for the image member (projectID).
 	MemberId interface{}
+	// The region in which to obtain the V2 Imagestorage client.
+	// Images are associated with accounts, but a Imagestroage client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new image.
 	Region interface{}
+	// URL for schema of the member.
 	Schema interface{}
+	// The status of this image member.
 	Status interface{}
+	// Date and time of last modification of image member.
 	UpdatedAt interface{}
 }
 
 // The set of arguments for constructing a ImageMember resource.
 type ImageMemberArgs struct {
+	// An identifier for the image.
 	ImageId interface{}
+	// An identifier for the image member (projectID).
 	MemberId interface{}
+	// The region in which to obtain the V2 Imagestorage client.
+	// Images are associated with accounts, but a Imagestroage client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new image.
 	Region interface{}
 }

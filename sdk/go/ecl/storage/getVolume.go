@@ -7,17 +7,11 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID of an Enterprise Cloud volume.
 func LookupVolume(ctx *pulumi.Context, args *GetVolumeArgs) (*GetVolumeResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
-		inputs["availabilityZone"] = args.AvailabilityZone
-		inputs["description"] = args.Description
-		inputs["initiatorIqns"] = args.InitiatorIqns
-		inputs["iopsPerGb"] = args.IopsPerGb
 		inputs["name"] = args.Name
-		inputs["size"] = args.Size
-		inputs["throughput"] = args.Throughput
-		inputs["virtualStorageId"] = args.VirtualStorageId
 		inputs["volumeId"] = args.VolumeId
 	}
 	outputs, err := ctx.Invoke("ecl:storage/getVolume:getVolume", inputs)
@@ -26,26 +20,44 @@ func LookupVolume(ctx *pulumi.Context, args *GetVolumeArgs) (*GetVolumeResult, e
 	}
 	return &GetVolumeResult{
 		AvailabilityZone: outputs["availabilityZone"],
+		Description: outputs["description"],
+		InitiatorIqns: outputs["initiatorIqns"],
+		IopsPerGb: outputs["iopsPerGb"],
+		Name: outputs["name"],
+		Size: outputs["size"],
+		Throughput: outputs["throughput"],
+		VirtualStorageId: outputs["virtualStorageId"],
+		VolumeId: outputs["volumeId"],
 		Id: outputs["id"],
 	}, nil
 }
 
 // A collection of arguments for invoking getVolume.
 type GetVolumeArgs struct {
-	AvailabilityZone interface{}
-	Description interface{}
-	InitiatorIqns interface{}
-	IopsPerGb interface{}
+	// Name of Volume.
 	Name interface{}
-	Size interface{}
-	Throughput interface{}
-	VirtualStorageId interface{}
+	// ID of Volume.
 	VolumeId interface{}
 }
 
 // A collection of values returned by getVolume.
 type GetVolumeResult struct {
+	// Availability zone of volume.
 	AvailabilityZone interface{}
+	// Description of Volume.
+	Description interface{}
+	// List of initiator IQN who can access to this volume.
+	InitiatorIqns interface{}
+	// Provisioned IOPS/GB for volume.
+	IopsPerGb interface{}
+	Name interface{}
+	// Size of volume in Gigabyte.
+	Size interface{}
+	// Throughput for volume.
+	Throughput interface{}
+	// Virtual Storage ID (UUID) which this volume belongs.
+	VirtualStorageId interface{}
+	VolumeId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}
 }

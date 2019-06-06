@@ -53,6 +53,7 @@ export interface GetImageResult {
     readonly metadata: {[key: string]: any};
     readonly minDiskGb: number;
     readonly minRamMb: number;
+    readonly mostRecent?: boolean;
     readonly name: string;
     readonly owner: string;
     readonly properties: {[key: string]: any};
@@ -60,6 +61,10 @@ export interface GetImageResult {
     readonly region: string;
     readonly schema: string;
     readonly sizeBytes: number;
+    readonly sizeMax?: number;
+    readonly sizeMin?: number;
+    readonly sortDirection?: string;
+    readonly sortKey?: string;
     readonly tag: string;
     readonly updatedAt: string;
     readonly visibility: string;

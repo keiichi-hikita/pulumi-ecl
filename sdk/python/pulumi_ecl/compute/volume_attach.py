@@ -10,19 +10,48 @@ from .. import utilities, tables
 
 class VolumeAttach(pulumi.CustomResource):
     device: pulumi.Output[str]
+    """
+    The device of the volume attachment (ex: `/dev/vdc`).
+    _NOTE_: Being able to specify a device is dependent upon the hypervisor in
+    use. There is a chance that the device specified in Terraform will not be
+    the same device the hypervisor chose. If this happens, Terraform will wish
+    to update the device upon subsequent applying which will cause the volume
+    to be detached and reattached indefinitely. Please use with caution.
+    """
     region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Compute client.
+    A Compute client is needed to create a volume attachment. If omitted, the
+    `region` argument of the provider is used. Changing this creates a
+    new volume attachment.
+    """
     server_id: pulumi.Output[str]
+    """
+    The ID of the Instance to attach the Volume to.
+    """
     volume_id: pulumi.Output[str]
+    """
+    The ID of the Volume to attach to an Instance.
+    """
     def __init__(__self__, resource_name, opts=None, device=None, region=None, server_id=None, volume_id=None, __name__=None, __opts__=None):
         """
-        Create a VolumeAttach resource with the given unique name, props, and options.
+        Attaches a Compute Volume to an Instance using the Enterprise Cloud
+        Compute (Nova) v2 API.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] device
-        :param pulumi.Input[str] region
-        :param pulumi.Input[str] server_id
-        :param pulumi.Input[str] volume_id
+        :param pulumi.Input[str] device: The device of the volume attachment (ex: `/dev/vdc`).
+               _NOTE_: Being able to specify a device is dependent upon the hypervisor in
+               use. There is a chance that the device specified in Terraform will not be
+               the same device the hypervisor chose. If this happens, Terraform will wish
+               to update the device upon subsequent applying which will cause the volume
+               to be detached and reattached indefinitely. Please use with caution.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Compute client.
+               A Compute client is needed to create a volume attachment. If omitted, the
+               `region` argument of the provider is used. Changing this creates a
+               new volume attachment.
+        :param pulumi.Input[str] server_id: The ID of the Instance to attach the Volume to.
+        :param pulumi.Input[str] volume_id: The ID of the Volume to attach to an Instance.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -44,11 +73,11 @@ class VolumeAttach(pulumi.CustomResource):
         __props__['region'] = region
 
         if server_id is None:
-            raise TypeError('Missing required property server_id')
+            raise TypeError("Missing required property 'server_id'")
         __props__['server_id'] = server_id
 
         if volume_id is None:
-            raise TypeError('Missing required property volume_id')
+            raise TypeError("Missing required property 'volume_id'")
         __props__['volume_id'] = volume_id
 
         super(VolumeAttach, __self__).__init__(

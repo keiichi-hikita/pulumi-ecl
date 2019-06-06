@@ -8,31 +8,34 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetKeypairResult(object):
+class GetKeypairResult:
     """
     A collection of values returned by getKeypair.
     """
-    def __init__(__self__, public_key=None, region=None, id=None):
+    def __init__(__self__, name=None, public_key=None, region=None, id=None):
+        if name and not isinstance(name, str):
+            raise TypeError("Expected argument 'name' to be a str")
+        __self__.name = name
         if public_key and not isinstance(public_key, str):
-            raise TypeError('Expected argument public_key to be a str')
+            raise TypeError("Expected argument 'public_key' to be a str")
         __self__.public_key = public_key
         """
         The OpenSSH-formatted public key of the keypair.
         """
         if region and not isinstance(region, str):
-            raise TypeError('Expected argument region to be a str')
+            raise TypeError("Expected argument 'region' to be a str")
         __self__.region = region
         """
         See Argument Reference above.
         """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_keypair(name=None, region=None):
+async def get_keypair(name=None,region=None,opts=None):
     """
     Use this data source to get the ID and public key of an Enterprise Cloud keypair.
     """
@@ -40,9 +43,10 @@ async def get_keypair(name=None, region=None):
 
     __args__['name'] = name
     __args__['region'] = region
-    __ret__ = await pulumi.runtime.invoke('ecl:compute/getKeypair:getKeypair', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:compute/getKeypair:getKeypair', __args__, opts=opts)
 
     return GetKeypairResult(
+        name=__ret__.get('name'),
         public_key=__ret__.get('publicKey'),
         region=__ret__.get('region'),
         id=__ret__.get('id'))

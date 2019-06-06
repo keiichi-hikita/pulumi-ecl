@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V1 virtual storage resource within Enterprise Cloud.
 type VirtualStorage struct {
 	s *pulumi.ResourceState
 }
@@ -86,64 +87,112 @@ func (r *VirtualStorage) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// Description of Virtual Storage.
 func (r *VirtualStorage) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// Error message of Virtual Storage.
 func (r *VirtualStorage) ErrorMessage() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["errorMessage"])
 }
 
+// List of static routes to be set to this Virtual Storage.
+// The host_routes structure is documented below.
 func (r *VirtualStorage) HostRoutes() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["hostRoutes"])
 }
 
+// IP address pool which specifies IP address range 
+// used by the Virtual Storage.
+// The ip_addr_pool structure is documented below.
 func (r *VirtualStorage) IpAddrPool() *pulumi.Output {
 	return r.s.State["ipAddrPool"]
 }
 
+// Name of Virtual Storage.
 func (r *VirtualStorage) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// ID(UUID) for network to be connected to the Virtual Storage.
 func (r *VirtualStorage) NetworkId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["networkId"])
 }
 
+// ID(UUID) for subnet to be connected to the Virtual Storage.
 func (r *VirtualStorage) SubnetId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["subnetId"])
 }
 
+// ID of volume type used for this Virtual Storage (UUID).
+// User must specify either volume_type_id or volume_type_name.
+// This parameter conflicts with `volume_type_name` .
 func (r *VirtualStorage) VolumeTypeId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["volumeTypeId"])
 }
 
+// Name of volume type used for this Virtual Storage.
+// User must specify either volume_type_id or volume_type_name.
+// This parameter conflicts with `volume_type_id` .
 func (r *VirtualStorage) VolumeTypeName() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["volumeTypeName"])
 }
 
 // Input properties used for looking up and filtering VirtualStorage resources.
 type VirtualStorageState struct {
+	// Description of Virtual Storage.
 	Description interface{}
+	// Error message of Virtual Storage.
 	ErrorMessage interface{}
+	// List of static routes to be set to this Virtual Storage.
+	// The host_routes structure is documented below.
 	HostRoutes interface{}
+	// IP address pool which specifies IP address range 
+	// used by the Virtual Storage.
+	// The ip_addr_pool structure is documented below.
 	IpAddrPool interface{}
+	// Name of Virtual Storage.
 	Name interface{}
+	// ID(UUID) for network to be connected to the Virtual Storage.
 	NetworkId interface{}
+	// ID(UUID) for subnet to be connected to the Virtual Storage.
 	SubnetId interface{}
+	// ID of volume type used for this Virtual Storage (UUID).
+	// User must specify either volume_type_id or volume_type_name.
+	// This parameter conflicts with `volume_type_name` .
 	VolumeTypeId interface{}
+	// Name of volume type used for this Virtual Storage.
+	// User must specify either volume_type_id or volume_type_name.
+	// This parameter conflicts with `volume_type_id` .
 	VolumeTypeName interface{}
 }
 
 // The set of arguments for constructing a VirtualStorage resource.
 type VirtualStorageArgs struct {
+	// Description of Virtual Storage.
 	Description interface{}
+	// Error message of Virtual Storage.
 	ErrorMessage interface{}
+	// List of static routes to be set to this Virtual Storage.
+	// The host_routes structure is documented below.
 	HostRoutes interface{}
+	// IP address pool which specifies IP address range 
+	// used by the Virtual Storage.
+	// The ip_addr_pool structure is documented below.
 	IpAddrPool interface{}
+	// Name of Virtual Storage.
 	Name interface{}
+	// ID(UUID) for network to be connected to the Virtual Storage.
 	NetworkId interface{}
+	// ID(UUID) for subnet to be connected to the Virtual Storage.
 	SubnetId interface{}
+	// ID of volume type used for this Virtual Storage (UUID).
+	// User must specify either volume_type_id or volume_type_name.
+	// This parameter conflicts with `volume_type_name` .
 	VolumeTypeId interface{}
+	// Name of volume type used for this Virtual Storage.
+	// User must specify either volume_type_id or volume_type_name.
+	// This parameter conflicts with `volume_type_id` .
 	VolumeTypeName interface{}
 }

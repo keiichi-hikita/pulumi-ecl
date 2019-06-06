@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 public ip resource within Enterprise Cloud.
 type PublicIP struct {
 	s *pulumi.ResourceState
 }
@@ -76,51 +77,80 @@ func (r *PublicIP) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// The IP address of the block (assigned automatically).
 func (r *PublicIP) Cidr() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["cidr"])
 }
 
+// Description of the Public IP resource.
 func (r *PublicIP) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// Internet Gateway the block will be assigned to.
 func (r *PublicIP) InternetGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["internetGwId"])
 }
 
+// Name of the Public IP resource.
 func (r *PublicIP) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// The region in which to obtain the V2 Network client.
+// Public ips are associated with accounts, but a Network client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new public ip.
 func (r *PublicIP) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// Specifies the size of the block by the length of its subnetwork mask length.
 func (r *PublicIP) SubmaskLength() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["submaskLength"])
 }
 
+// Tenant ID of the owner (UUID).
 func (r *PublicIP) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
 // Input properties used for looking up and filtering PublicIP resources.
 type PublicIPState struct {
+	// The IP address of the block (assigned automatically).
 	Cidr interface{}
+	// Description of the Public IP resource.
 	Description interface{}
+	// Internet Gateway the block will be assigned to.
 	InternetGwId interface{}
+	// Name of the Public IP resource.
 	Name interface{}
+	// The region in which to obtain the V2 Network client.
+	// Public ips are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new public ip.
 	Region interface{}
+	// Specifies the size of the block by the length of its subnetwork mask length.
 	SubmaskLength interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }
 
 // The set of arguments for constructing a PublicIP resource.
 type PublicIPArgs struct {
+	// Description of the Public IP resource.
 	Description interface{}
+	// Internet Gateway the block will be assigned to.
 	InternetGwId interface{}
+	// Name of the Public IP resource.
 	Name interface{}
+	// The region in which to obtain the V2 Network client.
+	// Public ips are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new public ip.
 	Region interface{}
+	// Specifies the size of the block by the length of its subnetwork mask length.
 	SubmaskLength interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }

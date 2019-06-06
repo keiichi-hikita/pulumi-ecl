@@ -17,13 +17,27 @@ export class PublicIP extends pulumi.CustomResource {
         return new PublicIP(name, <any>state, { ...opts, id: id });
     }
 
-    public /*out*/ readonly cidr: pulumi.Output<string>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly internetGwId: pulumi.Output<string>;
-    public readonly name: pulumi.Output<string>;
-    public readonly region: pulumi.Output<string>;
-    public readonly submaskLength: pulumi.Output<number>;
-    public readonly tenantId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/publicIP:PublicIP';
+
+    /**
+     * Returns true if the given object is an instance of PublicIP.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is PublicIP {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === PublicIP.__pulumiType;
+    }
+
+    public /*out*/ readonly cidr!: pulumi.Output<string>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly internetGwId!: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly submaskLength!: pulumi.Output<number>;
+    public readonly tenantId!: pulumi.Output<string>;
 
     /**
      * Create a PublicIP resource with the given unique name, arguments, and options.
@@ -36,7 +50,7 @@ export class PublicIP extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: PublicIPArgs | PublicIPState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: PublicIPState = argsOrState as PublicIPState | undefined;
+            const state = argsOrState as PublicIPState | undefined;
             inputs["cidr"] = state ? state.cidr : undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["internetGwId"] = state ? state.internetGwId : undefined;
@@ -60,7 +74,7 @@ export class PublicIP extends pulumi.CustomResource {
             inputs["tenantId"] = args ? args.tenantId : undefined;
             inputs["cidr"] = undefined /*out*/;
         }
-        super("ecl:network/publicIP:PublicIP", name, inputs, opts);
+        super(PublicIP.__pulumiType, name, inputs, opts);
     }
 }
 

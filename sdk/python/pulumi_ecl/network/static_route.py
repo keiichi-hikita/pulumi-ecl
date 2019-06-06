@@ -10,37 +10,83 @@ from .. import utilities, tables
 
 class StaticRoute(pulumi.CustomResource):
     aws_gw_id: pulumi.Output[str]
+    """
+    AWS Gateway on which this static route will be set. Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
+    """
     azure_gw_id: pulumi.Output[str]
+    """
+    Azure Gateway on which this static route will be set. Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
+    """
     description: pulumi.Output[str]
+    """
+    Description of the Static Route resource.
+    """
     destination: pulumi.Output[str]
+    """
+    CIDR this static route points to.
+    """
     gcp_gw_id: pulumi.Output[str]
+    """
+    GCP Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
+    """
     interdc_gw_id: pulumi.Output[str]
+    """
+    Inter DC Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
+    """
     internet_gw_id: pulumi.Output[str]
+    """
+    Internet Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
+    """
     name: pulumi.Output[str]
+    """
+    Name of the Static Route resource.
+    """
     nexthop: pulumi.Output[str]
+    """
+    Next Hop address for specified CIDR.
+    """
     region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Network client.
+    Public ips are associated with accounts, but a Network client is needed to
+    create one. If omitted, the `region` argument of the provider is used.
+    Changing this creates a new public ip.
+    """
     service_type: pulumi.Output[str]
+    """
+    Service type for this route. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
+    """
     tenant_id: pulumi.Output[str]
+    """
+    Tenant ID of the owner (UUID).
+    """
     vpn_gw_id: pulumi.Output[str]
+    """
+    VPN Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
+    """
     def __init__(__self__, resource_name, opts=None, aws_gw_id=None, azure_gw_id=None, description=None, destination=None, gcp_gw_id=None, interdc_gw_id=None, internet_gw_id=None, name=None, nexthop=None, region=None, service_type=None, tenant_id=None, vpn_gw_id=None, __name__=None, __opts__=None):
         """
-        Create a StaticRoute resource with the given unique name, props, and options.
+        Manages a V2 static route resource within Enterprise Cloud.
+        > **Notice** We only support Static Route with service_type "internet" for now.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] aws_gw_id
-        :param pulumi.Input[str] azure_gw_id
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] destination
-        :param pulumi.Input[str] gcp_gw_id
-        :param pulumi.Input[str] interdc_gw_id
-        :param pulumi.Input[str] internet_gw_id
-        :param pulumi.Input[str] name
-        :param pulumi.Input[str] nexthop
-        :param pulumi.Input[str] region
-        :param pulumi.Input[str] service_type
-        :param pulumi.Input[str] tenant_id
-        :param pulumi.Input[str] vpn_gw_id
+        :param pulumi.Input[str] aws_gw_id: AWS Gateway on which this static route will be set. Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
+        :param pulumi.Input[str] azure_gw_id: Azure Gateway on which this static route will be set. Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
+        :param pulumi.Input[str] description: Description of the Static Route resource.
+        :param pulumi.Input[str] destination: CIDR this static route points to.
+        :param pulumi.Input[str] gcp_gw_id: GCP Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
+        :param pulumi.Input[str] interdc_gw_id: Inter DC Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
+        :param pulumi.Input[str] internet_gw_id: Internet Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
+        :param pulumi.Input[str] name: Name of the Static Route resource.
+        :param pulumi.Input[str] nexthop: Next Hop address for specified CIDR.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Network client.
+               Public ips are associated with accounts, but a Network client is needed to
+               create one. If omitted, the `region` argument of the provider is used.
+               Changing this creates a new public ip.
+        :param pulumi.Input[str] service_type: Service type for this route. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
+        :param pulumi.Input[str] tenant_id: Tenant ID of the owner (UUID).
+        :param pulumi.Input[str] vpn_gw_id: VPN Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -64,7 +110,7 @@ class StaticRoute(pulumi.CustomResource):
         __props__['description'] = description
 
         if destination is None:
-            raise TypeError('Missing required property destination')
+            raise TypeError("Missing required property 'destination'")
         __props__['destination'] = destination
 
         __props__['gcp_gw_id'] = gcp_gw_id
@@ -76,13 +122,13 @@ class StaticRoute(pulumi.CustomResource):
         __props__['name'] = name
 
         if nexthop is None:
-            raise TypeError('Missing required property nexthop')
+            raise TypeError("Missing required property 'nexthop'")
         __props__['nexthop'] = nexthop
 
         __props__['region'] = region
 
         if service_type is None:
-            raise TypeError('Missing required property service_type')
+            raise TypeError("Missing required property 'service_type'")
         __props__['service_type'] = service_type
 
         __props__['tenant_id'] = tenant_id

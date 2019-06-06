@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID and Details of an Enterprise Cloud Static route.
 func LookupStaticRoute(ctx *pulumi.Context, args *GetStaticRouteArgs) (*GetStaticRouteResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -43,6 +44,7 @@ func LookupStaticRoute(ctx *pulumi.Context, args *GetStaticRouteArgs) (*GetStati
 		Region: outputs["region"],
 		ServiceType: outputs["serviceType"],
 		StaticRouteId: outputs["staticRouteId"],
+		Status: outputs["status"],
 		TenantId: outputs["tenantId"],
 		VpnGwId: outputs["vpnGwId"],
 		Id: outputs["id"],
@@ -51,38 +53,68 @@ func LookupStaticRoute(ctx *pulumi.Context, args *GetStaticRouteArgs) (*GetStati
 
 // A collection of arguments for invoking getStaticRoute.
 type GetStaticRouteArgs struct {
+	// AWS Gateway on which this static route will be set.
 	AwsGwId interface{}
+	// Azure Gateway on which this static route will be set.
 	AzureGwId interface{}
+	// Description of the Static Route resource.
 	Description interface{}
+	// CIDR this static route points to.
 	Destination interface{}
+	// GCP Gateway on which this static route will be set.
 	GcpGwId interface{}
+	// Inter DC Gateway on which this static route will be set.
 	InterdcGwId interface{}
+	// Internet Gateway on which this static route will be set.
 	InternetGwId interface{}
+	// Name of the Static Route resource.
 	Name interface{}
+	// Next Hop address for specified CIDR.
 	Nexthop interface{}
+	// The region in which to obtain the V2 Network client.
+	// If omitted, the `region` argument of the provider is used.
 	Region interface{}
+	// Service type for this route. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 	ServiceType interface{}
+	// Unique ID of the Static Route resource.
 	StaticRouteId interface{}
+	// Static Route status.
 	Status interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
+	// VPN Gateway on which this static route will be set.
 	VpnGwId interface{}
 }
 
 // A collection of values returned by getStaticRoute.
 type GetStaticRouteResult struct {
+	// See Argument Reference above.
 	AwsGwId interface{}
+	// See Argument Reference above.
 	AzureGwId interface{}
+	// See Argument Reference above .
 	Description interface{}
+	// See Argument Reference above .
 	Destination interface{}
+	// See Argument Reference above.
 	GcpGwId interface{}
+	// See Argument Reference above.
 	InterdcGwId interface{}
+	// See Argument Reference above.
 	InternetGwId interface{}
+	// See Argument Reference above.
 	Name interface{}
+	// See Argument Reference above.
 	Nexthop interface{}
 	Region interface{}
+	// See Argument Reference above.
 	ServiceType interface{}
 	StaticRouteId interface{}
+	// See Argument Reference above.
+	Status interface{}
+	// See Argument Reference above.
 	TenantId interface{}
+	// See Argument Reference above.
 	VpnGwId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

@@ -8,6 +8,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 Image member resource within Enterprise Cloud.
+// Accepter project handles this member accepter resource.
 type ImageMemberAccepter struct {
 	s *pulumi.ResourceState
 }
@@ -65,28 +67,46 @@ func (r *ImageMemberAccepter) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// An identifier for the image and member. You can refer it from ID of member resource. The format is "${image_id}/${member_id}", where member_id is accepter project ID.
 func (r *ImageMemberAccepter) ImageMemberId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["imageMemberId"])
 }
 
+// The region in which to obtain the V2 Imagestorage client.
+// Images are associated with accounts, but a Imagestroage client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new image.
 func (r *ImageMemberAccepter) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// The status of this image member. Must be one of "pending", "accepted", "rejected".
 func (r *ImageMemberAccepter) Status() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["status"])
 }
 
 // Input properties used for looking up and filtering ImageMemberAccepter resources.
 type ImageMemberAccepterState struct {
+	// An identifier for the image and member. You can refer it from ID of member resource. The format is "${image_id}/${member_id}", where member_id is accepter project ID.
 	ImageMemberId interface{}
+	// The region in which to obtain the V2 Imagestorage client.
+	// Images are associated with accounts, but a Imagestroage client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new image.
 	Region interface{}
+	// The status of this image member. Must be one of "pending", "accepted", "rejected".
 	Status interface{}
 }
 
 // The set of arguments for constructing a ImageMemberAccepter resource.
 type ImageMemberAccepterArgs struct {
+	// An identifier for the image and member. You can refer it from ID of member resource. The format is "${image_id}/${member_id}", where member_id is accepter project ID.
 	ImageMemberId interface{}
+	// The region in which to obtain the V2 Imagestorage client.
+	// Images are associated with accounts, but a Imagestroage client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new image.
 	Region interface{}
+	// The status of this image member. Must be one of "pending", "accepted", "rejected".
 	Status interface{}
 }

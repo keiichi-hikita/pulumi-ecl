@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V1 tenant resource within Enterprise Cloud.
 type Tenant struct {
 	s *pulumi.ResourceState
 }
@@ -75,44 +76,69 @@ func (r *Tenant) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// Contract which new tenant belongs to.
+// If this parameter is not designated, API user's contract
+// implicitly designated.
 func (r *Tenant) ContractId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["contractId"])
 }
 
+// Description for this tenant.
 func (r *Tenant) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// Tenant created time.
 func (r *Tenant) StartTime() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["startTime"])
 }
 
+// ID of the tenant.
 func (r *Tenant) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
+// Name of new tenant.
+// This name need to be unique globally.
 func (r *Tenant) TenantName() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantName"])
 }
 
+// Region this tenant belongs to.
 func (r *Tenant) TenantRegion() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantRegion"])
 }
 
 // Input properties used for looking up and filtering Tenant resources.
 type TenantState struct {
+	// Contract which new tenant belongs to.
+	// If this parameter is not designated, API user's contract
+	// implicitly designated.
 	ContractId interface{}
+	// Description for this tenant.
 	Description interface{}
+	// Tenant created time.
 	StartTime interface{}
+	// ID of the tenant.
 	TenantId interface{}
+	// Name of new tenant.
+	// This name need to be unique globally.
 	TenantName interface{}
+	// Region this tenant belongs to.
 	TenantRegion interface{}
 }
 
 // The set of arguments for constructing a Tenant resource.
 type TenantArgs struct {
+	// Contract which new tenant belongs to.
+	// If this parameter is not designated, API user's contract
+	// implicitly designated.
 	ContractId interface{}
+	// Description for this tenant.
 	Description interface{}
+	// Name of new tenant.
+	// This name need to be unique globally.
 	TenantName interface{}
+	// Region this tenant belongs to.
 	TenantRegion interface{}
 }

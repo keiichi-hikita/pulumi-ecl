@@ -17,15 +17,29 @@ export class VirtualStorage extends pulumi.CustomResource {
         return new VirtualStorage(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly errorMessage: pulumi.Output<string>;
-    public readonly hostRoutes: pulumi.Output<{ destination: string, nexthop: string }[] | undefined>;
-    public readonly ipAddrPool: pulumi.Output<{ end: string, start: string }>;
-    public readonly name: pulumi.Output<string>;
-    public readonly networkId: pulumi.Output<string>;
-    public readonly subnetId: pulumi.Output<string>;
-    public readonly volumeTypeId: pulumi.Output<string>;
-    public readonly volumeTypeName: pulumi.Output<string | undefined>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:storage/virtualStorage:VirtualStorage';
+
+    /**
+     * Returns true if the given object is an instance of VirtualStorage.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is VirtualStorage {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === VirtualStorage.__pulumiType;
+    }
+
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly errorMessage!: pulumi.Output<string>;
+    public readonly hostRoutes!: pulumi.Output<{ destination: string, nexthop: string }[] | undefined>;
+    public readonly ipAddrPool!: pulumi.Output<{ end: string, start: string }>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly networkId!: pulumi.Output<string>;
+    public readonly subnetId!: pulumi.Output<string>;
+    public readonly volumeTypeId!: pulumi.Output<string>;
+    public readonly volumeTypeName!: pulumi.Output<string | undefined>;
 
     /**
      * Create a VirtualStorage resource with the given unique name, arguments, and options.
@@ -38,7 +52,7 @@ export class VirtualStorage extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: VirtualStorageArgs | VirtualStorageState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: VirtualStorageState = argsOrState as VirtualStorageState | undefined;
+            const state = argsOrState as VirtualStorageState | undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["errorMessage"] = state ? state.errorMessage : undefined;
             inputs["hostRoutes"] = state ? state.hostRoutes : undefined;
@@ -69,7 +83,7 @@ export class VirtualStorage extends pulumi.CustomResource {
             inputs["volumeTypeId"] = args ? args.volumeTypeId : undefined;
             inputs["volumeTypeName"] = args ? args.volumeTypeName : undefined;
         }
-        super("ecl:storage/virtualStorage:VirtualStorage", name, inputs, opts);
+        super(VirtualStorage.__pulumiType, name, inputs, opts);
     }
 }
 

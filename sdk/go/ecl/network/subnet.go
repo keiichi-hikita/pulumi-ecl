@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 Neutron subnet resource within Enterprise Cloud.
 type Subnet struct {
 	s *pulumi.ResourceState
 }
@@ -31,13 +32,11 @@ func NewSubnet(ctx *pulumi.Context,
 		inputs["gatewayIp"] = nil
 		inputs["hostRoutes"] = nil
 		inputs["ipVersion"] = nil
-		inputs["ipv6AddressMode"] = nil
-		inputs["ipv6RaMode"] = nil
 		inputs["name"] = nil
 		inputs["networkId"] = nil
 		inputs["noGateway"] = nil
 		inputs["ntpServers"] = nil
-		inputs["status"] = nil
+		inputs["region"] = nil
 		inputs["tags"] = nil
 		inputs["tenantId"] = nil
 	} else {
@@ -49,16 +48,17 @@ func NewSubnet(ctx *pulumi.Context,
 		inputs["gatewayIp"] = args.GatewayIp
 		inputs["hostRoutes"] = args.HostRoutes
 		inputs["ipVersion"] = args.IpVersion
-		inputs["ipv6AddressMode"] = args.Ipv6AddressMode
-		inputs["ipv6RaMode"] = args.Ipv6RaMode
 		inputs["name"] = args.Name
 		inputs["networkId"] = args.NetworkId
 		inputs["noGateway"] = args.NoGateway
 		inputs["ntpServers"] = args.NtpServers
-		inputs["status"] = args.Status
+		inputs["region"] = args.Region
 		inputs["tags"] = args.Tags
 		inputs["tenantId"] = args.TenantId
 	}
+	inputs["ipv6AddressMode"] = nil
+	inputs["ipv6RaMode"] = nil
+	inputs["status"] = nil
 	s, err := ctx.RegisterResource("ecl:network/subnet:Subnet", name, true, inputs, opts...)
 	if err != nil {
 		return nil, err
@@ -86,6 +86,7 @@ func GetSubnet(ctx *pulumi.Context,
 		inputs["networkId"] = state.NetworkId
 		inputs["noGateway"] = state.NoGateway
 		inputs["ntpServers"] = state.NtpServers
+		inputs["region"] = state.Region
 		inputs["status"] = state.Status
 		inputs["tags"] = state.Tags
 		inputs["tenantId"] = state.TenantId
@@ -107,112 +108,226 @@ func (r *Subnet) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// An array of sub-ranges of CIDR available for
+// dynamic allocation to ports. The allocation_pool object structure is
+// documented below. Changing this creates a new subnet.
 func (r *Subnet) AllocationPools() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["allocationPools"])
 }
 
+// CIDR representing IP range for this subnet, based on IP
+// version. You can omit this option if you are creating a subnet from a
+// subnet pool.
 func (r *Subnet) Cidr() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["cidr"])
 }
 
+// Subnet description.
 func (r *Subnet) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// List of subnet dns name servers.
 func (r *Subnet) DnsNameservers() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["dnsNameservers"])
 }
 
+// The administrative state of the network.
+// Acceptable values are "true" and "false". Changing this value enables or
+// disables the DHCP capabilities of the existing subnet. Defaults to true.
 func (r *Subnet) EnableDhcp() *pulumi.BoolOutput {
 	return (*pulumi.BoolOutput)(r.s.State["enableDhcp"])
 }
 
+// Default gateway used by devices in this subnet.
+// Leaving this blank and not setting `no_gateway` will cause a default
+// gateway of `.1` to be used. Changing this updates the gateway IP of the
+// existing subnet.
 func (r *Subnet) GatewayIp() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["gatewayIp"])
 }
 
+// An array of routes that should be used by devices
+// with IPs from this subnet (not including local subnet route). The host_route
+// object structure is documented below. Changing this updates the host routes
+// for the existing subnet.
 func (r *Subnet) HostRoutes() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["hostRoutes"])
 }
 
+// IP version.
+// In Enterprise Cloud service this parameter is fixed as 4.
 func (r *Subnet) IpVersion() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["ipVersion"])
 }
 
+// Address mode for IPv6 (not supported).
 func (r *Subnet) Ipv6AddressMode() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["ipv6AddressMode"])
 }
 
+// IPv6 router advertisement mode (not supported).
 func (r *Subnet) Ipv6RaMode() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["ipv6RaMode"])
 }
 
+// The name of the subnet. Changing this updates the name of
+// the existing subnet.
 func (r *Subnet) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// The UUID of the parent network. Changing this
+// creates a new subnet.
 func (r *Subnet) NetworkId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["networkId"])
 }
 
+// Do not set a gateway IP on this subnet. Changing
+// this removes or adds a default gateway IP of the existing subnet.
 func (r *Subnet) NoGateway() *pulumi.BoolOutput {
 	return (*pulumi.BoolOutput)(r.s.State["noGateway"])
 }
 
+// List of ntp servers.
 func (r *Subnet) NtpServers() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["ntpServers"])
 }
 
+// The region in which to obtain the V2 Networking client.
+// A Networking client is needed to create a Neutron subnet. If omitted, the
+// `region` argument of the provider is used. Changing this creates a new
+// subnet.
+func (r *Subnet) Region() *pulumi.StringOutput {
+	return (*pulumi.StringOutput)(r.s.State["region"])
+}
+
+// Hidden Subnet status.
 func (r *Subnet) Status() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["status"])
 }
 
+// Subnet tags.
 func (r *Subnet) Tags() *pulumi.MapOutput {
 	return (*pulumi.MapOutput)(r.s.State["tags"])
 }
 
+// The owner of the subnet. Required if admin wants to
+// create a subnet for another tenant. Changing this creates a new subnet.
 func (r *Subnet) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
 // Input properties used for looking up and filtering Subnet resources.
 type SubnetState struct {
+	// An array of sub-ranges of CIDR available for
+	// dynamic allocation to ports. The allocation_pool object structure is
+	// documented below. Changing this creates a new subnet.
 	AllocationPools interface{}
+	// CIDR representing IP range for this subnet, based on IP
+	// version. You can omit this option if you are creating a subnet from a
+	// subnet pool.
 	Cidr interface{}
+	// Subnet description.
 	Description interface{}
+	// List of subnet dns name servers.
 	DnsNameservers interface{}
+	// The administrative state of the network.
+	// Acceptable values are "true" and "false". Changing this value enables or
+	// disables the DHCP capabilities of the existing subnet. Defaults to true.
 	EnableDhcp interface{}
+	// Default gateway used by devices in this subnet.
+	// Leaving this blank and not setting `no_gateway` will cause a default
+	// gateway of `.1` to be used. Changing this updates the gateway IP of the
+	// existing subnet.
 	GatewayIp interface{}
+	// An array of routes that should be used by devices
+	// with IPs from this subnet (not including local subnet route). The host_route
+	// object structure is documented below. Changing this updates the host routes
+	// for the existing subnet.
 	HostRoutes interface{}
+	// IP version.
+	// In Enterprise Cloud service this parameter is fixed as 4.
 	IpVersion interface{}
+	// Address mode for IPv6 (not supported).
 	Ipv6AddressMode interface{}
+	// IPv6 router advertisement mode (not supported).
 	Ipv6RaMode interface{}
+	// The name of the subnet. Changing this updates the name of
+	// the existing subnet.
 	Name interface{}
+	// The UUID of the parent network. Changing this
+	// creates a new subnet.
 	NetworkId interface{}
+	// Do not set a gateway IP on this subnet. Changing
+	// this removes or adds a default gateway IP of the existing subnet.
 	NoGateway interface{}
+	// List of ntp servers.
 	NtpServers interface{}
+	// The region in which to obtain the V2 Networking client.
+	// A Networking client is needed to create a Neutron subnet. If omitted, the
+	// `region` argument of the provider is used. Changing this creates a new
+	// subnet.
+	Region interface{}
+	// Hidden Subnet status.
 	Status interface{}
+	// Subnet tags.
 	Tags interface{}
+	// The owner of the subnet. Required if admin wants to
+	// create a subnet for another tenant. Changing this creates a new subnet.
 	TenantId interface{}
 }
 
 // The set of arguments for constructing a Subnet resource.
 type SubnetArgs struct {
+	// An array of sub-ranges of CIDR available for
+	// dynamic allocation to ports. The allocation_pool object structure is
+	// documented below. Changing this creates a new subnet.
 	AllocationPools interface{}
+	// CIDR representing IP range for this subnet, based on IP
+	// version. You can omit this option if you are creating a subnet from a
+	// subnet pool.
 	Cidr interface{}
+	// Subnet description.
 	Description interface{}
+	// List of subnet dns name servers.
 	DnsNameservers interface{}
+	// The administrative state of the network.
+	// Acceptable values are "true" and "false". Changing this value enables or
+	// disables the DHCP capabilities of the existing subnet. Defaults to true.
 	EnableDhcp interface{}
+	// Default gateway used by devices in this subnet.
+	// Leaving this blank and not setting `no_gateway` will cause a default
+	// gateway of `.1` to be used. Changing this updates the gateway IP of the
+	// existing subnet.
 	GatewayIp interface{}
+	// An array of routes that should be used by devices
+	// with IPs from this subnet (not including local subnet route). The host_route
+	// object structure is documented below. Changing this updates the host routes
+	// for the existing subnet.
 	HostRoutes interface{}
+	// IP version.
+	// In Enterprise Cloud service this parameter is fixed as 4.
 	IpVersion interface{}
-	Ipv6AddressMode interface{}
-	Ipv6RaMode interface{}
+	// The name of the subnet. Changing this updates the name of
+	// the existing subnet.
 	Name interface{}
+	// The UUID of the parent network. Changing this
+	// creates a new subnet.
 	NetworkId interface{}
+	// Do not set a gateway IP on this subnet. Changing
+	// this removes or adds a default gateway IP of the existing subnet.
 	NoGateway interface{}
+	// List of ntp servers.
 	NtpServers interface{}
-	Status interface{}
+	// The region in which to obtain the V2 Networking client.
+	// A Networking client is needed to create a Neutron subnet. If omitted, the
+	// `region` argument of the provider is used. Changing this creates a new
+	// subnet.
+	Region interface{}
+	// Subnet tags.
 	Tags interface{}
+	// The owner of the subnet. Required if admin wants to
+	// create a subnet for another tenant. Changing this creates a new subnet.
 	TenantId interface{}
 }

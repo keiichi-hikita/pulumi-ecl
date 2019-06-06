@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID and Details of an Enterprise Cloud Image.
 func LookupImage(ctx *pulumi.Context, args *GetImageArgs) (*GetImageResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -37,6 +38,7 @@ func LookupImage(ctx *pulumi.Context, args *GetImageArgs) (*GetImageResult, erro
 		Metadata: outputs["metadata"],
 		MinDiskGb: outputs["minDiskGb"],
 		MinRamMb: outputs["minRamMb"],
+		MostRecent: outputs["mostRecent"],
 		Name: outputs["name"],
 		Owner: outputs["owner"],
 		Properties: outputs["properties"],
@@ -44,6 +46,10 @@ func LookupImage(ctx *pulumi.Context, args *GetImageArgs) (*GetImageResult, erro
 		Region: outputs["region"],
 		Schema: outputs["schema"],
 		SizeBytes: outputs["sizeBytes"],
+		SizeMax: outputs["sizeMax"],
+		SizeMin: outputs["sizeMin"],
+		SortDirection: outputs["sortDirection"],
+		SortKey: outputs["sortKey"],
 		Tag: outputs["tag"],
 		UpdatedAt: outputs["updatedAt"],
 		Visibility: outputs["visibility"],
@@ -53,40 +59,81 @@ func LookupImage(ctx *pulumi.Context, args *GetImageArgs) (*GetImageResult, erro
 
 // A collection of arguments for invoking getImage.
 type GetImageArgs struct {
+	// Only show images with the specified member status. Must be one of "queued", "saving", "active", "killed", "deleted", "pending_delete".
 	MemberStatus interface{}
+	// If more than one result is returned, use the most recent image.
 	MostRecent interface{}
+	// Name of the image as a string.
 	Name interface{}
+	// Shows images shared with me by the specified owner, where the owner is indicated by project ID.
 	Owner interface{}
+	// a map of key/value pairs to match an image with. All specified properties must be matched. 
 	Properties interface{}
+	// The region in which to obtain the V2 Network client.
+	// If omitted, the `region` argument of the provider is used.
 	Region interface{}
+	// Value of the maximum size of the image in bytes.
 	SizeMax interface{}
+	// Value of the minimum size of the image in bytes.
 	SizeMin interface{}
+	// Sort direction. Must be one of "desc", "asc".
 	SortDirection interface{}
+	// Sort key.
 	SortKey interface{}
+	// Image tag.
 	Tag interface{}
+	// Image visibility. Must be one of "public", "private", "shared".
 	Visibility interface{}
 }
 
 // A collection of values returned by getImage.
 type GetImageResult struct {
+	// md5 hash of image contents.
 	Checksum interface{}
+	// Format of the container.
 	ContainerFormat interface{}
+	// Date and time of image registration.
 	CreatedAt interface{}
+	// Format of the disk.
 	DiskFormat interface{}
+	// URL for the virtual machine image file.
 	File interface{}
+	// See Argument Reference above.
 	MemberStatus interface{}
+	// The location metadata.
 	Metadata interface{}
+	// Amount of disk space (in GB) required to boot image.
 	MinDiskGb interface{}
+	// Amount of ram (in MB) required to boot image.
 	MinRamMb interface{}
+	// See Argument Reference above.
+	MostRecent interface{}
+	// See Argument Reference above.
 	Name interface{}
+	// See Argument Reference above.
 	Owner interface{}
 	Properties interface{}
+	// If true, image will not be deletable.
 	Protected interface{}
+	// See Argument Reference above.
 	Region interface{}
+	// URL for schema of the virtual machine image.
 	Schema interface{}
+	// Size of image file in bytes.
 	SizeBytes interface{}
+	// See Argument Reference above.
+	SizeMax interface{}
+	// See Argument Reference above.
+	SizeMin interface{}
+	// See Argument Reference above.
+	SortDirection interface{}
+	// See Argument Reference above.
+	SortKey interface{}
+	// See Argument Reference above.
 	Tag interface{}
+	// Date and time of the last image modification.
 	UpdatedAt interface{}
+	// See Argument Reference above.
 	Visibility interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

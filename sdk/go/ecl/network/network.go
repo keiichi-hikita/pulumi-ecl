@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 network resource within Enterprise Cloud.
 type Network struct {
 	s *pulumi.ResourceState
 }
@@ -20,8 +21,7 @@ func NewNetwork(ctx *pulumi.Context,
 		inputs["description"] = nil
 		inputs["name"] = nil
 		inputs["plane"] = nil
-		inputs["status"] = nil
-		inputs["subnets"] = nil
+		inputs["region"] = nil
 		inputs["tags"] = nil
 		inputs["tenantId"] = nil
 	} else {
@@ -29,11 +29,13 @@ func NewNetwork(ctx *pulumi.Context,
 		inputs["description"] = args.Description
 		inputs["name"] = args.Name
 		inputs["plane"] = args.Plane
-		inputs["status"] = args.Status
-		inputs["subnets"] = args.Subnets
+		inputs["region"] = args.Region
 		inputs["tags"] = args.Tags
 		inputs["tenantId"] = args.TenantId
 	}
+	inputs["shared"] = nil
+	inputs["status"] = nil
+	inputs["subnets"] = nil
 	s, err := ctx.RegisterResource("ecl:network/network:Network", name, true, inputs, opts...)
 	if err != nil {
 		return nil, err
@@ -51,6 +53,8 @@ func GetNetwork(ctx *pulumi.Context,
 		inputs["description"] = state.Description
 		inputs["name"] = state.Name
 		inputs["plane"] = state.Plane
+		inputs["region"] = state.Region
+		inputs["shared"] = state.Shared
 		inputs["status"] = state.Status
 		inputs["subnets"] = state.Subnets
 		inputs["tags"] = state.Tags
@@ -73,58 +77,121 @@ func (r *Network) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
-func (r *Network) AdminStateUp() *pulumi.StringOutput {
-	return (*pulumi.StringOutput)(r.s.State["adminStateUp"])
+// The administrative state of the network.
+// Acceptable values are "true" and "false".
+// Changing this value updates the state of the existing network.
+func (r *Network) AdminStateUp() *pulumi.BoolOutput {
+	return (*pulumi.BoolOutput)(r.s.State["adminStateUp"])
 }
 
+// Network description.
 func (r *Network) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// The name of the network. Changing this updates the name of
+// the existing network.
 func (r *Network) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// The plane of the network. 
+// Allowed values are "data" and "storage".
+// Changing this creates a new network.
 func (r *Network) Plane() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["plane"])
 }
 
+// The region in which to obtain the V2 Networking client.
+// A Networking client is needed to create a Neutron network. If omitted, the
+// `region` argument of the provider is used. Changing this creates a new
+// network.
+func (r *Network) Region() *pulumi.StringOutput {
+	return (*pulumi.StringOutput)(r.s.State["region"])
+}
+
+// See Argument Reference above.
+func (r *Network) Shared() *pulumi.BoolOutput {
+	return (*pulumi.BoolOutput)(r.s.State["shared"])
+}
+
+// The network status.
 func (r *Network) Status() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["status"])
 }
 
+// The associated subnets.
 func (r *Network) Subnets() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["subnets"])
 }
 
+// Network tags.
 func (r *Network) Tags() *pulumi.MapOutput {
 	return (*pulumi.MapOutput)(r.s.State["tags"])
 }
 
+// The owner of the network. Required if admin wants to
+// create a network for another tenant. Changing this creates a new network.
 func (r *Network) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
 // Input properties used for looking up and filtering Network resources.
 type NetworkState struct {
+	// The administrative state of the network.
+	// Acceptable values are "true" and "false".
+	// Changing this value updates the state of the existing network.
 	AdminStateUp interface{}
+	// Network description.
 	Description interface{}
+	// The name of the network. Changing this updates the name of
+	// the existing network.
 	Name interface{}
+	// The plane of the network. 
+	// Allowed values are "data" and "storage".
+	// Changing this creates a new network.
 	Plane interface{}
+	// The region in which to obtain the V2 Networking client.
+	// A Networking client is needed to create a Neutron network. If omitted, the
+	// `region` argument of the provider is used. Changing this creates a new
+	// network.
+	Region interface{}
+	// See Argument Reference above.
+	Shared interface{}
+	// The network status.
 	Status interface{}
+	// The associated subnets.
 	Subnets interface{}
+	// Network tags.
 	Tags interface{}
+	// The owner of the network. Required if admin wants to
+	// create a network for another tenant. Changing this creates a new network.
 	TenantId interface{}
 }
 
 // The set of arguments for constructing a Network resource.
 type NetworkArgs struct {
+	// The administrative state of the network.
+	// Acceptable values are "true" and "false".
+	// Changing this value updates the state of the existing network.
 	AdminStateUp interface{}
+	// Network description.
 	Description interface{}
+	// The name of the network. Changing this updates the name of
+	// the existing network.
 	Name interface{}
+	// The plane of the network. 
+	// Allowed values are "data" and "storage".
+	// Changing this creates a new network.
 	Plane interface{}
-	Status interface{}
-	Subnets interface{}
+	// The region in which to obtain the V2 Networking client.
+	// A Networking client is needed to create a Neutron network. If omitted, the
+	// `region` argument of the provider is used. Changing this creates a new
+	// network.
+	Region interface{}
+	// Network tags.
 	Tags interface{}
+	// The owner of the network. Required if admin wants to
+	// create a network for another tenant. Changing this creates a new network.
 	TenantId interface{}
 }
