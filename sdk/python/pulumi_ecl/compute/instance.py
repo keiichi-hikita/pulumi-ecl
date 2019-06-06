@@ -11,8 +11,7 @@ from .. import utilities, tables
 class Instance(pulumi.CustomResource):
     access_ip_v4: pulumi.Output[str]
     """
-    The first detected Fixed IPv4 address _or_ the
-    Floating IP.
+    The first detected Fixed IPv4 address.
     """
     all_metadata: pulumi.Output[dict]
     """
@@ -30,8 +29,7 @@ class Instance(pulumi.CustomResource):
     structure is documented below. Changing this creates a new server.
     You can specify multiple block devices which will create an instance with
     multiple disks. This configuration is very flexible, so please see the
-    following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-    for more information.
+    above examples for more information.
     """
     flavor_id: pulumi.Output[str]
     """
@@ -100,22 +98,19 @@ class Instance(pulumi.CustomResource):
     The user data to provide when launching the instance.
     Changing this creates a new server.
     """
-    def __init__(__self__, resource_name, opts=None, access_ip_v4=None, availability_zone=None, block_devices=None, flavor_id=None, flavor_name=None, image_id=None, image_name=None, key_pair=None, metadata=None, name=None, networks=None, power_state=None, region=None, stop_before_destroy=None, user_data=None, __name__=None, __opts__=None):
+    def __init__(__self__, resource_name, opts=None, availability_zone=None, block_devices=None, flavor_id=None, flavor_name=None, image_id=None, image_name=None, key_pair=None, metadata=None, name=None, networks=None, power_state=None, region=None, stop_before_destroy=None, user_data=None, __name__=None, __opts__=None):
         """
-        Manages a V2 VM instance resource within Enterprise Cloud.
+        Manages a V2 Instance resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] access_ip_v4: The first detected Fixed IPv4 address _or_ the
-               Floating IP.
         :param pulumi.Input[str] availability_zone: The availability zone in which to create
                the server. Changing this creates a new server.
         :param pulumi.Input[list] block_devices: Configuration of block devices. The block_device
                structure is documented below. Changing this creates a new server.
                You can specify multiple block devices which will create an instance with
                multiple disks. This configuration is very flexible, so please see the
-               following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-               for more information.
+               above examples for more information.
         :param pulumi.Input[str] flavor_id: The flavor ID of
                the desired flavor for the server. Changing this resizes the existing server.
         :param pulumi.Input[str] flavor_name: The name of the
@@ -163,8 +158,6 @@ class Instance(pulumi.CustomResource):
 
         __props__ = dict()
 
-        __props__['access_ip_v4'] = access_ip_v4
-
         __props__['availability_zone'] = availability_zone
 
         __props__['block_devices'] = block_devices
@@ -193,6 +186,7 @@ class Instance(pulumi.CustomResource):
 
         __props__['user_data'] = user_data
 
+        __props__['access_ip_v4'] = None
         __props__['all_metadata'] = None
 
         super(Instance, __self__).__init__(

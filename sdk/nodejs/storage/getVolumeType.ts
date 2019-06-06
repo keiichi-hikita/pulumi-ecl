@@ -7,7 +7,6 @@ import * as utilities from "../utilities";
 export function getVolumeType(args?: GetVolumeTypeArgs, opts?: pulumi.InvokeOptions): Promise<GetVolumeTypeResult> {
     args = args || {};
     return pulumi.runtime.invoke("ecl:storage/getVolumeType:getVolumeType", {
-        "extraSpecs": args.extraSpecs,
         "name": args.name,
         "volumeTypeId": args.volumeTypeId,
     }, opts);
@@ -17,7 +16,6 @@ export function getVolumeType(args?: GetVolumeTypeArgs, opts?: pulumi.InvokeOpti
  * A collection of arguments for invoking getVolumeType.
  */
 export interface GetVolumeTypeArgs {
-    readonly extraSpecs?: { availableIopsPerGbs?: string[], availableVolumeSizes?: number[], availableVolumeThroughputs?: string[] };
     readonly name?: string;
     readonly volumeTypeId?: string;
 }
@@ -27,6 +25,8 @@ export interface GetVolumeTypeArgs {
  */
 export interface GetVolumeTypeResult {
     readonly extraSpecs: { availableIopsPerGbs?: string[], availableVolumeSizes?: number[], availableVolumeThroughputs?: string[] };
+    readonly name?: string;
+    readonly volumeTypeId?: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

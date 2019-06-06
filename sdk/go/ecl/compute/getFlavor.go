@@ -26,8 +26,16 @@ func LookupFlavor(ctx *pulumi.Context, args *GetFlavorArgs) (*GetFlavorResult, e
 		return nil, err
 	}
 	return &GetFlavorResult{
+		Disk: outputs["disk"],
 		IsPublic: outputs["isPublic"],
+		MinDisk: outputs["minDisk"],
+		MinRam: outputs["minRam"],
+		Name: outputs["name"],
+		Ram: outputs["ram"],
 		Region: outputs["region"],
+		RxTxFactor: outputs["rxTxFactor"],
+		Swap: outputs["swap"],
+		Vcpus: outputs["vcpus"],
 		Id: outputs["id"],
 	}, nil
 }
@@ -57,9 +65,26 @@ type GetFlavorArgs struct {
 
 // A collection of values returned by getFlavor.
 type GetFlavorResult struct {
+	// See Argument Reference above.
+	Disk interface{}
 	// Whether the flavor is public or private.
 	IsPublic interface{}
+	// See Argument Reference above.
+	MinDisk interface{}
+	// See Argument Reference above.
+	MinRam interface{}
+	// See Argument Reference above.
+	Name interface{}
+	// See Argument Reference above.
+	Ram interface{}
+	// See Argument Reference above.
 	Region interface{}
+	// See Argument Reference above.
+	RxTxFactor interface{}
+	// See Argument Reference above.
+	Swap interface{}
+	// See Argument Reference above.
+	Vcpus interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}
 }

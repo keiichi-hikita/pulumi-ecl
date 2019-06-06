@@ -10,24 +10,51 @@ from .. import utilities, tables
 
 class PublicIP(pulumi.CustomResource):
     cidr: pulumi.Output[str]
+    """
+    The IP address of the block (assigned automatically).
+    """
     description: pulumi.Output[str]
+    """
+    Description of the Public IP resource.
+    """
     internet_gw_id: pulumi.Output[str]
+    """
+    Internet Gateway the block will be assigned to.
+    """
     name: pulumi.Output[str]
+    """
+    Name of the Public IP resource.
+    """
     region: pulumi.Output[str]
-    submask_length: pulumi.Output[int]
+    """
+    The region in which to obtain the V2 Network client.
+    Public ips are associated with accounts, but a Network client is needed to
+    create one. If omitted, the `region` argument of the provider is used.
+    Changing this creates a new public ip.
+    """
+    submask_length: pulumi.Output[float]
+    """
+    Specifies the size of the block by the length of its subnetwork mask length.
+    """
     tenant_id: pulumi.Output[str]
+    """
+    Tenant ID of the owner (UUID).
+    """
     def __init__(__self__, resource_name, opts=None, description=None, internet_gw_id=None, name=None, region=None, submask_length=None, tenant_id=None, __name__=None, __opts__=None):
         """
-        Create a PublicIP resource with the given unique name, props, and options.
+        Manages a V2 public ip resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] internet_gw_id
-        :param pulumi.Input[str] name
-        :param pulumi.Input[str] region
-        :param pulumi.Input[int] submask_length
-        :param pulumi.Input[str] tenant_id
+        :param pulumi.Input[str] description: Description of the Public IP resource.
+        :param pulumi.Input[str] internet_gw_id: Internet Gateway the block will be assigned to.
+        :param pulumi.Input[str] name: Name of the Public IP resource.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Network client.
+               Public ips are associated with accounts, but a Network client is needed to
+               create one. If omitted, the `region` argument of the provider is used.
+               Changing this creates a new public ip.
+        :param pulumi.Input[float] submask_length: Specifies the size of the block by the length of its subnetwork mask length.
+        :param pulumi.Input[str] tenant_id: Tenant ID of the owner (UUID).
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -47,7 +74,7 @@ class PublicIP(pulumi.CustomResource):
         __props__['description'] = description
 
         if internet_gw_id is None:
-            raise TypeError('Missing required property internet_gw_id')
+            raise TypeError("Missing required property 'internet_gw_id'")
         __props__['internet_gw_id'] = internet_gw_id
 
         __props__['name'] = name
@@ -55,7 +82,7 @@ class PublicIP(pulumi.CustomResource):
         __props__['region'] = region
 
         if submask_length is None:
-            raise TypeError('Missing required property submask_length')
+            raise TypeError("Missing required property 'submask_length'")
         __props__['submask_length'] = submask_length
 
         __props__['tenant_id'] = tenant_id

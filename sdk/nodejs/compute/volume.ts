@@ -17,16 +17,30 @@ export class Volume extends pulumi.CustomResource {
         return new Volume(name, <any>state, { ...opts, id: id });
     }
 
-    public /*out*/ readonly attachments: pulumi.Output<{ device: string, id: string, instanceId: string }[]>;
-    public readonly availabilityZone: pulumi.Output<string>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly imageId: pulumi.Output<string | undefined>;
-    public readonly metadata: pulumi.Output<{[key: string]: any}>;
-    public readonly name: pulumi.Output<string>;
-    public readonly region: pulumi.Output<string>;
-    public readonly size: pulumi.Output<number>;
-    public readonly sourceReplica: pulumi.Output<string | undefined>;
-    public readonly volumeType: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:compute/volume:Volume';
+
+    /**
+     * Returns true if the given object is an instance of Volume.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Volume {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Volume.__pulumiType;
+    }
+
+    public /*out*/ readonly attachments!: pulumi.Output<{ device: string, id: string, instanceId: string }[]>;
+    public readonly availabilityZone!: pulumi.Output<string>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly imageId!: pulumi.Output<string | undefined>;
+    public readonly metadata!: pulumi.Output<{[key: string]: any}>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly size!: pulumi.Output<number>;
+    public readonly sourceReplica!: pulumi.Output<string | undefined>;
+    public readonly volumeType!: pulumi.Output<string>;
 
     /**
      * Create a Volume resource with the given unique name, arguments, and options.
@@ -39,7 +53,7 @@ export class Volume extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: VolumeArgs | VolumeState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: VolumeState = argsOrState as VolumeState | undefined;
+            const state = argsOrState as VolumeState | undefined;
             inputs["attachments"] = state ? state.attachments : undefined;
             inputs["availabilityZone"] = state ? state.availabilityZone : undefined;
             inputs["description"] = state ? state.description : undefined;
@@ -66,7 +80,7 @@ export class Volume extends pulumi.CustomResource {
             inputs["volumeType"] = args ? args.volumeType : undefined;
             inputs["attachments"] = undefined /*out*/;
         }
-        super("ecl:compute/volume:Volume", name, inputs, opts);
+        super(Volume.__pulumiType, name, inputs, opts);
     }
 }
 

@@ -17,19 +17,33 @@ export class StaticRoute extends pulumi.CustomResource {
         return new StaticRoute(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly awsGwId: pulumi.Output<string | undefined>;
-    public readonly azureGwId: pulumi.Output<string | undefined>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly destination: pulumi.Output<string>;
-    public readonly gcpGwId: pulumi.Output<string | undefined>;
-    public readonly interdcGwId: pulumi.Output<string | undefined>;
-    public readonly internetGwId: pulumi.Output<string | undefined>;
-    public readonly name: pulumi.Output<string>;
-    public readonly nexthop: pulumi.Output<string>;
-    public readonly region: pulumi.Output<string>;
-    public readonly serviceType: pulumi.Output<string>;
-    public readonly tenantId: pulumi.Output<string>;
-    public readonly vpnGwId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/staticRoute:StaticRoute';
+
+    /**
+     * Returns true if the given object is an instance of StaticRoute.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is StaticRoute {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === StaticRoute.__pulumiType;
+    }
+
+    public readonly awsGwId!: pulumi.Output<string | undefined>;
+    public readonly azureGwId!: pulumi.Output<string | undefined>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly destination!: pulumi.Output<string>;
+    public readonly gcpGwId!: pulumi.Output<string | undefined>;
+    public readonly interdcGwId!: pulumi.Output<string | undefined>;
+    public readonly internetGwId!: pulumi.Output<string | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly nexthop!: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly serviceType!: pulumi.Output<string>;
+    public readonly tenantId!: pulumi.Output<string>;
+    public readonly vpnGwId!: pulumi.Output<string>;
 
     /**
      * Create a StaticRoute resource with the given unique name, arguments, and options.
@@ -42,7 +56,7 @@ export class StaticRoute extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: StaticRouteArgs | StaticRouteState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: StaticRouteState = argsOrState as StaticRouteState | undefined;
+            const state = argsOrState as StaticRouteState | undefined;
             inputs["awsGwId"] = state ? state.awsGwId : undefined;
             inputs["azureGwId"] = state ? state.azureGwId : undefined;
             inputs["description"] = state ? state.description : undefined;
@@ -81,7 +95,7 @@ export class StaticRoute extends pulumi.CustomResource {
             inputs["tenantId"] = args ? args.tenantId : undefined;
             inputs["vpnGwId"] = args ? args.vpnGwId : undefined;
         }
-        super("ecl:network/staticRoute:StaticRoute", name, inputs, opts);
+        super(StaticRoute.__pulumiType, name, inputs, opts);
     }
 }
 

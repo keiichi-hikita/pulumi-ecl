@@ -4,4 +4,5 @@
 
 # Export this package's modules as members:
 from .tenant import *
+from .user import *
 from .get_tenant import *

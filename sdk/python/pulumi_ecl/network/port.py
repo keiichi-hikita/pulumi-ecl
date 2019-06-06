@@ -10,44 +10,140 @@ from .. import utilities, tables
 
 class Port(pulumi.CustomResource):
     admin_state_up: pulumi.Output[bool]
+    """
+    Administrative up/down status for the port
+    (must be "true" or "false" if provided). Changing this updates the
+    `admin_state_up` of an existing port.
+    """
     all_fixed_ips: pulumi.Output[list]
+    """
+    The collection of Fixed IP addresses on the port in the
+    order returned by the Network v2 API.
+    """
     allowed_address_pairs: pulumi.Output[list]
+    """
+    An IP/MAC Address pair of additional IP
+    addresses that can be active on this port. The structure is described
+    below.
+    """
     description: pulumi.Output[str]
+    """
+    Port description.
+    """
     device_id: pulumi.Output[str]
+    """
+    The ID of the device attached to the port. Changing this
+    creates a new port.
+    """
     device_owner: pulumi.Output[str]
+    """
+    The device owner of the Port.
+    Changing this creates a new port.
+    """
     fixed_ips: pulumi.Output[list]
+    """
+    An array of desired IPs for
+    this port. The structure is described below.
+    """
     mac_address: pulumi.Output[str]
+    """
+    Specify a specific MAC address for the port. Changing
+    this creates a new port.
+    """
+    managed_by_service: pulumi.Output[bool]
     name: pulumi.Output[str]
+    """
+    A unique name for the port. Changing this
+    updates the `name` of an existing port.
+    """
     network_id: pulumi.Output[str]
+    """
+    The ID of the network to attach the port to.
+    Changing this creates a new port.
+    """
     no_fixed_ip: pulumi.Output[bool]
+    """
+    Create a port with no fixed
+    IP address. This will also remove any fixed IPs previously set on a port. `true`
+    is the only valid value for this argument.
+    """
     region: pulumi.Output[str]
-    segmentation_id: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 network client.
+    A network client is needed to create a port. If omitted, the
+    `region` argument of the provider is used.
+    Changing this creates a new port.
+    """
+    segmentation_id: pulumi.Output[float]
+    """
+    The segmentation ID used for this port.
+    User can specify this value only in case segmentation type is "vlan".
+    """
     segmentation_type: pulumi.Output[str]
+    """
+    The segmentation type used for this port.
+    User can use "vlan" of "flat" as this argument
+    """
     status: pulumi.Output[str]
+    """
+    Status for the Port.
+    """
     tags: pulumi.Output[dict]
+    """
+    Port tags.
+    """
     tenant_id: pulumi.Output[str]
-    def __init__(__self__, resource_name, opts=None, admin_state_up=None, allowed_address_pairs=None, description=None, device_id=None, device_owner=None, fixed_ips=None, mac_address=None, name=None, network_id=None, no_fixed_ip=None, region=None, segmentation_id=None, segmentation_type=None, status=None, tags=None, tenant_id=None, __name__=None, __opts__=None):
+    """
+    The owner of the Port. Required if admin wants
+    to create a port for another tenant. Changing this creates a new port.
+    """
+    def __init__(__self__, resource_name, opts=None, admin_state_up=None, allowed_address_pairs=None, description=None, device_id=None, device_owner=None, fixed_ips=None, mac_address=None, name=None, network_id=None, no_fixed_ip=None, region=None, segmentation_id=None, segmentation_type=None, tags=None, tenant_id=None, __name__=None, __opts__=None):
         """
-        Create a Port resource with the given unique name, props, and options.
+        Manages a V2 port resource within Enterprise Cloud.
+        
+        ## Notes
+        
+        ### Ports and Instances
+        
+        There are some notes to consider when connecting Instances to networks using
+        Ports.
+        Please see Enterprise Cloud 2.0 Knowledge Center documents for further information.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[bool] admin_state_up
-        :param pulumi.Input[list] allowed_address_pairs
-        :param pulumi.Input[str] description
-        :param pulumi.Input[str] device_id
-        :param pulumi.Input[str] device_owner
-        :param pulumi.Input[list] fixed_ips
-        :param pulumi.Input[str] mac_address
-        :param pulumi.Input[str] name
-        :param pulumi.Input[str] network_id
-        :param pulumi.Input[bool] no_fixed_ip
-        :param pulumi.Input[str] region
-        :param pulumi.Input[str] segmentation_id
-        :param pulumi.Input[str] segmentation_type
-        :param pulumi.Input[str] status
-        :param pulumi.Input[dict] tags
-        :param pulumi.Input[str] tenant_id
+        :param pulumi.Input[bool] admin_state_up: Administrative up/down status for the port
+               (must be "true" or "false" if provided). Changing this updates the
+               `admin_state_up` of an existing port.
+        :param pulumi.Input[list] allowed_address_pairs: An IP/MAC Address pair of additional IP
+               addresses that can be active on this port. The structure is described
+               below.
+        :param pulumi.Input[str] description: Port description.
+        :param pulumi.Input[str] device_id: The ID of the device attached to the port. Changing this
+               creates a new port.
+        :param pulumi.Input[str] device_owner: The device owner of the Port.
+               Changing this creates a new port.
+        :param pulumi.Input[list] fixed_ips: An array of desired IPs for
+               this port. The structure is described below.
+        :param pulumi.Input[str] mac_address: Specify a specific MAC address for the port. Changing
+               this creates a new port.
+        :param pulumi.Input[str] name: A unique name for the port. Changing this
+               updates the `name` of an existing port.
+        :param pulumi.Input[str] network_id: The ID of the network to attach the port to.
+               Changing this creates a new port.
+        :param pulumi.Input[bool] no_fixed_ip: Create a port with no fixed
+               IP address. This will also remove any fixed IPs previously set on a port. `true`
+               is the only valid value for this argument.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 network client.
+               A network client is needed to create a port. If omitted, the
+               `region` argument of the provider is used.
+               Changing this creates a new port.
+        :param pulumi.Input[float] segmentation_id: The segmentation ID used for this port.
+               User can specify this value only in case segmentation type is "vlan".
+        :param pulumi.Input[str] segmentation_type: The segmentation type used for this port.
+               User can use "vlan" of "flat" as this argument
+        :param pulumi.Input[dict] tags: Port tags.
+        :param pulumi.Input[str] tenant_id: The owner of the Port. Required if admin wants
+               to create a port for another tenant. Changing this creates a new port.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -81,7 +177,7 @@ class Port(pulumi.CustomResource):
         __props__['name'] = name
 
         if network_id is None:
-            raise TypeError('Missing required property network_id')
+            raise TypeError("Missing required property 'network_id'")
         __props__['network_id'] = network_id
 
         __props__['no_fixed_ip'] = no_fixed_ip
@@ -92,13 +188,13 @@ class Port(pulumi.CustomResource):
 
         __props__['segmentation_type'] = segmentation_type
 
-        __props__['status'] = status
-
         __props__['tags'] = tags
 
         __props__['tenant_id'] = tenant_id
 
         __props__['all_fixed_ips'] = None
+        __props__['managed_by_service'] = None
+        __props__['status'] = None
 
         super(Port, __self__).__init__(
             'ecl:network/port:Port',

@@ -8,6 +8,9 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 gateway interface resource within Enterprise Cloud.
+// 
+// > **Notice** We only support Gateway interface with service_type "internet" for now.
 type GatewayInterface struct {
 	s *pulumi.ResourceState
 }
@@ -131,130 +134,220 @@ func (r *GatewayInterface) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// AWS Gateway to which this port is connected.
+// Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *GatewayInterface) AwsGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["awsGwId"])
 }
 
+// Azure Gateway to which this port is connected.
+// Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *GatewayInterface) AzureGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["azureGwId"])
 }
 
+// Description of the Gateway Interface resource.
 func (r *GatewayInterface) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// GCP Gateway to which this port is connected.
+// Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *GatewayInterface) GcpGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["gcpGwId"])
 }
 
+// IP version 4 address to be assigned virtual router on VRRP.
 func (r *GatewayInterface) GwVipv4() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["gwVipv4"])
 }
 
+// IP version 6 address to be assigned virtual router on VRRP.
 func (r *GatewayInterface) GwVipv6() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["gwVipv6"])
 }
 
+// Inter DC Gateway to which this port is connected.
+// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *GatewayInterface) InterdcGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["interdcGwId"])
 }
 
+// Internet GW to which this port is connected.
+// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
 func (r *GatewayInterface) InternetGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["internetGwId"])
 }
 
+// Name of the Gateway Interface resource.
 func (r *GatewayInterface) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// Netmask for IPv4 addresses.
 func (r *GatewayInterface) Netmask() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["netmask"])
 }
 
+// Network connected to this interface.
 func (r *GatewayInterface) NetworkId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["networkId"])
 }
 
+// IP version 4 address to be assigned to primary device on VRRP.
 func (r *GatewayInterface) PrimaryIpv4() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["primaryIpv4"])
 }
 
+// IP version 6 address to be assigned to primary device on VRRP.
 func (r *GatewayInterface) PrimaryIpv6() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["primaryIpv6"])
 }
 
+// The region in which to obtain the V2 Network client.
+// Gateway interfaces are associated with accounts, but a Network client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new gateway interface.
 func (r *GatewayInterface) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// IP version 4 address to be assigned to secondary device on VRRP.
 func (r *GatewayInterface) SecondaryIpv4() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["secondaryIpv4"])
 }
 
+// IP version 6 address to be assigned to secondary device on VRRP.
 func (r *GatewayInterface) SecondaryIpv6() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["secondaryIpv6"])
 }
 
+// Service type for this interface.
+// Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 func (r *GatewayInterface) ServiceType() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["serviceType"])
 }
 
+// Tenant ID of the owner (UUID).
 func (r *GatewayInterface) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
+// VPN Gateway to which this port is connected.
+// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
 func (r *GatewayInterface) VpnGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["vpnGwId"])
 }
 
+// VRRP Group ID for this GW Interface.
 func (r *GatewayInterface) Vrid() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["vrid"])
 }
 
 // Input properties used for looking up and filtering GatewayInterface resources.
 type GatewayInterfaceState struct {
+	// AWS Gateway to which this port is connected.
+	// Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AwsGwId interface{}
+	// Azure Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AzureGwId interface{}
+	// Description of the Gateway Interface resource.
 	Description interface{}
+	// GCP Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	GcpGwId interface{}
+	// IP version 4 address to be assigned virtual router on VRRP.
 	GwVipv4 interface{}
+	// IP version 6 address to be assigned virtual router on VRRP.
 	GwVipv6 interface{}
+	// Inter DC Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
 	InterdcGwId interface{}
+	// Internet GW to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
 	InternetGwId interface{}
+	// Name of the Gateway Interface resource.
 	Name interface{}
+	// Netmask for IPv4 addresses.
 	Netmask interface{}
+	// Network connected to this interface.
 	NetworkId interface{}
+	// IP version 4 address to be assigned to primary device on VRRP.
 	PrimaryIpv4 interface{}
+	// IP version 6 address to be assigned to primary device on VRRP.
 	PrimaryIpv6 interface{}
+	// The region in which to obtain the V2 Network client.
+	// Gateway interfaces are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new gateway interface.
 	Region interface{}
+	// IP version 4 address to be assigned to secondary device on VRRP.
 	SecondaryIpv4 interface{}
+	// IP version 6 address to be assigned to secondary device on VRRP.
 	SecondaryIpv6 interface{}
+	// Service type for this interface.
+	// Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 	ServiceType interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
+	// VPN Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
 	VpnGwId interface{}
+	// VRRP Group ID for this GW Interface.
 	Vrid interface{}
 }
 
 // The set of arguments for constructing a GatewayInterface resource.
 type GatewayInterfaceArgs struct {
+	// AWS Gateway to which this port is connected.
+	// Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AwsGwId interface{}
+	// Azure Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AzureGwId interface{}
+	// Description of the Gateway Interface resource.
 	Description interface{}
+	// GCP Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	GcpGwId interface{}
+	// IP version 4 address to be assigned virtual router on VRRP.
 	GwVipv4 interface{}
+	// IP version 6 address to be assigned virtual router on VRRP.
 	GwVipv6 interface{}
+	// Inter DC Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
 	InterdcGwId interface{}
+	// Internet GW to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
 	InternetGwId interface{}
+	// Name of the Gateway Interface resource.
 	Name interface{}
+	// Netmask for IPv4 addresses.
 	Netmask interface{}
+	// Network connected to this interface.
 	NetworkId interface{}
+	// IP version 4 address to be assigned to primary device on VRRP.
 	PrimaryIpv4 interface{}
+	// IP version 6 address to be assigned to primary device on VRRP.
 	PrimaryIpv6 interface{}
+	// The region in which to obtain the V2 Network client.
+	// Gateway interfaces are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new gateway interface.
 	Region interface{}
+	// IP version 4 address to be assigned to secondary device on VRRP.
 	SecondaryIpv4 interface{}
+	// IP version 6 address to be assigned to secondary device on VRRP.
 	SecondaryIpv6 interface{}
+	// Service type for this interface.
+	// Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 	ServiceType interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
+	// VPN Gateway to which this port is connected.
+	// Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
 	VpnGwId interface{}
+	// VRRP Group ID for this GW Interface.
 	Vrid interface{}
 }

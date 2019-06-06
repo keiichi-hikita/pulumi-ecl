@@ -4,21 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-/**
- * Use this data source to get the ID of an Enterprise Cloud zone.
- * Manages a V2 zone resource within Enterprise Cloud.
- * 
- * ## Example Usage
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const zone1 = pulumi.output(ecl.dns.getDnsZone({
- *     domainName: "terraform-example.com.",
- * }));
- * ```
- */
 export function getDnsZone(args?: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): Promise<GetDnsZoneResult> {
     args = args || {};
     return pulumi.runtime.invoke("ecl:dns/getDnsZone:getDnsZone", {
@@ -47,75 +32,21 @@ export function getDnsZone(args?: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): 
  */
 export interface GetDnsZoneArgs {
     readonly attributes?: {[key: string]: any};
-    /**
-     * Date / Time when zone was created.
-     */
     readonly createdAt?: string;
-    /**
-     * The description of the zone.
-     */
     readonly description?: string;
-    /**
-     * Domain name of the zone.
-     */
     readonly domainName?: string;
-    /**
-     * e-mail for the zone.
-     * Used in SOA records for the zone.
-     */
     readonly email?: string;
-    /**
-     * For secondary zones.
-     * The servers to slave from to get DNS information.
-     */
     readonly masters?: string[];
-    /**
-     * DNS Name for the zone.
-     */
     readonly name?: string;
-    /**
-     * ID for the pool hosting this zone. 
-     */
     readonly poolId?: string;
-    /**
-     * ID for the project(tenant) that owns the zone.
-     */
     readonly projectId?: string;
-    /**
-     * The region of the zone.
-     */
     readonly region?: string;
-    /**
-     * Current serial number for the zone.
-     */
     readonly serial?: number;
-    /**
-     * Status of the zone.
-     */
     readonly status?: string;
-    /**
-     * For secondary zones.
-     * The last time an update was retrieved from the master servers.
-     */
     readonly transferredAt?: string;
-    /**
-     * TTL (Time to Live) for the zone.
-     */
     readonly ttl?: number;
-    /**
-     * Type of zone.
-     * PRIMARY is controlled by ECL2.0 DNS,
-     * SECONDARY zones are slaved from another DNS Server.
-     * Defaults to PRIMARY.
-     */
     readonly type?: string;
-    /**
-     * Date / Time when zone last updated.
-     */
     readonly updatedAt?: string;
-    /**
-     * Version of the zone.
-     */
     readonly version?: number;
 }
 
@@ -123,89 +54,22 @@ export interface GetDnsZoneArgs {
  * A collection of values returned by getDnsZone.
  */
 export interface GetDnsZoneResult {
-    /**
-     * (Optional) See Argument Reference above.
-     */
     readonly attributes: {[key: string]: any};
-    /**
-     * See Argument Reference above.
-     */
     readonly createdAt: string;
-    /**
-     * See Argument Reference above.
-     */
     readonly description: string;
-    /**
-     * See Argument Reference above.
-     */
     readonly domainName: string;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns an empty string.
-     */
     readonly email: string;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns an empty string.
-     */
     readonly masters: string[];
-    /**
-     * See Argument Reference above.
-     */
     readonly name: string;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns an empty string.
-     */
     readonly poolId: string;
-    /**
-     * See Argument Reference above.
-     */
     readonly projectId: string;
-    /**
-     * See Argument Reference above.
-     */
     readonly region: string;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns zero.
-     */
     readonly serial: number;
-    /**
-     * See Argument Reference above.
-     */
     readonly status: string;
-    /**
-     * (Optional)	See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns null.
-     */
     readonly transferredAt: string;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns zero.
-     */
     readonly ttl: number;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns an empty string.
-     */
     readonly type: string;
-    /**
-     * See Argument Reference above.
-     */
     readonly updatedAt: string;
-    /**
-     * See Argument Reference above.
-     * This parameter is not currently supported.
-     * It always returns 1.
-     */
     readonly version: number;
     /**
      * id is the provider-assigned unique ID for this managed resource.

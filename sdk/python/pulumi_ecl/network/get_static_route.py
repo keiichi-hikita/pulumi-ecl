@@ -8,61 +8,106 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetStaticRouteResult(object):
+class GetStaticRouteResult:
     """
     A collection of values returned by getStaticRoute.
     """
-    def __init__(__self__, aws_gw_id=None, azure_gw_id=None, description=None, destination=None, gcp_gw_id=None, interdc_gw_id=None, internet_gw_id=None, name=None, nexthop=None, region=None, service_type=None, static_route_id=None, tenant_id=None, vpn_gw_id=None, id=None):
+    def __init__(__self__, aws_gw_id=None, azure_gw_id=None, description=None, destination=None, gcp_gw_id=None, interdc_gw_id=None, internet_gw_id=None, name=None, nexthop=None, region=None, service_type=None, static_route_id=None, status=None, tenant_id=None, vpn_gw_id=None, id=None):
         if aws_gw_id and not isinstance(aws_gw_id, str):
-            raise TypeError('Expected argument aws_gw_id to be a str')
+            raise TypeError("Expected argument 'aws_gw_id' to be a str")
         __self__.aws_gw_id = aws_gw_id
+        """
+        See Argument Reference above.
+        """
         if azure_gw_id and not isinstance(azure_gw_id, str):
-            raise TypeError('Expected argument azure_gw_id to be a str')
+            raise TypeError("Expected argument 'azure_gw_id' to be a str")
         __self__.azure_gw_id = azure_gw_id
+        """
+        See Argument Reference above.
+        """
         if description and not isinstance(description, str):
-            raise TypeError('Expected argument description to be a str')
+            raise TypeError("Expected argument 'description' to be a str")
         __self__.description = description
+        """
+        See Argument Reference above .
+        """
         if destination and not isinstance(destination, str):
-            raise TypeError('Expected argument destination to be a str')
+            raise TypeError("Expected argument 'destination' to be a str")
         __self__.destination = destination
+        """
+        See Argument Reference above .
+        """
         if gcp_gw_id and not isinstance(gcp_gw_id, str):
-            raise TypeError('Expected argument gcp_gw_id to be a str')
+            raise TypeError("Expected argument 'gcp_gw_id' to be a str")
         __self__.gcp_gw_id = gcp_gw_id
+        """
+        See Argument Reference above.
+        """
         if interdc_gw_id and not isinstance(interdc_gw_id, str):
-            raise TypeError('Expected argument interdc_gw_id to be a str')
+            raise TypeError("Expected argument 'interdc_gw_id' to be a str")
         __self__.interdc_gw_id = interdc_gw_id
+        """
+        See Argument Reference above.
+        """
         if internet_gw_id and not isinstance(internet_gw_id, str):
-            raise TypeError('Expected argument internet_gw_id to be a str')
+            raise TypeError("Expected argument 'internet_gw_id' to be a str")
         __self__.internet_gw_id = internet_gw_id
+        """
+        See Argument Reference above.
+        """
         if name and not isinstance(name, str):
-            raise TypeError('Expected argument name to be a str')
+            raise TypeError("Expected argument 'name' to be a str")
         __self__.name = name
+        """
+        See Argument Reference above.
+        """
         if nexthop and not isinstance(nexthop, str):
-            raise TypeError('Expected argument nexthop to be a str')
+            raise TypeError("Expected argument 'nexthop' to be a str")
         __self__.nexthop = nexthop
+        """
+        See Argument Reference above.
+        """
         if region and not isinstance(region, str):
-            raise TypeError('Expected argument region to be a str')
+            raise TypeError("Expected argument 'region' to be a str")
         __self__.region = region
         if service_type and not isinstance(service_type, str):
-            raise TypeError('Expected argument service_type to be a str')
+            raise TypeError("Expected argument 'service_type' to be a str")
         __self__.service_type = service_type
+        """
+        See Argument Reference above.
+        """
         if static_route_id and not isinstance(static_route_id, str):
-            raise TypeError('Expected argument static_route_id to be a str')
+            raise TypeError("Expected argument 'static_route_id' to be a str")
         __self__.static_route_id = static_route_id
+        if status and not isinstance(status, str):
+            raise TypeError("Expected argument 'status' to be a str")
+        __self__.status = status
+        """
+        See Argument Reference above.
+        """
         if tenant_id and not isinstance(tenant_id, str):
-            raise TypeError('Expected argument tenant_id to be a str')
+            raise TypeError("Expected argument 'tenant_id' to be a str")
         __self__.tenant_id = tenant_id
+        """
+        See Argument Reference above.
+        """
         if vpn_gw_id and not isinstance(vpn_gw_id, str):
-            raise TypeError('Expected argument vpn_gw_id to be a str')
+            raise TypeError("Expected argument 'vpn_gw_id' to be a str")
         __self__.vpn_gw_id = vpn_gw_id
+        """
+        See Argument Reference above.
+        """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_static_route(aws_gw_id=None, azure_gw_id=None, description=None, destination=None, gcp_gw_id=None, interdc_gw_id=None, internet_gw_id=None, name=None, nexthop=None, region=None, service_type=None, static_route_id=None, status=None, tenant_id=None, vpn_gw_id=None):
+async def get_static_route(aws_gw_id=None,azure_gw_id=None,description=None,destination=None,gcp_gw_id=None,interdc_gw_id=None,internet_gw_id=None,name=None,nexthop=None,region=None,service_type=None,static_route_id=None,status=None,tenant_id=None,vpn_gw_id=None,opts=None):
+    """
+    Use this data source to get the ID and Details of an Enterprise Cloud Static route.
+    """
     __args__ = dict()
 
     __args__['awsGwId'] = aws_gw_id
@@ -80,7 +125,7 @@ async def get_static_route(aws_gw_id=None, azure_gw_id=None, description=None, d
     __args__['status'] = status
     __args__['tenantId'] = tenant_id
     __args__['vpnGwId'] = vpn_gw_id
-    __ret__ = await pulumi.runtime.invoke('ecl:network/getStaticRoute:getStaticRoute', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:network/getStaticRoute:getStaticRoute', __args__, opts=opts)
 
     return GetStaticRouteResult(
         aws_gw_id=__ret__.get('awsGwId'),
@@ -95,6 +140,7 @@ async def get_static_route(aws_gw_id=None, azure_gw_id=None, description=None, d
         region=__ret__.get('region'),
         service_type=__ret__.get('serviceType'),
         static_route_id=__ret__.get('staticRouteId'),
+        status=__ret__.get('status'),
         tenant_id=__ret__.get('tenantId'),
         vpn_gw_id=__ret__.get('vpnGwId'),
         id=__ret__.get('id'))

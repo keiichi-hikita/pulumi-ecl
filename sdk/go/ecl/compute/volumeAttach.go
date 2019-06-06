@@ -8,6 +8,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Attaches a Compute Volume to an Instance using the Enterprise Cloud
+// Compute (Nova) v2 API.
 type VolumeAttach struct {
 	s *pulumi.ResourceState
 }
@@ -68,34 +70,70 @@ func (r *VolumeAttach) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// The device of the volume attachment (ex: `/dev/vdc`).
+// _NOTE_: Being able to specify a device is dependent upon the hypervisor in
+// use. There is a chance that the device specified in Terraform will not be
+// the same device the hypervisor chose. If this happens, Terraform will wish
+// to update the device upon subsequent applying which will cause the volume
+// to be detached and reattached indefinitely. Please use with caution.
 func (r *VolumeAttach) Device() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["device"])
 }
 
+// The region in which to obtain the V2 Compute client.
+// A Compute client is needed to create a volume attachment. If omitted, the
+// `region` argument of the provider is used. Changing this creates a
+// new volume attachment.
 func (r *VolumeAttach) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// The ID of the Instance to attach the Volume to.
 func (r *VolumeAttach) ServerId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["serverId"])
 }
 
+// The ID of the Volume to attach to an Instance.
 func (r *VolumeAttach) VolumeId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["volumeId"])
 }
 
 // Input properties used for looking up and filtering VolumeAttach resources.
 type VolumeAttachState struct {
+	// The device of the volume attachment (ex: `/dev/vdc`).
+	// _NOTE_: Being able to specify a device is dependent upon the hypervisor in
+	// use. There is a chance that the device specified in Terraform will not be
+	// the same device the hypervisor chose. If this happens, Terraform will wish
+	// to update the device upon subsequent applying which will cause the volume
+	// to be detached and reattached indefinitely. Please use with caution.
 	Device interface{}
+	// The region in which to obtain the V2 Compute client.
+	// A Compute client is needed to create a volume attachment. If omitted, the
+	// `region` argument of the provider is used. Changing this creates a
+	// new volume attachment.
 	Region interface{}
+	// The ID of the Instance to attach the Volume to.
 	ServerId interface{}
+	// The ID of the Volume to attach to an Instance.
 	VolumeId interface{}
 }
 
 // The set of arguments for constructing a VolumeAttach resource.
 type VolumeAttachArgs struct {
+	// The device of the volume attachment (ex: `/dev/vdc`).
+	// _NOTE_: Being able to specify a device is dependent upon the hypervisor in
+	// use. There is a chance that the device specified in Terraform will not be
+	// the same device the hypervisor chose. If this happens, Terraform will wish
+	// to update the device upon subsequent applying which will cause the volume
+	// to be detached and reattached indefinitely. Please use with caution.
 	Device interface{}
+	// The region in which to obtain the V2 Compute client.
+	// A Compute client is needed to create a volume attachment. If omitted, the
+	// `region` argument of the provider is used. Changing this creates a
+	// new volume attachment.
 	Region interface{}
+	// The ID of the Instance to attach the Volume to.
 	ServerId interface{}
+	// The ID of the Volume to attach to an Instance.
 	VolumeId interface{}
 }

@@ -62,6 +62,7 @@ export interface GetStaticRouteResult {
     readonly region: string;
     readonly serviceType: string;
     readonly staticRouteId: string;
+    readonly status: string;
     readonly tenantId: string;
     readonly vpnGwId: string;
     /**

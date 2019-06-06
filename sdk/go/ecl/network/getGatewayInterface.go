@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID and Details of an Enterprise Cloud Gateway interface.
 func LookupGatewayInterface(ctx *pulumi.Context, args *GetGatewayInterfaceArgs) (*GetGatewayInterfaceResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -56,6 +57,7 @@ func LookupGatewayInterface(ctx *pulumi.Context, args *GetGatewayInterfaceArgs) 
 		SecondaryIpv4: outputs["secondaryIpv4"],
 		SecondaryIpv6: outputs["secondaryIpv6"],
 		ServiceType: outputs["serviceType"],
+		Status: outputs["status"],
 		TenantId: outputs["tenantId"],
 		VpnGwId: outputs["vpnGwId"],
 		Vrid: outputs["vrid"],
@@ -65,52 +67,96 @@ func LookupGatewayInterface(ctx *pulumi.Context, args *GetGatewayInterfaceArgs) 
 
 // A collection of arguments for invoking getGatewayInterface.
 type GetGatewayInterfaceArgs struct {
+	// AWS Gateway to which this port is connected.
 	AwsGwId interface{}
+	// Azure Gateway to which this port is connected.
 	AzureGwId interface{}
+	// Description of the Gateway Interface resource.
 	Description interface{}
+	// Unique ID of the Gateway Interface resource.
 	GatewayInterfaceId interface{}
+	// GCP Gateway to which this port is connected.
 	GcpGwId interface{}
+	// IP version 4 address to be assigned virtual router on VRRP.
 	GwVipv4 interface{}
+	// IP version 6 address to be assigned virtual router on VRRP.
 	GwVipv6 interface{}
+	// Inter DC Gateway to which this port is connected.
 	InterdcGwId interface{}
+	// Internet GW to which this port is connected.
 	InternetGwId interface{}
+	// Name of the Gateway Interface resource.
 	Name interface{}
+	// Netmask for IPv4 addresses.
 	Netmask interface{}
+	// Network connected to this interface.
 	NetworkId interface{}
+	// IP version 4 address to be assigned to primary device on VRRP.
 	PrimaryIpv4 interface{}
+	// IP version 6 address to be assigned to primary device on VRRP.
 	PrimaryIpv6 interface{}
+	// The region in which to obtain the V2 Network client.
+	// If omitted, the `region` argument of the provider is used.
 	Region interface{}
+	// IP version 4 address to be assigned to secondary device on VRRP.
 	SecondaryIpv4 interface{}
+	// IP version 6 address to be assigned to secondary device on VRRP.
 	SecondaryIpv6 interface{}
+	// Service type for this interface. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 	ServiceType interface{}
+	// The Gateway Interface status.
 	Status interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
+	// VPN Gateway to which this port is connected.
 	VpnGwId interface{}
+	// VRRP Group ID for this GW Interface.
 	Vrid interface{}
 }
 
 // A collection of values returned by getGatewayInterface.
 type GetGatewayInterfaceResult struct {
+	// See Argument Reference above.
 	AwsGwId interface{}
+	// See Argument Reference above.
 	AzureGwId interface{}
+	// See Argument Reference above .
 	Description interface{}
 	GatewayInterfaceId interface{}
+	// See Argument Reference above.
 	GcpGwId interface{}
+	// See Argument Reference above.
 	GwVipv4 interface{}
+	// See Argument Reference above.
 	GwVipv6 interface{}
+	// See Argument Reference above.
 	InterdcGwId interface{}
+	// See Argument Reference above.
 	InternetGwId interface{}
+	// See Argument Reference above.
 	Name interface{}
+	// See Argument Reference above.
 	Netmask interface{}
+	// See Argument Reference above.
 	NetworkId interface{}
+	// See Argument Reference above.
 	PrimaryIpv4 interface{}
+	// See Argument Reference above.
 	PrimaryIpv6 interface{}
 	Region interface{}
+	// See Argument Reference above.
 	SecondaryIpv4 interface{}
+	// See Argument Reference above.
 	SecondaryIpv6 interface{}
+	// See Argument Reference above.
 	ServiceType interface{}
+	// See Argument Reference above.
+	Status interface{}
+	// See Argument Reference above.
 	TenantId interface{}
+	// See Argument Reference above.
 	VpnGwId interface{}
+	// See Argument Reference above.
 	Vrid interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

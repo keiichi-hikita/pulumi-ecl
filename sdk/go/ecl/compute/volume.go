@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 volume resource within Enterprise Cloud.
 type Volume struct {
 	s *pulumi.ResourceState
 }
@@ -82,69 +83,132 @@ func (r *Volume) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// If a volume is attached to an instance, this attribute will
+// display the Attachment ID, Instance ID, and the Device as the Instance
+// sees it.
 func (r *Volume) Attachments() *pulumi.ArrayOutput {
 	return (*pulumi.ArrayOutput)(r.s.State["attachments"])
 }
 
+// The availability zone for the volume.
+// Changing this creates a new volume.
 func (r *Volume) AvailabilityZone() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["availabilityZone"])
 }
 
+// A description of the volume. Changing this updates
+// the volume's description.
 func (r *Volume) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// The image ID from which to create the volume.
+// Changing this creates a new volume.
 func (r *Volume) ImageId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["imageId"])
 }
 
+// Metadata key/value pairs to associate with the volume.
+// Changing this updates the existing volume metadata.
 func (r *Volume) Metadata() *pulumi.MapOutput {
 	return (*pulumi.MapOutput)(r.s.State["metadata"])
 }
 
+// A unique name for the volume. Changing this updates the
+// volume's name.
 func (r *Volume) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// The region in which to create the volume. If
+// omitted, the `region` argument of the provider is used. Changing this
+// creates a new volume.
 func (r *Volume) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// The size of the volume to create (in gigabytes). Changing
+// this creates a new volume.
+// User can choice following volume sizes.
 func (r *Volume) Size() *pulumi.IntOutput {
 	return (*pulumi.IntOutput)(r.s.State["size"])
 }
 
+// The volume ID to replicate with.
 func (r *Volume) SourceReplica() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["sourceReplica"])
 }
 
+// The type of volume to create.
+// Changing this creates a new volume.
 func (r *Volume) VolumeType() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["volumeType"])
 }
 
 // Input properties used for looking up and filtering Volume resources.
 type VolumeState struct {
+	// If a volume is attached to an instance, this attribute will
+	// display the Attachment ID, Instance ID, and the Device as the Instance
+	// sees it.
 	Attachments interface{}
+	// The availability zone for the volume.
+	// Changing this creates a new volume.
 	AvailabilityZone interface{}
+	// A description of the volume. Changing this updates
+	// the volume's description.
 	Description interface{}
+	// The image ID from which to create the volume.
+	// Changing this creates a new volume.
 	ImageId interface{}
+	// Metadata key/value pairs to associate with the volume.
+	// Changing this updates the existing volume metadata.
 	Metadata interface{}
+	// A unique name for the volume. Changing this updates the
+	// volume's name.
 	Name interface{}
+	// The region in which to create the volume. If
+	// omitted, the `region` argument of the provider is used. Changing this
+	// creates a new volume.
 	Region interface{}
+	// The size of the volume to create (in gigabytes). Changing
+	// this creates a new volume.
+	// User can choice following volume sizes.
 	Size interface{}
+	// The volume ID to replicate with.
 	SourceReplica interface{}
+	// The type of volume to create.
+	// Changing this creates a new volume.
 	VolumeType interface{}
 }
 
 // The set of arguments for constructing a Volume resource.
 type VolumeArgs struct {
+	// The availability zone for the volume.
+	// Changing this creates a new volume.
 	AvailabilityZone interface{}
+	// A description of the volume. Changing this updates
+	// the volume's description.
 	Description interface{}
+	// The image ID from which to create the volume.
+	// Changing this creates a new volume.
 	ImageId interface{}
+	// Metadata key/value pairs to associate with the volume.
+	// Changing this updates the existing volume metadata.
 	Metadata interface{}
+	// A unique name for the volume. Changing this updates the
+	// volume's name.
 	Name interface{}
+	// The region in which to create the volume. If
+	// omitted, the `region` argument of the provider is used. Changing this
+	// creates a new volume.
 	Region interface{}
+	// The size of the volume to create (in gigabytes). Changing
+	// this creates a new volume.
+	// User can choice following volume sizes.
 	Size interface{}
+	// The volume ID to replicate with.
 	SourceReplica interface{}
+	// The type of volume to create.
+	// Changing this creates a new volume.
 	VolumeType interface{}
 }

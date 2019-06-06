@@ -9,18 +9,11 @@ export function getSubnet(args?: GetSubnetArgs, opts?: pulumi.InvokeOptions): Pr
     return pulumi.runtime.invoke("ecl:network/getSubnet:getSubnet", {
         "cidr": args.cidr,
         "description": args.description,
-        "enableDhcp": args.enableDhcp,
         "gatewayIp": args.gatewayIp,
-        "ipVersion": args.ipVersion,
-        "ipv6AddressMode": args.ipv6AddressMode,
-        "ipv6RaMode": args.ipv6RaMode,
         "name": args.name,
         "networkId": args.networkId,
-        "ntpServers": args.ntpServers,
-        "status": args.status,
+        "region": args.region,
         "subnetId": args.subnetId,
-        "tags": args.tags,
-        "tenantId": args.tenantId,
     }, opts);
 }
 
@@ -30,18 +23,11 @@ export function getSubnet(args?: GetSubnetArgs, opts?: pulumi.InvokeOptions): Pr
 export interface GetSubnetArgs {
     readonly cidr?: string;
     readonly description?: string;
-    readonly enableDhcp?: boolean;
     readonly gatewayIp?: string;
-    readonly ipVersion?: number;
-    readonly ipv6AddressMode?: string;
-    readonly ipv6RaMode?: string;
     readonly name?: string;
     readonly networkId?: string;
-    readonly ntpServers?: string[];
-    readonly status?: string;
+    readonly region?: string;
     readonly subnetId?: string;
-    readonly tags?: {[key: string]: any};
-    readonly tenantId?: string;
 }
 
 /**
@@ -61,8 +47,10 @@ export interface GetSubnetResult {
     readonly name: string;
     readonly networkId: string;
     readonly ntpServers: string[];
+    readonly region: string;
     readonly status: string;
     readonly subnetId: string;
+    readonly tags: {[key: string]: any};
     readonly tenantId: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.

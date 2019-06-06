@@ -17,12 +17,26 @@ export class Tenant extends pulumi.CustomResource {
         return new Tenant(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly contractId: pulumi.Output<string>;
-    public readonly description: pulumi.Output<string>;
-    public /*out*/ readonly startTime: pulumi.Output<string>;
-    public /*out*/ readonly tenantId: pulumi.Output<string>;
-    public readonly tenantName: pulumi.Output<string>;
-    public readonly tenantRegion: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:sss/tenant:Tenant';
+
+    /**
+     * Returns true if the given object is an instance of Tenant.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Tenant {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Tenant.__pulumiType;
+    }
+
+    public readonly contractId!: pulumi.Output<string>;
+    public readonly description!: pulumi.Output<string>;
+    public /*out*/ readonly startTime!: pulumi.Output<string>;
+    public /*out*/ readonly tenantId!: pulumi.Output<string>;
+    public readonly tenantName!: pulumi.Output<string>;
+    public readonly tenantRegion!: pulumi.Output<string>;
 
     /**
      * Create a Tenant resource with the given unique name, arguments, and options.
@@ -35,7 +49,7 @@ export class Tenant extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: TenantArgs | TenantState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: TenantState = argsOrState as TenantState | undefined;
+            const state = argsOrState as TenantState | undefined;
             inputs["contractId"] = state ? state.contractId : undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["startTime"] = state ? state.startTime : undefined;
@@ -60,7 +74,7 @@ export class Tenant extends pulumi.CustomResource {
             inputs["startTime"] = undefined /*out*/;
             inputs["tenantId"] = undefined /*out*/;
         }
-        super("ecl:sss/tenant:Tenant", name, inputs, opts);
+        super(Tenant.__pulumiType, name, inputs, opts);
     }
 }
 

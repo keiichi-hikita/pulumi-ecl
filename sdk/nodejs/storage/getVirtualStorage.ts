@@ -7,14 +7,8 @@ import * as utilities from "../utilities";
 export function getVirtualStorage(args?: GetVirtualStorageArgs, opts?: pulumi.InvokeOptions): Promise<GetVirtualStorageResult> {
     args = args || {};
     return pulumi.runtime.invoke("ecl:storage/getVirtualStorage:getVirtualStorage", {
-        "description": args.description,
-        "hostRoutes": args.hostRoutes,
-        "ipAddrPool": args.ipAddrPool,
         "name": args.name,
-        "networkId": args.networkId,
-        "subnetId": args.subnetId,
         "virtualStorageId": args.virtualStorageId,
-        "volumeTypeId": args.volumeTypeId,
     }, opts);
 }
 
@@ -22,20 +16,22 @@ export function getVirtualStorage(args?: GetVirtualStorageArgs, opts?: pulumi.In
  * A collection of arguments for invoking getVirtualStorage.
  */
 export interface GetVirtualStorageArgs {
-    readonly description?: string;
-    readonly hostRoutes?: { destination: string, nexthop: string }[];
-    readonly ipAddrPool?: { end: string, start: string };
     readonly name?: string;
-    readonly networkId?: string;
-    readonly subnetId?: string;
     readonly virtualStorageId?: string;
-    readonly volumeTypeId?: string;
 }
 
 /**
  * A collection of values returned by getVirtualStorage.
  */
 export interface GetVirtualStorageResult {
+    readonly description: string;
+    readonly hostRoutes: { destination: string, nexthop: string }[];
+    readonly ipAddrPool: { end: string, start: string };
+    readonly name?: string;
+    readonly networkId: string;
+    readonly subnetId: string;
+    readonly virtualStorageId?: string;
+    readonly volumeTypeId: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

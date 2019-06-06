@@ -7,14 +7,7 @@ import * as utilities from "../utilities";
 export function getVolume(args?: GetVolumeArgs, opts?: pulumi.InvokeOptions): Promise<GetVolumeResult> {
     args = args || {};
     return pulumi.runtime.invoke("ecl:storage/getVolume:getVolume", {
-        "availabilityZone": args.availabilityZone,
-        "description": args.description,
-        "initiatorIqns": args.initiatorIqns,
-        "iopsPerGb": args.iopsPerGb,
         "name": args.name,
-        "size": args.size,
-        "throughput": args.throughput,
-        "virtualStorageId": args.virtualStorageId,
         "volumeId": args.volumeId,
     }, opts);
 }
@@ -23,14 +16,7 @@ export function getVolume(args?: GetVolumeArgs, opts?: pulumi.InvokeOptions): Pr
  * A collection of arguments for invoking getVolume.
  */
 export interface GetVolumeArgs {
-    readonly availabilityZone?: string;
-    readonly description?: string;
-    readonly initiatorIqns?: string[];
-    readonly iopsPerGb?: string;
     readonly name?: string;
-    readonly size?: number;
-    readonly throughput?: string;
-    readonly virtualStorageId?: string;
     readonly volumeId?: string;
 }
 
@@ -39,6 +25,14 @@ export interface GetVolumeArgs {
  */
 export interface GetVolumeResult {
     readonly availabilityZone: string;
+    readonly description: string;
+    readonly initiatorIqns: string[];
+    readonly iopsPerGb: string;
+    readonly name?: string;
+    readonly size: number;
+    readonly throughput: string;
+    readonly virtualStorageId: string;
+    readonly volumeId?: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

@@ -17,26 +17,40 @@ export class GatewayInterface extends pulumi.CustomResource {
         return new GatewayInterface(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly awsGwId: pulumi.Output<string | undefined>;
-    public readonly azureGwId: pulumi.Output<string | undefined>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly gcpGwId: pulumi.Output<string | undefined>;
-    public readonly gwVipv4: pulumi.Output<string>;
-    public readonly gwVipv6: pulumi.Output<string | undefined>;
-    public readonly interdcGwId: pulumi.Output<string | undefined>;
-    public readonly internetGwId: pulumi.Output<string | undefined>;
-    public readonly name: pulumi.Output<string>;
-    public readonly netmask: pulumi.Output<number>;
-    public readonly networkId: pulumi.Output<string>;
-    public readonly primaryIpv4: pulumi.Output<string>;
-    public readonly primaryIpv6: pulumi.Output<string | undefined>;
-    public readonly region: pulumi.Output<string>;
-    public readonly secondaryIpv4: pulumi.Output<string>;
-    public readonly secondaryIpv6: pulumi.Output<string | undefined>;
-    public readonly serviceType: pulumi.Output<string>;
-    public readonly tenantId: pulumi.Output<string>;
-    public readonly vpnGwId: pulumi.Output<string | undefined>;
-    public readonly vrid: pulumi.Output<number>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/gatewayInterface:GatewayInterface';
+
+    /**
+     * Returns true if the given object is an instance of GatewayInterface.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is GatewayInterface {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === GatewayInterface.__pulumiType;
+    }
+
+    public readonly awsGwId!: pulumi.Output<string | undefined>;
+    public readonly azureGwId!: pulumi.Output<string | undefined>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly gcpGwId!: pulumi.Output<string | undefined>;
+    public readonly gwVipv4!: pulumi.Output<string>;
+    public readonly gwVipv6!: pulumi.Output<string | undefined>;
+    public readonly interdcGwId!: pulumi.Output<string | undefined>;
+    public readonly internetGwId!: pulumi.Output<string | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly netmask!: pulumi.Output<number>;
+    public readonly networkId!: pulumi.Output<string>;
+    public readonly primaryIpv4!: pulumi.Output<string>;
+    public readonly primaryIpv6!: pulumi.Output<string | undefined>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly secondaryIpv4!: pulumi.Output<string>;
+    public readonly secondaryIpv6!: pulumi.Output<string | undefined>;
+    public readonly serviceType!: pulumi.Output<string>;
+    public readonly tenantId!: pulumi.Output<string>;
+    public readonly vpnGwId!: pulumi.Output<string | undefined>;
+    public readonly vrid!: pulumi.Output<number>;
 
     /**
      * Create a GatewayInterface resource with the given unique name, arguments, and options.
@@ -49,7 +63,7 @@ export class GatewayInterface extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: GatewayInterfaceArgs | GatewayInterfaceState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: GatewayInterfaceState = argsOrState as GatewayInterfaceState | undefined;
+            const state = argsOrState as GatewayInterfaceState | undefined;
             inputs["awsGwId"] = state ? state.awsGwId : undefined;
             inputs["azureGwId"] = state ? state.azureGwId : undefined;
             inputs["description"] = state ? state.description : undefined;
@@ -114,7 +128,7 @@ export class GatewayInterface extends pulumi.CustomResource {
             inputs["vpnGwId"] = args ? args.vpnGwId : undefined;
             inputs["vrid"] = args ? args.vrid : undefined;
         }
-        super("ecl:network/gatewayInterface:GatewayInterface", name, inputs, opts);
+        super(GatewayInterface.__pulumiType, name, inputs, opts);
     }
 }
 

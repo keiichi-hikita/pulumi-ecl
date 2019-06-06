@@ -10,46 +10,111 @@ from .. import utilities, tables
 
 class Image(pulumi.CustomResource):
     checksum: pulumi.Output[str]
+    """
+    md5 hash of image contents.
+    """
     container_format: pulumi.Output[str]
+    """
+    Format of the container. Must be "bare".
+    """
     created_at: pulumi.Output[str]
+    """
+    Date and time of image registration.
+    """
     disk_format: pulumi.Output[str]
+    """
+    Format of the disk. Must be one of "raw", "qcow2", "iso".
+    """
     file: pulumi.Output[str]
+    """
+    URL for the virtual machine image file.
+    """
     license_switch: pulumi.Output[str]
+    """
+    Switch destination of the license type. Must be one of "WindowsServer_2012R2_Standard_64bit_ComLicense", "WindowsServer_2012_Standard_64bit_ComLicense", "WindowsServer_2008R2_Enterprise_64bit_ComLicense", "WindowsServer_2008R2_Standard_64bit_ComLicense", "WindowsServer_2008_Enterprise_64bit_ComLicense", "WindowsServer_2008_Standard_64bit_ComLicense", "Red_Hat_Enterprise_Linux_6_64bit_BYOL".
+    """
     local_file_path: pulumi.Output[str]
+    """
+    This is the filepath of the raw image file that will be uploaded to Glance.
+    """
     metadata: pulumi.Output[dict]
-    min_disk_gb: pulumi.Output[int]
-    min_ram_mb: pulumi.Output[int]
+    """
+    The location metadata.
+    """
+    min_disk_gb: pulumi.Output[float]
+    """
+    Amount of disk space (in GB) required to boot image. Defaults to 0.
+    """
+    min_ram_mb: pulumi.Output[float]
+    """
+    Amount of ram (in MB) required to boot image. Defaults to 0.
+    """
     name: pulumi.Output[str]
+    """
+    Descriptive name for the image.
+    """
     owner: pulumi.Output[str]
+    """
+    Owner of the image.
+    """
     properties: pulumi.Output[dict]
     protected: pulumi.Output[bool]
+    """
+    If true, image will not be deletable. Defaults to false.
+    """
     region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Imagestorage client.
+    Images are associated with accounts, but a Imagestroage client is needed to
+    create one. If omitted, the `region` argument of the provider is used.
+    Changing this creates a new image.
+    """
     schema: pulumi.Output[str]
-    size_bytes: pulumi.Output[int]
+    """
+    URL for schema of the virtual machine image.
+    """
+    size_bytes: pulumi.Output[float]
+    """
+    Size of image file in bytes.
+    """
     status: pulumi.Output[str]
+    """
+    Status of the image.
+    """
     tags: pulumi.Output[list]
+    """
+    String related to the image.
+    """
     update_at: pulumi.Output[str]
     verify_checksum: pulumi.Output[bool]
+    """
+    If false, the checksum will not be verified once the image is finished uploading. Defaults to true.
+    """
     visibility: pulumi.Output[str]
+    """
+    Scope of image accessibility. Must be one of "public", "private". Defaults to "private".
+    """
     def __init__(__self__, resource_name, opts=None, container_format=None, disk_format=None, license_switch=None, local_file_path=None, min_disk_gb=None, min_ram_mb=None, name=None, properties=None, protected=None, region=None, tags=None, verify_checksum=None, visibility=None, __name__=None, __opts__=None):
         """
-        Create a Image resource with the given unique name, props, and options.
+        Manages a V2 image resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] container_format
-        :param pulumi.Input[str] disk_format
-        :param pulumi.Input[str] license_switch
-        :param pulumi.Input[str] local_file_path
-        :param pulumi.Input[int] min_disk_gb
-        :param pulumi.Input[int] min_ram_mb
-        :param pulumi.Input[str] name
-        :param pulumi.Input[dict] properties
-        :param pulumi.Input[bool] protected
-        :param pulumi.Input[str] region
-        :param pulumi.Input[list] tags
-        :param pulumi.Input[bool] verify_checksum
-        :param pulumi.Input[str] visibility
+        :param pulumi.Input[str] container_format: Format of the container. Must be "bare".
+        :param pulumi.Input[str] disk_format: Format of the disk. Must be one of "raw", "qcow2", "iso".
+        :param pulumi.Input[str] license_switch: Switch destination of the license type. Must be one of "WindowsServer_2012R2_Standard_64bit_ComLicense", "WindowsServer_2012_Standard_64bit_ComLicense", "WindowsServer_2008R2_Enterprise_64bit_ComLicense", "WindowsServer_2008R2_Standard_64bit_ComLicense", "WindowsServer_2008_Enterprise_64bit_ComLicense", "WindowsServer_2008_Standard_64bit_ComLicense", "Red_Hat_Enterprise_Linux_6_64bit_BYOL".
+        :param pulumi.Input[str] local_file_path: This is the filepath of the raw image file that will be uploaded to Glance.
+        :param pulumi.Input[float] min_disk_gb: Amount of disk space (in GB) required to boot image. Defaults to 0.
+        :param pulumi.Input[float] min_ram_mb: Amount of ram (in MB) required to boot image. Defaults to 0.
+        :param pulumi.Input[str] name: Descriptive name for the image.
+        :param pulumi.Input[bool] protected: If true, image will not be deletable. Defaults to false.
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Imagestorage client.
+               Images are associated with accounts, but a Imagestroage client is needed to
+               create one. If omitted, the `region` argument of the provider is used.
+               Changing this creates a new image.
+        :param pulumi.Input[list] tags: String related to the image.
+        :param pulumi.Input[bool] verify_checksum: If false, the checksum will not be verified once the image is finished uploading. Defaults to true.
+        :param pulumi.Input[str] visibility: Scope of image accessibility. Must be one of "public", "private". Defaults to "private".
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -67,17 +132,17 @@ class Image(pulumi.CustomResource):
         __props__ = dict()
 
         if container_format is None:
-            raise TypeError('Missing required property container_format')
+            raise TypeError("Missing required property 'container_format'")
         __props__['container_format'] = container_format
 
         if disk_format is None:
-            raise TypeError('Missing required property disk_format')
+            raise TypeError("Missing required property 'disk_format'")
         __props__['disk_format'] = disk_format
 
         __props__['license_switch'] = license_switch
 
         if local_file_path is None:
-            raise TypeError('Missing required property local_file_path')
+            raise TypeError("Missing required property 'local_file_path'")
         __props__['local_file_path'] = local_file_path
 
         __props__['min_disk_gb'] = min_disk_gb

@@ -7,23 +7,17 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID of an available Enterprise Cloud subnet.
 func LookupSubnet(ctx *pulumi.Context, args *GetSubnetArgs) (*GetSubnetResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
 		inputs["cidr"] = args.Cidr
 		inputs["description"] = args.Description
-		inputs["enableDhcp"] = args.EnableDhcp
 		inputs["gatewayIp"] = args.GatewayIp
-		inputs["ipVersion"] = args.IpVersion
-		inputs["ipv6AddressMode"] = args.Ipv6AddressMode
-		inputs["ipv6RaMode"] = args.Ipv6RaMode
 		inputs["name"] = args.Name
 		inputs["networkId"] = args.NetworkId
-		inputs["ntpServers"] = args.NtpServers
-		inputs["status"] = args.Status
+		inputs["region"] = args.Region
 		inputs["subnetId"] = args.SubnetId
-		inputs["tags"] = args.Tags
-		inputs["tenantId"] = args.TenantId
 	}
 	outputs, err := ctx.Invoke("ecl:network/getSubnet:getSubnet", inputs)
 	if err != nil {
@@ -43,8 +37,10 @@ func LookupSubnet(ctx *pulumi.Context, args *GetSubnetArgs) (*GetSubnetResult, e
 		Name: outputs["name"],
 		NetworkId: outputs["networkId"],
 		NtpServers: outputs["ntpServers"],
+		Region: outputs["region"],
 		Status: outputs["status"],
 		SubnetId: outputs["subnetId"],
+		Tags: outputs["tags"],
 		TenantId: outputs["tenantId"],
 		Id: outputs["id"],
 	}, nil
@@ -52,39 +48,70 @@ func LookupSubnet(ctx *pulumi.Context, args *GetSubnetArgs) (*GetSubnetResult, e
 
 // A collection of arguments for invoking getSubnet.
 type GetSubnetArgs struct {
+	// CIDR representing IP range for this subnet, based on IP
+	// version. You can omit this option if you are creating a subnet from a
+	// subnet pool.
 	Cidr interface{}
+	// Subnet description.
 	Description interface{}
-	EnableDhcp interface{}
+	// Default gateway used by devices in this subnet.
+	// Leaving this blank and not setting `no_gateway` will cause a default
+	// gateway of `.1` to be used. Changing this updates the gateway IP of the
+	// existing subnet.
 	GatewayIp interface{}
-	IpVersion interface{}
-	Ipv6AddressMode interface{}
-	Ipv6RaMode interface{}
+	// The name of the subnet. Changing this updates the name of
+	// the existing subnet.
 	Name interface{}
+	// The UUID of the parent network. Changing this
+	// creates a new subnet.
 	NetworkId interface{}
-	NtpServers interface{}
-	Status interface{}
+	// The region in which to obtain the V2 Network client.
+	// A Network client is needed to retrieve subnet ids. If omitted, the
+	// `region` argument of the provider is used.
+	Region interface{}
+	// ID of subnet.
 	SubnetId interface{}
-	Tags interface{}
-	TenantId interface{}
 }
 
 // A collection of values returned by getSubnet.
 type GetSubnetResult struct {
+	// An array of sub-ranges of CIDR available for dynamic allocation to ports.
 	AllocationPools interface{}
+	// See Argument Reference above.
 	Cidr interface{}
+	// See Argument Reference above.
 	Description interface{}
+	// List of subnet dns name servers.
 	DnsNameservers interface{}
+	// The administrative state of the network.
 	EnableDhcp interface{}
+	// See Argument Reference above.
 	GatewayIp interface{}
+	// An array of routes that should be used by devices with IPs from this subnet
 	HostRoutes interface{}
+	// IP version.
+	// In Enterprise Cloud service this parameter is fixed as 4.
 	IpVersion interface{}
+	// Address mode for IPv6 (not supported).
 	Ipv6AddressMode interface{}
+	// IPv6 router advertisement mode (not supported).
 	Ipv6RaMode interface{}
+	// See Argument Reference above.
 	Name interface{}
+	// See Argument Reference above.
 	NetworkId interface{}
+	// List of ntp servers.
 	NtpServers interface{}
+	// See Argument Reference above.
+	Region interface{}
+	// Hidden Subnet status.
 	Status interface{}
+	// See Argument Reference above.
 	SubnetId interface{}
+	// Subnet tags.
+	Tags interface{}
+	// The owner of the subnet. Required if admin wants to
+	// create a subnet for another tenant. Changing this creates a new subnet.
 	TenantId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

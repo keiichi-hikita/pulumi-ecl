@@ -37,11 +37,7 @@ class Keypair(pulumi.CustomResource):
     create one. If omitted, the `region` argument of the provider is used.
     Changing this creates a new keypair.
     """
-    value_specs: pulumi.Output[dict]
-    """
-    Map of additional options.
-    """
-    def __init__(__self__, resource_name, opts=None, name=None, public_key=None, region=None, value_specs=None, __name__=None, __opts__=None):
+    def __init__(__self__, resource_name, opts=None, name=None, public_key=None, region=None, __name__=None, __opts__=None):
         """
         Manages a V2 keypair resource within Enterprise Cloud.
         
@@ -64,7 +60,6 @@ class Keypair(pulumi.CustomResource):
                Keypairs are associated with accounts, but a Compute client is needed to
                create one. If omitted, the `region` argument of the provider is used.
                Changing this creates a new keypair.
-        :param pulumi.Input[dict] value_specs: Map of additional options.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -86,8 +81,6 @@ class Keypair(pulumi.CustomResource):
         __props__['public_key'] = public_key
 
         __props__['region'] = region
-
-        __props__['value_specs'] = value_specs
 
         __props__['fingerprint'] = None
         __props__['private_key'] = None

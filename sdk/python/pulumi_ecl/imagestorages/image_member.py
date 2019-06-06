@@ -10,21 +10,48 @@ from .. import utilities, tables
 
 class ImageMember(pulumi.CustomResource):
     created_at: pulumi.Output[str]
+    """
+    Date and time of image member creation.
+    """
     image_id: pulumi.Output[str]
+    """
+    An identifier for the image.
+    """
     member_id: pulumi.Output[str]
+    """
+    An identifier for the image member (projectID).
+    """
     region: pulumi.Output[str]
+    """
+    The region in which to obtain the V2 Imagestorage client.
+    Images are associated with accounts, but a Imagestroage client is needed to
+    create one. If omitted, the `region` argument of the provider is used.
+    Changing this creates a new image.
+    """
     schema: pulumi.Output[str]
+    """
+    URL for schema of the member.
+    """
     status: pulumi.Output[str]
+    """
+    The status of this image member.
+    """
     updated_at: pulumi.Output[str]
+    """
+    Date and time of last modification of image member.
+    """
     def __init__(__self__, resource_name, opts=None, image_id=None, member_id=None, region=None, __name__=None, __opts__=None):
         """
-        Create a ImageMember resource with the given unique name, props, and options.
+        Manages a V2 Image member resource within Enterprise Cloud.
         
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[str] image_id
-        :param pulumi.Input[str] member_id
-        :param pulumi.Input[str] region
+        :param pulumi.Input[str] image_id: An identifier for the image.
+        :param pulumi.Input[str] member_id: An identifier for the image member (projectID).
+        :param pulumi.Input[str] region: The region in which to obtain the V2 Imagestorage client.
+               Images are associated with accounts, but a Imagestroage client is needed to
+               create one. If omitted, the `region` argument of the provider is used.
+               Changing this creates a new image.
         """
         if __name__ is not None:
             warnings.warn("explicit use of __name__ is deprecated", DeprecationWarning)
@@ -42,11 +69,11 @@ class ImageMember(pulumi.CustomResource):
         __props__ = dict()
 
         if image_id is None:
-            raise TypeError('Missing required property image_id')
+            raise TypeError("Missing required property 'image_id'")
         __props__['image_id'] = image_id
 
         if member_id is None:
-            raise TypeError('Missing required property member_id')
+            raise TypeError("Missing required property 'member_id'")
         __props__['member_id'] = member_id
 
         __props__['region'] = region

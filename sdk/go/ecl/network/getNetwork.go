@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID of an available Enterprise Cloud network.
 func LookupNetwork(ctx *pulumi.Context, args *GetNetworkArgs) (*GetNetworkResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -15,10 +16,7 @@ func LookupNetwork(ctx *pulumi.Context, args *GetNetworkArgs) (*GetNetworkResult
 		inputs["name"] = args.Name
 		inputs["networkId"] = args.NetworkId
 		inputs["plane"] = args.Plane
-		inputs["status"] = args.Status
-		inputs["subnets"] = args.Subnets
-		inputs["tags"] = args.Tags
-		inputs["tenantId"] = args.TenantId
+		inputs["region"] = args.Region
 	}
 	outputs, err := ctx.Invoke("ecl:network/getNetwork:getNetwork", inputs)
 	if err != nil {
@@ -26,26 +24,63 @@ func LookupNetwork(ctx *pulumi.Context, args *GetNetworkArgs) (*GetNetworkResult
 	}
 	return &GetNetworkResult{
 		AdminStateUp: outputs["adminStateUp"],
+		Description: outputs["description"],
+		MatchingSubnetCidr: outputs["matchingSubnetCidr"],
+		Name: outputs["name"],
+		NetworkId: outputs["networkId"],
+		Plane: outputs["plane"],
+		Region: outputs["region"],
+		Status: outputs["status"],
+		Subnets: outputs["subnets"],
+		Tags: outputs["tags"],
+		TenantId: outputs["tenantId"],
 		Id: outputs["id"],
 	}, nil
 }
 
 // A collection of arguments for invoking getNetwork.
 type GetNetworkArgs struct {
+	// The description of the network.
 	Description interface{}
+	// The CIDR of a subnet within the network.
 	MatchingSubnetCidr interface{}
+	// The name of the network.
 	Name interface{}
+	// The ID of the network.
 	NetworkId interface{}
+	// The plane of the network.
+	// Allowed values are "data" and "storage".
 	Plane interface{}
-	Status interface{}
-	Subnets interface{}
-	Tags interface{}
-	TenantId interface{}
+	// The region in which to obtain the V2 Neutron client.
+	// A Neutron client is needed to retrieve networks ids. If omitted, the
+	// `region` argument of the provider is used.
+	Region interface{}
 }
 
 // A collection of values returned by getNetwork.
 type GetNetworkResult struct {
+	// The administrative state of the network.
 	AdminStateUp interface{}
+	// See Argument Reference above.
+	Description interface{}
+	// See Argument Reference above.
+	MatchingSubnetCidr interface{}
+	// See Argument Reference above.
+	Name interface{}
+	// ID of network.
+	NetworkId interface{}
+	// See Argument Reference above.
+	Plane interface{}
+	// See Argument Reference above.
+	Region interface{}
+	// The network status.
+	Status interface{}
+	// The subnets of the network.
+	Subnets interface{}
+	// The network tags.
+	Tags interface{}
+	// See Argument Reference above.
+	TenantId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}
 }

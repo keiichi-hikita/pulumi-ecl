@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 internet gateway resource within Enterprise Cloud.
 type InternetGateway struct {
 	s *pulumi.ResourceState
 }
@@ -74,46 +75,73 @@ func (r *InternetGateway) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// Description of the Internet Gateway resource.
 func (r *InternetGateway) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// Internet Service instantiated by Internet gateway.
 func (r *InternetGateway) InternetServiceId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["internetServiceId"])
 }
 
+// Name of the Internet Gateway resource.
 func (r *InternetGateway) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// Quality of Service options selected for Internet gateway.
 func (r *InternetGateway) QosOptionId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["qosOptionId"])
 }
 
+// The region in which to obtain the V2 Network client.
+// Internet gateways are associated with accounts, but a Network client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new internet gateway.
 func (r *InternetGateway) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// Tenant ID of the owner (UUID).
 func (r *InternetGateway) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
 // Input properties used for looking up and filtering InternetGateway resources.
 type InternetGatewayState struct {
+	// Description of the Internet Gateway resource.
 	Description interface{}
+	// Internet Service instantiated by Internet gateway.
 	InternetServiceId interface{}
+	// Name of the Internet Gateway resource.
 	Name interface{}
+	// Quality of Service options selected for Internet gateway.
 	QosOptionId interface{}
+	// The region in which to obtain the V2 Network client.
+	// Internet gateways are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new internet gateway.
 	Region interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }
 
 // The set of arguments for constructing a InternetGateway resource.
 type InternetGatewayArgs struct {
+	// Description of the Internet Gateway resource.
 	Description interface{}
+	// Internet Service instantiated by Internet gateway.
 	InternetServiceId interface{}
+	// Name of the Internet Gateway resource.
 	Name interface{}
+	// Quality of Service options selected for Internet gateway.
 	QosOptionId interface{}
+	// The region in which to obtain the V2 Network client.
+	// Internet gateways are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new internet gateway.
 	Region interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }

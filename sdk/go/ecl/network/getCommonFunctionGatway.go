@@ -7,6 +7,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Use this data source to get the ID of an Enterprise Cloud common function gateway.
 func LookupCommonFunctionGatway(ctx *pulumi.Context, args *GetCommonFunctionGatwayArgs) (*GetCommonFunctionGatwayResult, error) {
 	inputs := make(map[string]interface{})
 	if args != nil {
@@ -34,21 +35,33 @@ func LookupCommonFunctionGatway(ctx *pulumi.Context, args *GetCommonFunctionGatw
 
 // A collection of arguments for invoking getCommonFunctionGatway.
 type GetCommonFunctionGatwayArgs struct {
+	// Common Function Pool instantiated by this Gateway.
 	CommonFunctionPoolId interface{}
+	// Description of the Common Function Gateway resource.
 	Description interface{}
+	// Name of the Common Function Gateway resource.
 	Name interface{}
+	// ID of automatically created network connected to this Common Function Gateway.
 	NetworkId interface{}
+	// ID of automatically created subnet connected to this Common Function Gateway (using link-local address).
 	SubnetId interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }
 
 // A collection of values returned by getCommonFunctionGatway.
 type GetCommonFunctionGatwayResult struct {
+	// See Argument Reference above.
 	CommonFunctionPoolId interface{}
+	// See Argument Reference above.
 	Description interface{}
+	// See Argument Reference above.
 	Name interface{}
+	// See Argument Reference above.
 	NetworkId interface{}
+	// See Argument Reference above.
 	SubnetId interface{}
+	// See Argument Reference above.
 	TenantId interface{}
 	// id is the provider-assigned unique ID for this managed resource.
 	Id interface{}

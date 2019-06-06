@@ -8,37 +8,58 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetCommonFunctionGatwayResult(object):
+class GetCommonFunctionGatwayResult:
     """
     A collection of values returned by getCommonFunctionGatway.
     """
     def __init__(__self__, common_function_pool_id=None, description=None, name=None, network_id=None, subnet_id=None, tenant_id=None, id=None):
         if common_function_pool_id and not isinstance(common_function_pool_id, str):
-            raise TypeError('Expected argument common_function_pool_id to be a str')
+            raise TypeError("Expected argument 'common_function_pool_id' to be a str")
         __self__.common_function_pool_id = common_function_pool_id
+        """
+        See Argument Reference above.
+        """
         if description and not isinstance(description, str):
-            raise TypeError('Expected argument description to be a str')
+            raise TypeError("Expected argument 'description' to be a str")
         __self__.description = description
+        """
+        See Argument Reference above.
+        """
         if name and not isinstance(name, str):
-            raise TypeError('Expected argument name to be a str')
+            raise TypeError("Expected argument 'name' to be a str")
         __self__.name = name
+        """
+        See Argument Reference above.
+        """
         if network_id and not isinstance(network_id, str):
-            raise TypeError('Expected argument network_id to be a str')
+            raise TypeError("Expected argument 'network_id' to be a str")
         __self__.network_id = network_id
+        """
+        See Argument Reference above.
+        """
         if subnet_id and not isinstance(subnet_id, str):
-            raise TypeError('Expected argument subnet_id to be a str')
+            raise TypeError("Expected argument 'subnet_id' to be a str")
         __self__.subnet_id = subnet_id
+        """
+        See Argument Reference above.
+        """
         if tenant_id and not isinstance(tenant_id, str):
-            raise TypeError('Expected argument tenant_id to be a str')
+            raise TypeError("Expected argument 'tenant_id' to be a str")
         __self__.tenant_id = tenant_id
+        """
+        See Argument Reference above.
+        """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_common_function_gatway(common_function_pool_id=None, description=None, name=None, network_id=None, subnet_id=None, tenant_id=None):
+async def get_common_function_gatway(common_function_pool_id=None,description=None,name=None,network_id=None,subnet_id=None,tenant_id=None,opts=None):
+    """
+    Use this data source to get the ID of an Enterprise Cloud common function gateway.
+    """
     __args__ = dict()
 
     __args__['commonFunctionPoolId'] = common_function_pool_id
@@ -47,7 +68,7 @@ async def get_common_function_gatway(common_function_pool_id=None, description=N
     __args__['networkId'] = network_id
     __args__['subnetId'] = subnet_id
     __args__['tenantId'] = tenant_id
-    __ret__ = await pulumi.runtime.invoke('ecl:network/getCommonFunctionGatway:getCommonFunctionGatway', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:network/getCommonFunctionGatway:getCommonFunctionGatway', __args__, opts=opts)
 
     return GetCommonFunctionGatwayResult(
         common_function_pool_id=__ret__.get('commonFunctionPoolId'),

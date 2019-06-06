@@ -12,10 +12,7 @@ export function getNetwork(args?: GetNetworkArgs, opts?: pulumi.InvokeOptions): 
         "name": args.name,
         "networkId": args.networkId,
         "plane": args.plane,
-        "status": args.status,
-        "subnets": args.subnets,
-        "tags": args.tags,
-        "tenantId": args.tenantId,
+        "region": args.region,
     }, opts);
 }
 
@@ -28,17 +25,24 @@ export interface GetNetworkArgs {
     readonly name?: string;
     readonly networkId?: string;
     readonly plane?: string;
-    readonly status?: string;
-    readonly subnets?: string[];
-    readonly tags?: {[key: string]: any};
-    readonly tenantId?: string;
+    readonly region?: string;
 }
 
 /**
  * A collection of values returned by getNetwork.
  */
 export interface GetNetworkResult {
-    readonly adminStateUp: string;
+    readonly adminStateUp: boolean;
+    readonly description: string;
+    readonly matchingSubnetCidr: string;
+    readonly name: string;
+    readonly networkId: string;
+    readonly plane: string;
+    readonly region: string;
+    readonly status: string;
+    readonly subnets: string[];
+    readonly tags: {[key: string]: any};
+    readonly tenantId: string;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

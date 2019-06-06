@@ -17,12 +17,26 @@ export class CommonFunctionGateway extends pulumi.CustomResource {
         return new CommonFunctionGateway(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly commonFunctionPoolId: pulumi.Output<string>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly name: pulumi.Output<string>;
-    public /*out*/ readonly networkId: pulumi.Output<string>;
-    public /*out*/ readonly subnetId: pulumi.Output<string>;
-    public readonly tenantId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/commonFunctionGateway:CommonFunctionGateway';
+
+    /**
+     * Returns true if the given object is an instance of CommonFunctionGateway.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is CommonFunctionGateway {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === CommonFunctionGateway.__pulumiType;
+    }
+
+    public readonly commonFunctionPoolId!: pulumi.Output<string>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public /*out*/ readonly networkId!: pulumi.Output<string>;
+    public /*out*/ readonly subnetId!: pulumi.Output<string>;
+    public readonly tenantId!: pulumi.Output<string>;
 
     /**
      * Create a CommonFunctionGateway resource with the given unique name, arguments, and options.
@@ -35,7 +49,7 @@ export class CommonFunctionGateway extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: CommonFunctionGatewayArgs | CommonFunctionGatewayState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: CommonFunctionGatewayState = argsOrState as CommonFunctionGatewayState | undefined;
+            const state = argsOrState as CommonFunctionGatewayState | undefined;
             inputs["commonFunctionPoolId"] = state ? state.commonFunctionPoolId : undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["name"] = state ? state.name : undefined;
@@ -54,7 +68,7 @@ export class CommonFunctionGateway extends pulumi.CustomResource {
             inputs["networkId"] = undefined /*out*/;
             inputs["subnetId"] = undefined /*out*/;
         }
-        super("ecl:network/commonFunctionGateway:CommonFunctionGateway", name, inputs, opts);
+        super(CommonFunctionGateway.__pulumiType, name, inputs, opts);
     }
 }
 

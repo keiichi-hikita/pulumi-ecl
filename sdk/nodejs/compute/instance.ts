@@ -4,162 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-/**
- * Manages a V2 VM instance resource within Enterprise Cloud.
- * 
- * ## Example Usage
- * 
- * ### Basic Instance
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const basic = new ecl.compute.Instance("basic", {
- *     flavorId: "3",
- *     imageId: "ad091b52-742f-469e-8f3c-fd81cadf0743",
- *     keyPair: "my_key_pair_name",
- *     networks: [{
- *         uuid: "my_network-id",
- *     }],
- * });
- * ```
- * 
- * ### Instance With Attached Volume
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const myvol = new ecl.BlockstorageVolumeV2("myvol", {
- *     size: 1,
- * });
- * const myinstance = new ecl.compute.Instance("myinstance", {
- *     flavorId: "3",
- *     imageId: "ad091b52-742f-469e-8f3c-fd81cadf0743",
- *     keyPair: "my_key_pair_name",
- *     networks: [{
- *         uuid: "my_network-id",
- *     }],
- * });
- * const attached = new ecl.compute.VolumeAttach("attached", {
- *     serverId: myinstance.id,
- *     volumeId: myvol.id,
- * });
- * ```
- * 
- * ### Boot From Volume
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const boot_from_volume = new ecl.compute.Instance("boot-from-volume", {
- *     blockDevices: [{
- *         bootIndex: 0,
- *         deleteOnTermination: true,
- *         destinationType: "volume",
- *         sourceType: "image",
- *         uuid: "<image-id>",
- *         volumeSize: 5,
- *     }],
- *     flavorId: "3",
- *     keyPair: "my_key_pair_name",
- *     networks: [{
- *         uuid: "my_network-id",
- *     }],
- * });
- * ```
- * 
- * ### Boot From an Existing Volume
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * import * as openstack from "@pulumi/openstack";
- * 
- * const myvol = new ecl.ComputeVolumeV1("myvol", {
- *     imageId: "<image-id>",
- *     size: 5,
- * });
- * const boot_from_volume = new openstack.compute.Instance("boot-from-volume", {
- *     blockDevices: [{
- *         bootIndex: 0,
- *         deleteOnTermination: true,
- *         destinationType: "volume",
- *         sourceType: "volume",
- *         uuid: ecl_blockstorage_volume_v1_myvol.id,
- *     }],
- *     flavorId: "3",
- *     keyPair: "my_key_pair_name",
- *     networks: [{
- *         uuid: "my_network-id",
- *     }],
- *     securityGroups: ["default"],
- * });
- * ```
- * 
- * ### Boot Instance, Create Volume, and Attach Volume as a Block Device
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const instance1 = new ecl.compute.Instance("instance_1", {
- *     blockDevices: [
- *         {
- *             bootIndex: 0,
- *             deleteOnTermination: true,
- *             destinationType: "local",
- *             sourceType: "image",
- *             uuid: "<image-id>",
- *         },
- *         {
- *             bootIndex: 1,
- *             deleteOnTermination: true,
- *             destinationType: "volume",
- *             sourceType: "blank",
- *             volumeSize: 1,
- *         },
- *     ],
- *     flavorId: "3",
- *     imageId: "<image-id>",
- *     keyPair: "my_key_pair_name",
- * });
- * ```
- * 
- * ### Boot Instance and Attach Existing Volume as a Block Device
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const volume1 = new ecl.BlockstorageVolumeV2("volume_1", {
- *     size: 1,
- * });
- * const instance1 = new ecl.compute.Instance("instance_1", {
- *     blockDevices: [
- *         {
- *             bootIndex: 0,
- *             deleteOnTermination: true,
- *             destinationType: "local",
- *             sourceType: "image",
- *             uuid: "<image-id>",
- *         },
- *         {
- *             bootIndex: 1,
- *             deleteOnTermination: true,
- *             destinationType: "volume",
- *             sourceType: "volume",
- *             uuid: volume1.id,
- *         },
- *     ],
- *     flavorId: "3",
- *     imageId: "<image-id>",
- *     keyPair: "my_key_pair_name",
- * });
- * ```
- */
 export class Instance extends pulumi.CustomResource {
     /**
      * Get an existing Instance resource's state with the given name, ID, and optional extra
@@ -173,97 +17,36 @@ export class Instance extends pulumi.CustomResource {
         return new Instance(name, <any>state, { ...opts, id: id });
     }
 
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:compute/instance:Instance';
+
     /**
-     * The first detected Fixed IPv4 address _or_ the
-     * Floating IP.
+     * Returns true if the given object is an instance of Instance.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
      */
-    public readonly accessIpV4: pulumi.Output<string>;
-    /**
-     * Contains all instance metadata, even metadata not set
-     * by Terraform.
-     */
-    public /*out*/ readonly allMetadata: pulumi.Output<{[key: string]: any}>;
-    /**
-     * The availability zone in which to create
-     * the server. Changing this creates a new server.
-     */
-    public readonly availabilityZone: pulumi.Output<string>;
-    /**
-     * Configuration of block devices. The block_device
-     * structure is documented below. Changing this creates a new server.
-     * You can specify multiple block devices which will create an instance with
-     * multiple disks. This configuration is very flexible, so please see the
-     * following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-     * for more information.
-     */
-    public readonly blockDevices: pulumi.Output<{ bootIndex?: number, deleteOnTermination?: boolean, destinationType?: string, guestFormat?: string, sourceType: string, uuid?: string, volumeSize?: number }[] | undefined>;
-    /**
-     * The flavor ID of
-     * the desired flavor for the server. Changing this resizes the existing server.
-     */
-    public readonly flavorId: pulumi.Output<string>;
-    /**
-     * The name of the
-     * desired flavor for the server. Changing this resizes the existing server.
-     */
-    public readonly flavorName: pulumi.Output<string>;
-    /**
-     * (Optional; Required if `image_name` is empty and not booting
-     * from a volume. Do not specify if booting from a volume.) The image ID of
-     * the desired image for the server. Changing this creates a new server.
-     */
-    public readonly imageId: pulumi.Output<string>;
-    /**
-     * (Optional; Required if `image_id` is empty and not booting
-     * from a volume. Do not specify if booting from a volume.) The name of the
-     * desired image for the server. Changing this creates a new server.
-     */
-    public readonly imageName: pulumi.Output<string>;
-    /**
-     * The name of a key pair to put on the server. The key
-     * pair must already be created and associated with the tenant's account.
-     * Changing this creates a new server.
-     */
-    public readonly keyPair: pulumi.Output<string | undefined>;
-    /**
-     * Metadata key/value pairs to make available from
-     * within the instance. Changing this updates the existing server metadata.
-     */
-    public readonly metadata: pulumi.Output<{[key: string]: any} | undefined>;
-    /**
-     * A unique name for the resource.
-     */
-    public readonly name: pulumi.Output<string>;
-    /**
-     * An array of one or more networks to attach to the
-     * instance. The network object structure is documented below. Changing this
-     * creates a new server.
-     */
-    public readonly networks: pulumi.Output<{ accessNetwork?: boolean, fixedIpV4: string, mac: string, name: string, port: string, uuid: string }[]>;
-    /**
-     * Provide the VM state. Only 'active' and 'shutoff'
-     * are supported values. *Note*: If the initial power_state is the shutoff
-     * the VM will be stopped immediately after build and the provisioners like
-     * remote-exec or files are not supported.
-     */
-    public readonly powerState: pulumi.Output<string | undefined>;
-    /**
-     * The region in which to create the server instance. If
-     * omitted, the `region` argument of the provider is used. Changing this
-     * creates a new server.
-     */
-    public readonly region: pulumi.Output<string>;
-    /**
-     * Whether to try stop instance gracefully
-     * before destroying it, thus giving chance for guest OS daemons to stop correctly.
-     * If instance doesn't stop within timeout, it will be destroyed anyway.
-     */
-    public readonly stopBeforeDestroy: pulumi.Output<boolean | undefined>;
-    /**
-     * The user data to provide when launching the instance.
-     * Changing this creates a new server.
-     */
-    public readonly userData: pulumi.Output<string | undefined>;
+    public static isInstance(obj: any): obj is Instance {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Instance.__pulumiType;
+    }
+
+    public /*out*/ readonly accessIpV4!: pulumi.Output<string>;
+    public /*out*/ readonly allMetadata!: pulumi.Output<{[key: string]: any}>;
+    public readonly availabilityZone!: pulumi.Output<string>;
+    public readonly blockDevices!: pulumi.Output<{ bootIndex?: number, deleteOnTermination?: boolean, destinationType?: string, sourceType: string, uuid?: string, volumeSize?: number }[] | undefined>;
+    public readonly flavorId!: pulumi.Output<string>;
+    public readonly flavorName!: pulumi.Output<string>;
+    public readonly imageId!: pulumi.Output<string>;
+    public readonly imageName!: pulumi.Output<string>;
+    public readonly keyPair!: pulumi.Output<string | undefined>;
+    public readonly metadata!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly networks!: pulumi.Output<{ accessNetwork?: boolean, fixedIpV4: string, mac: string, name: string, port: string, uuid: string }[]>;
+    public readonly powerState!: pulumi.Output<string | undefined>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly stopBeforeDestroy!: pulumi.Output<boolean | undefined>;
+    public readonly userData!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Instance resource with the given unique name, arguments, and options.
@@ -276,7 +59,7 @@ export class Instance extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: InstanceArgs | InstanceState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: InstanceState = argsOrState as InstanceState | undefined;
+            const state = argsOrState as InstanceState | undefined;
             inputs["accessIpV4"] = state ? state.accessIpV4 : undefined;
             inputs["allMetadata"] = state ? state.allMetadata : undefined;
             inputs["availabilityZone"] = state ? state.availabilityZone : undefined;
@@ -295,7 +78,6 @@ export class Instance extends pulumi.CustomResource {
             inputs["userData"] = state ? state.userData : undefined;
         } else {
             const args = argsOrState as InstanceArgs | undefined;
-            inputs["accessIpV4"] = args ? args.accessIpV4 : undefined;
             inputs["availabilityZone"] = args ? args.availabilityZone : undefined;
             inputs["blockDevices"] = args ? args.blockDevices : undefined;
             inputs["flavorId"] = args ? args.flavorId : undefined;
@@ -310,9 +92,10 @@ export class Instance extends pulumi.CustomResource {
             inputs["region"] = args ? args.region : undefined;
             inputs["stopBeforeDestroy"] = args ? args.stopBeforeDestroy : undefined;
             inputs["userData"] = args ? args.userData : undefined;
+            inputs["accessIpV4"] = undefined /*out*/;
             inputs["allMetadata"] = undefined /*out*/;
         }
-        super("ecl:compute/instance:Instance", name, inputs, opts);
+        super(Instance.__pulumiType, name, inputs, opts);
     }
 }
 
@@ -320,96 +103,21 @@ export class Instance extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Instance resources.
  */
 export interface InstanceState {
-    /**
-     * The first detected Fixed IPv4 address _or_ the
-     * Floating IP.
-     */
     readonly accessIpV4?: pulumi.Input<string>;
-    /**
-     * Contains all instance metadata, even metadata not set
-     * by Terraform.
-     */
     readonly allMetadata?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * The availability zone in which to create
-     * the server. Changing this creates a new server.
-     */
     readonly availabilityZone?: pulumi.Input<string>;
-    /**
-     * Configuration of block devices. The block_device
-     * structure is documented below. Changing this creates a new server.
-     * You can specify multiple block devices which will create an instance with
-     * multiple disks. This configuration is very flexible, so please see the
-     * following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-     * for more information.
-     */
-    readonly blockDevices?: pulumi.Input<pulumi.Input<{ bootIndex?: pulumi.Input<number>, deleteOnTermination?: pulumi.Input<boolean>, destinationType?: pulumi.Input<string>, guestFormat?: pulumi.Input<string>, sourceType: pulumi.Input<string>, uuid?: pulumi.Input<string>, volumeSize?: pulumi.Input<number> }>[]>;
-    /**
-     * The flavor ID of
-     * the desired flavor for the server. Changing this resizes the existing server.
-     */
+    readonly blockDevices?: pulumi.Input<pulumi.Input<{ bootIndex?: pulumi.Input<number>, deleteOnTermination?: pulumi.Input<boolean>, destinationType?: pulumi.Input<string>, sourceType: pulumi.Input<string>, uuid?: pulumi.Input<string>, volumeSize?: pulumi.Input<number> }>[]>;
     readonly flavorId?: pulumi.Input<string>;
-    /**
-     * The name of the
-     * desired flavor for the server. Changing this resizes the existing server.
-     */
     readonly flavorName?: pulumi.Input<string>;
-    /**
-     * (Optional; Required if `image_name` is empty and not booting
-     * from a volume. Do not specify if booting from a volume.) The image ID of
-     * the desired image for the server. Changing this creates a new server.
-     */
     readonly imageId?: pulumi.Input<string>;
-    /**
-     * (Optional; Required if `image_id` is empty and not booting
-     * from a volume. Do not specify if booting from a volume.) The name of the
-     * desired image for the server. Changing this creates a new server.
-     */
     readonly imageName?: pulumi.Input<string>;
-    /**
-     * The name of a key pair to put on the server. The key
-     * pair must already be created and associated with the tenant's account.
-     * Changing this creates a new server.
-     */
     readonly keyPair?: pulumi.Input<string>;
-    /**
-     * Metadata key/value pairs to make available from
-     * within the instance. Changing this updates the existing server metadata.
-     */
     readonly metadata?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * A unique name for the resource.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * An array of one or more networks to attach to the
-     * instance. The network object structure is documented below. Changing this
-     * creates a new server.
-     */
     readonly networks?: pulumi.Input<pulumi.Input<{ accessNetwork?: pulumi.Input<boolean>, fixedIpV4?: pulumi.Input<string>, mac?: pulumi.Input<string>, name?: pulumi.Input<string>, port?: pulumi.Input<string>, uuid?: pulumi.Input<string> }>[]>;
-    /**
-     * Provide the VM state. Only 'active' and 'shutoff'
-     * are supported values. *Note*: If the initial power_state is the shutoff
-     * the VM will be stopped immediately after build and the provisioners like
-     * remote-exec or files are not supported.
-     */
     readonly powerState?: pulumi.Input<string>;
-    /**
-     * The region in which to create the server instance. If
-     * omitted, the `region` argument of the provider is used. Changing this
-     * creates a new server.
-     */
     readonly region?: pulumi.Input<string>;
-    /**
-     * Whether to try stop instance gracefully
-     * before destroying it, thus giving chance for guest OS daemons to stop correctly.
-     * If instance doesn't stop within timeout, it will be destroyed anyway.
-     */
     readonly stopBeforeDestroy?: pulumi.Input<boolean>;
-    /**
-     * The user data to provide when launching the instance.
-     * Changing this creates a new server.
-     */
     readonly userData?: pulumi.Input<string>;
 }
 
@@ -417,90 +125,18 @@ export interface InstanceState {
  * The set of arguments for constructing a Instance resource.
  */
 export interface InstanceArgs {
-    /**
-     * The first detected Fixed IPv4 address _or_ the
-     * Floating IP.
-     */
-    readonly accessIpV4?: pulumi.Input<string>;
-    /**
-     * The availability zone in which to create
-     * the server. Changing this creates a new server.
-     */
     readonly availabilityZone?: pulumi.Input<string>;
-    /**
-     * Configuration of block devices. The block_device
-     * structure is documented below. Changing this creates a new server.
-     * You can specify multiple block devices which will create an instance with
-     * multiple disks. This configuration is very flexible, so please see the
-     * following [reference](http://docs.openstack.org/developer/nova/block_device_mapping.html)
-     * for more information.
-     */
-    readonly blockDevices?: pulumi.Input<pulumi.Input<{ bootIndex?: pulumi.Input<number>, deleteOnTermination?: pulumi.Input<boolean>, destinationType?: pulumi.Input<string>, guestFormat?: pulumi.Input<string>, sourceType: pulumi.Input<string>, uuid?: pulumi.Input<string>, volumeSize?: pulumi.Input<number> }>[]>;
-    /**
-     * The flavor ID of
-     * the desired flavor for the server. Changing this resizes the existing server.
-     */
+    readonly blockDevices?: pulumi.Input<pulumi.Input<{ bootIndex?: pulumi.Input<number>, deleteOnTermination?: pulumi.Input<boolean>, destinationType?: pulumi.Input<string>, sourceType: pulumi.Input<string>, uuid?: pulumi.Input<string>, volumeSize?: pulumi.Input<number> }>[]>;
     readonly flavorId?: pulumi.Input<string>;
-    /**
-     * The name of the
-     * desired flavor for the server. Changing this resizes the existing server.
-     */
     readonly flavorName?: pulumi.Input<string>;
-    /**
-     * (Optional; Required if `image_name` is empty and not booting
-     * from a volume. Do not specify if booting from a volume.) The image ID of
-     * the desired image for the server. Changing this creates a new server.
-     */
     readonly imageId?: pulumi.Input<string>;
-    /**
-     * (Optional; Required if `image_id` is empty and not booting
-     * from a volume. Do not specify if booting from a volume.) The name of the
-     * desired image for the server. Changing this creates a new server.
-     */
     readonly imageName?: pulumi.Input<string>;
-    /**
-     * The name of a key pair to put on the server. The key
-     * pair must already be created and associated with the tenant's account.
-     * Changing this creates a new server.
-     */
     readonly keyPair?: pulumi.Input<string>;
-    /**
-     * Metadata key/value pairs to make available from
-     * within the instance. Changing this updates the existing server metadata.
-     */
     readonly metadata?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * A unique name for the resource.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * An array of one or more networks to attach to the
-     * instance. The network object structure is documented below. Changing this
-     * creates a new server.
-     */
     readonly networks?: pulumi.Input<pulumi.Input<{ accessNetwork?: pulumi.Input<boolean>, fixedIpV4?: pulumi.Input<string>, mac?: pulumi.Input<string>, name?: pulumi.Input<string>, port?: pulumi.Input<string>, uuid?: pulumi.Input<string> }>[]>;
-    /**
-     * Provide the VM state. Only 'active' and 'shutoff'
-     * are supported values. *Note*: If the initial power_state is the shutoff
-     * the VM will be stopped immediately after build and the provisioners like
-     * remote-exec or files are not supported.
-     */
     readonly powerState?: pulumi.Input<string>;
-    /**
-     * The region in which to create the server instance. If
-     * omitted, the `region` argument of the provider is used. Changing this
-     * creates a new server.
-     */
     readonly region?: pulumi.Input<string>;
-    /**
-     * Whether to try stop instance gracefully
-     * before destroying it, thus giving chance for guest OS daemons to stop correctly.
-     * If instance doesn't stop within timeout, it will be destroyed anyway.
-     */
     readonly stopBeforeDestroy?: pulumi.Input<boolean>;
-    /**
-     * The user data to provide when launching the instance.
-     * Changing this creates a new server.
-     */
     readonly userData?: pulumi.Input<string>;
 }

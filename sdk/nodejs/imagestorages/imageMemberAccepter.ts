@@ -17,9 +17,23 @@ export class ImageMemberAccepter extends pulumi.CustomResource {
         return new ImageMemberAccepter(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly imageMemberId: pulumi.Output<string>;
-    public readonly region: pulumi.Output<string>;
-    public readonly status: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:imagestorages/imageMemberAccepter:ImageMemberAccepter';
+
+    /**
+     * Returns true if the given object is an instance of ImageMemberAccepter.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is ImageMemberAccepter {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === ImageMemberAccepter.__pulumiType;
+    }
+
+    public readonly imageMemberId!: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
+    public readonly status!: pulumi.Output<string>;
 
     /**
      * Create a ImageMemberAccepter resource with the given unique name, arguments, and options.
@@ -32,7 +46,7 @@ export class ImageMemberAccepter extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: ImageMemberAccepterArgs | ImageMemberAccepterState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: ImageMemberAccepterState = argsOrState as ImageMemberAccepterState | undefined;
+            const state = argsOrState as ImageMemberAccepterState | undefined;
             inputs["imageMemberId"] = state ? state.imageMemberId : undefined;
             inputs["region"] = state ? state.region : undefined;
             inputs["status"] = state ? state.status : undefined;
@@ -48,7 +62,7 @@ export class ImageMemberAccepter extends pulumi.CustomResource {
             inputs["region"] = args ? args.region : undefined;
             inputs["status"] = args ? args.status : undefined;
         }
-        super("ecl:imagestorages/imageMemberAccepter:ImageMemberAccepter", name, inputs, opts);
+        super(ImageMemberAccepter.__pulumiType, name, inputs, opts);
     }
 }
 

@@ -8,6 +8,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 static route resource within Enterprise Cloud.
+// > **Notice** We only support Static Route with service_type "internet" for now.
 type StaticRoute struct {
 	s *pulumi.ResourceState
 }
@@ -98,88 +100,136 @@ func (r *StaticRoute) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// AWS Gateway on which this static route will be set. Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *StaticRoute) AwsGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["awsGwId"])
 }
 
+// Azure Gateway on which this static route will be set. Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *StaticRoute) AzureGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["azureGwId"])
 }
 
+// Description of the Static Route resource.
 func (r *StaticRoute) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// CIDR this static route points to.
 func (r *StaticRoute) Destination() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["destination"])
 }
 
+// GCP Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *StaticRoute) GcpGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["gcpGwId"])
 }
 
+// Inter DC Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
 func (r *StaticRoute) InterdcGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["interdcGwId"])
 }
 
+// Internet Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
 func (r *StaticRoute) InternetGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["internetGwId"])
 }
 
+// Name of the Static Route resource.
 func (r *StaticRoute) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// Next Hop address for specified CIDR.
 func (r *StaticRoute) Nexthop() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["nexthop"])
 }
 
+// The region in which to obtain the V2 Network client.
+// Public ips are associated with accounts, but a Network client is needed to
+// create one. If omitted, the `region` argument of the provider is used.
+// Changing this creates a new public ip.
 func (r *StaticRoute) Region() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["region"])
 }
 
+// Service type for this route. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 func (r *StaticRoute) ServiceType() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["serviceType"])
 }
 
+// Tenant ID of the owner (UUID).
 func (r *StaticRoute) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
+// VPN Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
 func (r *StaticRoute) VpnGwId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["vpnGwId"])
 }
 
 // Input properties used for looking up and filtering StaticRoute resources.
 type StaticRouteState struct {
+	// AWS Gateway on which this static route will be set. Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AwsGwId interface{}
+	// Azure Gateway on which this static route will be set. Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AzureGwId interface{}
+	// Description of the Static Route resource.
 	Description interface{}
+	// CIDR this static route points to.
 	Destination interface{}
+	// GCP Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	GcpGwId interface{}
+	// Inter DC Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
 	InterdcGwId interface{}
+	// Internet Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
 	InternetGwId interface{}
+	// Name of the Static Route resource.
 	Name interface{}
+	// Next Hop address for specified CIDR.
 	Nexthop interface{}
+	// The region in which to obtain the V2 Network client.
+	// Public ips are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new public ip.
 	Region interface{}
+	// Service type for this route. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 	ServiceType interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
+	// VPN Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
 	VpnGwId interface{}
 }
 
 // The set of arguments for constructing a StaticRoute resource.
 type StaticRouteArgs struct {
+	// AWS Gateway on which this static route will be set. Conflicts with "azure_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AwsGwId interface{}
+	// Azure Gateway on which this static route will be set. Conflicts with "aws_gw_id", "gcp_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	AzureGwId interface{}
+	// Description of the Static Route resource.
 	Description interface{}
+	// CIDR this static route points to.
 	Destination interface{}
+	// GCP Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "interdc_gw_id", "internet_gw_id" and "vpn_gw_id".
 	GcpGwId interface{}
+	// Inter DC Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "internet_gw_id" and "vpn_gw_id".
 	InterdcGwId interface{}
+	// Internet Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "vpn_gw_id".
 	InternetGwId interface{}
+	// Name of the Static Route resource.
 	Name interface{}
+	// Next Hop address for specified CIDR.
 	Nexthop interface{}
+	// The region in which to obtain the V2 Network client.
+	// Public ips are associated with accounts, but a Network client is needed to
+	// create one. If omitted, the `region` argument of the provider is used.
+	// Changing this creates a new public ip.
 	Region interface{}
+	// Service type for this route. Must be one of "aws", "azure", "gcp", "interdc", "internet" and "vpn".
 	ServiceType interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
+	// VPN Gateway on which this static route will be set. Conflicts with "aws_gw_id", "azure_gw_id", "gcp_gw_id", "interdc_gw_id" and "internet_gw_id".
 	VpnGwId interface{}
 }

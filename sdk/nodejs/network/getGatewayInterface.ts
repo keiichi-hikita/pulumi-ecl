@@ -82,6 +82,7 @@ export interface GetGatewayInterfaceResult {
     readonly secondaryIpv4: string;
     readonly secondaryIpv6: string;
     readonly serviceType: string;
+    readonly status?: string;
     readonly tenantId: string;
     readonly vpnGwId: string;
     readonly vrid: number;

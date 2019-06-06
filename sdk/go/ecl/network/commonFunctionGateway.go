@@ -8,6 +8,7 @@ import (
 	"github.com/pulumi/pulumi/sdk/go/pulumi"
 )
 
+// Manages a V2 common_function_gateway resource within Enterprise Cloud.
 type CommonFunctionGateway struct {
 	s *pulumi.ResourceState
 }
@@ -69,44 +70,60 @@ func (r *CommonFunctionGateway) ID() *pulumi.IDOutput {
 	return r.s.ID()
 }
 
+// Common Function Pool instantiated by this Gateway.
 func (r *CommonFunctionGateway) CommonFunctionPoolId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["commonFunctionPoolId"])
 }
 
+// Description of the Common Function Gateway resource.
 func (r *CommonFunctionGateway) Description() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["description"])
 }
 
+// Name of the Common Function Gateway resource.
 func (r *CommonFunctionGateway) Name() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["name"])
 }
 
+// ID of automatically created network connected to this Common Function Gateway.
 func (r *CommonFunctionGateway) NetworkId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["networkId"])
 }
 
+// ID of automatically created subnet connected to this Common Function Gateway (using link-local address).
 func (r *CommonFunctionGateway) SubnetId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["subnetId"])
 }
 
+// Tenant ID of the owner (UUID).
 func (r *CommonFunctionGateway) TenantId() *pulumi.StringOutput {
 	return (*pulumi.StringOutput)(r.s.State["tenantId"])
 }
 
 // Input properties used for looking up and filtering CommonFunctionGateway resources.
 type CommonFunctionGatewayState struct {
+	// Common Function Pool instantiated by this Gateway.
 	CommonFunctionPoolId interface{}
+	// Description of the Common Function Gateway resource.
 	Description interface{}
+	// Name of the Common Function Gateway resource.
 	Name interface{}
+	// ID of automatically created network connected to this Common Function Gateway.
 	NetworkId interface{}
+	// ID of automatically created subnet connected to this Common Function Gateway (using link-local address).
 	SubnetId interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }
 
 // The set of arguments for constructing a CommonFunctionGateway resource.
 type CommonFunctionGatewayArgs struct {
+	// Common Function Pool instantiated by this Gateway.
 	CommonFunctionPoolId interface{}
+	// Description of the Common Function Gateway resource.
 	Description interface{}
+	// Name of the Common Function Gateway resource.
 	Name interface{}
+	// Tenant ID of the owner (UUID).
 	TenantId interface{}
 }

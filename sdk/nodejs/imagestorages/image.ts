@@ -17,28 +17,42 @@ export class Image extends pulumi.CustomResource {
         return new Image(name, <any>state, { ...opts, id: id });
     }
 
-    public /*out*/ readonly checksum: pulumi.Output<string>;
-    public readonly containerFormat: pulumi.Output<string>;
-    public /*out*/ readonly createdAt: pulumi.Output<string>;
-    public readonly diskFormat: pulumi.Output<string>;
-    public /*out*/ readonly file: pulumi.Output<string>;
-    public readonly licenseSwitch: pulumi.Output<string | undefined>;
-    public readonly localFilePath: pulumi.Output<string>;
-    public /*out*/ readonly metadata: pulumi.Output<{[key: string]: any}>;
-    public readonly minDiskGb: pulumi.Output<number | undefined>;
-    public readonly minRamMb: pulumi.Output<number | undefined>;
-    public readonly name: pulumi.Output<string>;
-    public /*out*/ readonly owner: pulumi.Output<string>;
-    public readonly properties: pulumi.Output<{[key: string]: any}>;
-    public readonly protected: pulumi.Output<boolean | undefined>;
-    public readonly region: pulumi.Output<string>;
-    public /*out*/ readonly schema: pulumi.Output<string>;
-    public /*out*/ readonly sizeBytes: pulumi.Output<number>;
-    public /*out*/ readonly status: pulumi.Output<string>;
-    public readonly tags: pulumi.Output<string[] | undefined>;
-    public /*out*/ readonly updateAt: pulumi.Output<string>;
-    public readonly verifyChecksum: pulumi.Output<boolean | undefined>;
-    public readonly visibility: pulumi.Output<string | undefined>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:imagestorages/image:Image';
+
+    /**
+     * Returns true if the given object is an instance of Image.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Image {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Image.__pulumiType;
+    }
+
+    public /*out*/ readonly checksum!: pulumi.Output<string>;
+    public readonly containerFormat!: pulumi.Output<string>;
+    public /*out*/ readonly createdAt!: pulumi.Output<string>;
+    public readonly diskFormat!: pulumi.Output<string>;
+    public /*out*/ readonly file!: pulumi.Output<string>;
+    public readonly licenseSwitch!: pulumi.Output<string | undefined>;
+    public readonly localFilePath!: pulumi.Output<string>;
+    public /*out*/ readonly metadata!: pulumi.Output<{[key: string]: any}>;
+    public readonly minDiskGb!: pulumi.Output<number | undefined>;
+    public readonly minRamMb!: pulumi.Output<number | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public /*out*/ readonly owner!: pulumi.Output<string>;
+    public readonly properties!: pulumi.Output<{[key: string]: any}>;
+    public readonly protected!: pulumi.Output<boolean | undefined>;
+    public readonly region!: pulumi.Output<string>;
+    public /*out*/ readonly schema!: pulumi.Output<string>;
+    public /*out*/ readonly sizeBytes!: pulumi.Output<number>;
+    public /*out*/ readonly status!: pulumi.Output<string>;
+    public readonly tags!: pulumi.Output<string[] | undefined>;
+    public /*out*/ readonly updateAt!: pulumi.Output<string>;
+    public readonly verifyChecksum!: pulumi.Output<boolean | undefined>;
+    public readonly visibility!: pulumi.Output<string | undefined>;
 
     /**
      * Create a Image resource with the given unique name, arguments, and options.
@@ -51,7 +65,7 @@ export class Image extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: ImageArgs | ImageState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: ImageState = argsOrState as ImageState | undefined;
+            const state = argsOrState as ImageState | undefined;
             inputs["checksum"] = state ? state.checksum : undefined;
             inputs["containerFormat"] = state ? state.containerFormat : undefined;
             inputs["createdAt"] = state ? state.createdAt : undefined;
@@ -108,7 +122,7 @@ export class Image extends pulumi.CustomResource {
             inputs["status"] = undefined /*out*/;
             inputs["updateAt"] = undefined /*out*/;
         }
-        super("ecl:imagestorages/image:Image", name, inputs, opts);
+        super(Image.__pulumiType, name, inputs, opts);
     }
 }
 

@@ -4,21 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
-/**
- * Use this data source to get the ID of an available Enterprise Cloud flavor.
- * 
- * ## Example Usage
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as ecl from "@pulumi/ecl";
- * 
- * const small = pulumi.output(ecl.compute.getFlavor({
- *     ram: 512,
- *     vcpus: 1,
- * }));
- * ```
- */
 export function getFlavor(args?: GetFlavorArgs, opts?: pulumi.InvokeOptions): Promise<GetFlavorResult> {
     args = args || {};
     return pulumi.runtime.invoke("ecl:compute/getFlavor:getFlavor", {
@@ -38,42 +23,14 @@ export function getFlavor(args?: GetFlavorArgs, opts?: pulumi.InvokeOptions): Pr
  * A collection of arguments for invoking getFlavor.
  */
 export interface GetFlavorArgs {
-    /**
-     * The exact amount of disk (in gigabytes).
-     */
     readonly disk?: number;
-    /**
-     * The minimum amount of disk (in gigabytes).
-     */
     readonly minDisk?: number;
-    /**
-     * The minimum amount of RAM (in megabytes).
-     */
     readonly minRam?: number;
-    /**
-     * The name of the flavor.
-     */
     readonly name?: string;
-    /**
-     * The exact amount of RAM (in megabytes).
-     */
     readonly ram?: number;
-    /**
-     * The region in which to obtain the V2 Compute client.
-     * If omitted, the `region` argument of the provider is used.
-     */
     readonly region?: string;
-    /**
-     * The `rx_tx_factor` of the flavor.
-     */
     readonly rxTxFactor?: number;
-    /**
-     * The amount of swap (in gigabytes).
-     */
     readonly swap?: number;
-    /**
-     * The amount of VCPUs.
-     */
     readonly vcpus?: number;
 }
 
@@ -81,11 +38,16 @@ export interface GetFlavorArgs {
  * A collection of values returned by getFlavor.
  */
 export interface GetFlavorResult {
-    /**
-     * Whether the flavor is public or private.
-     */
+    readonly disk: number;
     readonly isPublic: boolean;
+    readonly minDisk: number;
+    readonly minRam: number;
+    readonly name: string;
+    readonly ram: number;
     readonly region: string;
+    readonly rxTxFactor: number;
+    readonly swap: number;
+    readonly vcpus: number;
     /**
      * id is the provider-assigned unique ID for this managed resource.
      */

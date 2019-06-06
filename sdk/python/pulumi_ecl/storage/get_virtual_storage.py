@@ -8,30 +8,80 @@ import pulumi
 import pulumi.runtime
 from .. import utilities, tables
 
-class GetVirtualStorageResult(object):
+class GetVirtualStorageResult:
     """
     A collection of values returned by getVirtualStorage.
     """
-    def __init__(__self__, id=None):
+    def __init__(__self__, description=None, host_routes=None, ip_addr_pool=None, name=None, network_id=None, subnet_id=None, virtual_storage_id=None, volume_type_id=None, id=None):
+        if description and not isinstance(description, str):
+            raise TypeError("Expected argument 'description' to be a str")
+        __self__.description = description
+        """
+        Description of Virtual Storage.
+        """
+        if host_routes and not isinstance(host_routes, list):
+            raise TypeError("Expected argument 'host_routes' to be a list")
+        __self__.host_routes = host_routes
+        """
+        List of static routes to be set to this Virtual Storage.
+        The host_routes structure is documented below.
+        """
+        if ip_addr_pool and not isinstance(ip_addr_pool, dict):
+            raise TypeError("Expected argument 'ip_addr_pool' to be a dict")
+        __self__.ip_addr_pool = ip_addr_pool
+        """
+        IP address pool which specifies IP address range 
+        used by the Virtual Storage.
+        The ip_addr_pool structure is documented below.
+        """
+        if name and not isinstance(name, str):
+            raise TypeError("Expected argument 'name' to be a str")
+        __self__.name = name
+        if network_id and not isinstance(network_id, str):
+            raise TypeError("Expected argument 'network_id' to be a str")
+        __self__.network_id = network_id
+        """
+        ID(UUID) for network to be connected to the Virtual Storage.
+        """
+        if subnet_id and not isinstance(subnet_id, str):
+            raise TypeError("Expected argument 'subnet_id' to be a str")
+        __self__.subnet_id = subnet_id
+        """
+        ID(UUID) for subnet to be connected to the Virtual Storage.
+        """
+        if virtual_storage_id and not isinstance(virtual_storage_id, str):
+            raise TypeError("Expected argument 'virtual_storage_id' to be a str")
+        __self__.virtual_storage_id = virtual_storage_id
+        if volume_type_id and not isinstance(volume_type_id, str):
+            raise TypeError("Expected argument 'volume_type_id' to be a str")
+        __self__.volume_type_id = volume_type_id
+        """
+        See Argument Reference above.
+        """
         if id and not isinstance(id, str):
-            raise TypeError('Expected argument id to be a str')
+            raise TypeError("Expected argument 'id' to be a str")
         __self__.id = id
         """
         id is the provider-assigned unique ID for this managed resource.
         """
 
-async def get_virtual_storage(description=None, host_routes=None, ip_addr_pool=None, name=None, network_id=None, subnet_id=None, virtual_storage_id=None, volume_type_id=None):
+async def get_virtual_storage(name=None,virtual_storage_id=None,opts=None):
+    """
+    Use this data source to get the ID of an Enterprise Cloud virtual storage.
+    """
     __args__ = dict()
 
-    __args__['description'] = description
-    __args__['hostRoutes'] = host_routes
-    __args__['ipAddrPool'] = ip_addr_pool
     __args__['name'] = name
-    __args__['networkId'] = network_id
-    __args__['subnetId'] = subnet_id
     __args__['virtualStorageId'] = virtual_storage_id
-    __args__['volumeTypeId'] = volume_type_id
-    __ret__ = await pulumi.runtime.invoke('ecl:storage/getVirtualStorage:getVirtualStorage', __args__)
+    __ret__ = await pulumi.runtime.invoke('ecl:storage/getVirtualStorage:getVirtualStorage', __args__, opts=opts)
 
     return GetVirtualStorageResult(
+        description=__ret__.get('description'),
+        host_routes=__ret__.get('hostRoutes'),
+        ip_addr_pool=__ret__.get('ipAddrPool'),
+        name=__ret__.get('name'),
+        network_id=__ret__.get('networkId'),
+        subnet_id=__ret__.get('subnetId'),
+        virtual_storage_id=__ret__.get('virtualStorageId'),
+        volume_type_id=__ret__.get('volumeTypeId'),
         id=__ret__.get('id'))

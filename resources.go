@@ -18,7 +18,7 @@ import (
 	"unicode"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/ngpf-public/terraform-provider-ecl/ecl"
+	"github.com/nttcom/terraform-provider-ecl/ecl"
 
 	"github.com/pulumi/pulumi-terraform/pkg/tfbridge"
 	"github.com/pulumi/pulumi/pkg/tokens"
@@ -64,6 +64,7 @@ func Provider() tfbridge.ProviderInfo {
 	prov := tfbridge.ProviderInfo{
 		P:           p,
 		Name:        "ecl",
+		GitHubOrg:   "nttcom",
 		Description: "A Pulumi package for creating and managing Enterprise Cloud resources.",
 		Keywords:    []string{"pulumi", "ecl"},
 		Homepage:    "https://pulumi.io",
@@ -180,11 +181,11 @@ func Provider() tfbridge.ProviderInfo {
 					EnvVars: []string{"OS_KEY"},
 				},
 			},
-			"swauth": {
-				Default: &tfbridge.DefaultInfo{
-					EnvVars: []string{"OS_SWAUTH"},
-				},
-			},
+			// "swauth": {
+			// 	Default: &tfbridge.DefaultInfo{
+			// 		EnvVars: []string{"OS_SWAUTH"},
+			// 	},
+			// },
 			// "use_octavia": {
 			// 	Default: &tfbridge.DefaultInfo{
 			// 		EnvVars: []string{"OS_USE_OCTAVIA"},
@@ -211,7 +212,9 @@ func Provider() tfbridge.ProviderInfo {
 			"ecl_network_common_function_gateway_v2": {Tok: eclDataSource(networkMod, "getCommonFunctionGatway")},
 			"ecl_network_gateway_interface_v2":       {Tok: eclDataSource(networkMod, "getGatewayInterface")},
 			"ecl_network_internet_gateway_v2":        {Tok: eclDataSource(networkMod, "getInternetGateway")},
+			"ecl_network_internet_service_v2":        {Tok: eclDataSource(networkMod, "getInternetService")},
 			"ecl_network_network_v2":                 {Tok: eclDataSource(networkMod, "getNetwork")},
+			"ecl_network_port_v2":                    {Tok: eclDataSource(networkMod, "getPort")},
 			"ecl_network_public_ip_v2":               {Tok: eclDataSource(networkMod, "getPublicIP")},
 			"ecl_network_static_route_v2":            {Tok: eclDataSource(networkMod, "getStaticRoute")},
 			"ecl_network_subnet_v2":                  {Tok: eclDataSource(networkMod, "getSubnet")},
@@ -252,6 +255,7 @@ func Provider() tfbridge.ProviderInfo {
 
 			// SSS
 			"ecl_sss_tenant_v1": {Tok: eclResource(sssMod, "Tenant")},
+			"ecl_sss_user_v1":   {Tok: eclResource(sssMod, "User")},
 
 			// Storage
 			"ecl_storage_virtualstorage_v1": {Tok: eclResource(storageMod, "VirtualStorage")},

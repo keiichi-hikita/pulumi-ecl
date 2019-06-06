@@ -11,6 +11,20 @@ import * as utilities from "./utilities";
  * [documentation](https://pulumi.io/reference/programming-model.html#providers) for more information.
  */
 export class Provider extends pulumi.ProviderResource {
+    /** @internal */
+    public static readonly __pulumiType = 'ecl';
+
+    /**
+     * Returns true if the given object is an instance of Provider.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Provider {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Provider.__pulumiType;
+    }
+
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -37,7 +51,6 @@ export class Provider extends pulumi.ProviderResource {
             inputs["projectDomainId"] = (args ? args.projectDomainId : undefined) || utilities.getEnv("OS_PROJECT_DOMAIN_ID");
             inputs["projectDomainName"] = (args ? args.projectDomainName : undefined) || utilities.getEnv("OS_PROJECT_DOMAIN_NAME");
             inputs["region"] = (args ? args.region : undefined) || utilities.getEnv("OS_REGION_NAME");
-            inputs["swauth"] = pulumi.output((args ? args.swauth : undefined) || utilities.getEnvBoolean("OS_SWAUTH")).apply(JSON.stringify);
             inputs["tenantId"] = (args ? args.tenantId : undefined) || utilities.getEnv("OS_TENANT_ID", "OS_PROJECT_ID");
             inputs["tenantName"] = (args ? args.tenantName : undefined) || utilities.getEnv("OS_TENANT_NAME", "OS_PROJECT_NAME");
             inputs["token"] = (args ? args.token : undefined) || utilities.getEnv("OS_TOKEN", "OS_AUTH_TOKEN");
@@ -46,7 +59,7 @@ export class Provider extends pulumi.ProviderResource {
             inputs["userId"] = (args ? args.userId : undefined) || utilities.getEnv("OS_USER_ID");
             inputs["userName"] = (args ? args.userName : undefined) || utilities.getEnv("OS_USERNAME");
         }
-        super("ecl", name, inputs, opts);
+        super(Provider.__pulumiType, name, inputs, opts);
     }
 }
 
@@ -108,13 +121,9 @@ export interface ProviderArgs {
      */
     readonly projectDomainName?: pulumi.Input<string>;
     /**
-     * The OpenStack region to connect to.
+     * The Enterprise Cloud region to connect to.
      */
     readonly region?: pulumi.Input<string>;
-    /**
-     * Use Swift's authentication system instead of Keystone. Only used for interaction with Swift.
-     */
-    readonly swauth?: pulumi.Input<boolean>;
     /**
      * The ID of the Tenant (Identity v2) or Project (Identity v3) to login with.
      */

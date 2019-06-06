@@ -17,14 +17,30 @@ export class Network extends pulumi.CustomResource {
         return new Network(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly adminStateUp: pulumi.Output<string>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly name: pulumi.Output<string>;
-    public readonly plane: pulumi.Output<string | undefined>;
-    public readonly status: pulumi.Output<string>;
-    public readonly subnets: pulumi.Output<string[]>;
-    public readonly tags: pulumi.Output<{[key: string]: any} | undefined>;
-    public readonly tenantId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/network:Network';
+
+    /**
+     * Returns true if the given object is an instance of Network.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Network {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Network.__pulumiType;
+    }
+
+    public readonly adminStateUp!: pulumi.Output<boolean>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly plane!: pulumi.Output<string | undefined>;
+    public readonly region!: pulumi.Output<string>;
+    public /*out*/ readonly shared!: pulumi.Output<boolean>;
+    public /*out*/ readonly status!: pulumi.Output<string>;
+    public /*out*/ readonly subnets!: pulumi.Output<string[]>;
+    public readonly tags!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly tenantId!: pulumi.Output<string>;
 
     /**
      * Create a Network resource with the given unique name, arguments, and options.
@@ -37,11 +53,13 @@ export class Network extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: NetworkArgs | NetworkState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: NetworkState = argsOrState as NetworkState | undefined;
+            const state = argsOrState as NetworkState | undefined;
             inputs["adminStateUp"] = state ? state.adminStateUp : undefined;
             inputs["description"] = state ? state.description : undefined;
             inputs["name"] = state ? state.name : undefined;
             inputs["plane"] = state ? state.plane : undefined;
+            inputs["region"] = state ? state.region : undefined;
+            inputs["shared"] = state ? state.shared : undefined;
             inputs["status"] = state ? state.status : undefined;
             inputs["subnets"] = state ? state.subnets : undefined;
             inputs["tags"] = state ? state.tags : undefined;
@@ -52,12 +70,14 @@ export class Network extends pulumi.CustomResource {
             inputs["description"] = args ? args.description : undefined;
             inputs["name"] = args ? args.name : undefined;
             inputs["plane"] = args ? args.plane : undefined;
-            inputs["status"] = args ? args.status : undefined;
-            inputs["subnets"] = args ? args.subnets : undefined;
+            inputs["region"] = args ? args.region : undefined;
             inputs["tags"] = args ? args.tags : undefined;
             inputs["tenantId"] = args ? args.tenantId : undefined;
+            inputs["shared"] = undefined /*out*/;
+            inputs["status"] = undefined /*out*/;
+            inputs["subnets"] = undefined /*out*/;
         }
-        super("ecl:network/network:Network", name, inputs, opts);
+        super(Network.__pulumiType, name, inputs, opts);
     }
 }
 
@@ -65,10 +85,12 @@ export class Network extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Network resources.
  */
 export interface NetworkState {
-    readonly adminStateUp?: pulumi.Input<string>;
+    readonly adminStateUp?: pulumi.Input<boolean>;
     readonly description?: pulumi.Input<string>;
     readonly name?: pulumi.Input<string>;
     readonly plane?: pulumi.Input<string>;
+    readonly region?: pulumi.Input<string>;
+    readonly shared?: pulumi.Input<boolean>;
     readonly status?: pulumi.Input<string>;
     readonly subnets?: pulumi.Input<pulumi.Input<string>[]>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
@@ -79,12 +101,11 @@ export interface NetworkState {
  * The set of arguments for constructing a Network resource.
  */
 export interface NetworkArgs {
-    readonly adminStateUp?: pulumi.Input<string>;
+    readonly adminStateUp?: pulumi.Input<boolean>;
     readonly description?: pulumi.Input<string>;
     readonly name?: pulumi.Input<string>;
     readonly plane?: pulumi.Input<string>;
-    readonly status?: pulumi.Input<string>;
-    readonly subnets?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly region?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
     readonly tenantId?: pulumi.Input<string>;
 }

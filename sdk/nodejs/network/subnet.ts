@@ -17,23 +17,38 @@ export class Subnet extends pulumi.CustomResource {
         return new Subnet(name, <any>state, { ...opts, id: id });
     }
 
-    public readonly allocationPools: pulumi.Output<{ end: string, start: string }[]>;
-    public readonly cidr: pulumi.Output<string>;
-    public readonly description: pulumi.Output<string | undefined>;
-    public readonly dnsNameservers: pulumi.Output<string[]>;
-    public readonly enableDhcp: pulumi.Output<boolean>;
-    public readonly gatewayIp: pulumi.Output<string>;
-    public readonly hostRoutes: pulumi.Output<{ destinationCidr: string, nextHop: string }[] | undefined>;
-    public readonly ipVersion: pulumi.Output<number | undefined>;
-    public readonly ipv6AddressMode: pulumi.Output<string>;
-    public readonly ipv6RaMode: pulumi.Output<string>;
-    public readonly name: pulumi.Output<string>;
-    public readonly networkId: pulumi.Output<string>;
-    public readonly noGateway: pulumi.Output<boolean | undefined>;
-    public readonly ntpServers: pulumi.Output<string[] | undefined>;
-    public readonly status: pulumi.Output<string>;
-    public readonly tags: pulumi.Output<{[key: string]: any} | undefined>;
-    public readonly tenantId: pulumi.Output<string>;
+    /** @internal */
+    public static readonly __pulumiType = 'ecl:network/subnet:Subnet';
+
+    /**
+     * Returns true if the given object is an instance of Subnet.  This is designed to work even
+     * when multiple copies of the Pulumi SDK have been loaded into the same process.
+     */
+    public static isInstance(obj: any): obj is Subnet {
+        if (obj === undefined || obj === null) {
+            return false;
+        }
+        return obj['__pulumiType'] === Subnet.__pulumiType;
+    }
+
+    public readonly allocationPools!: pulumi.Output<{ end: string, start: string }[]>;
+    public readonly cidr!: pulumi.Output<string>;
+    public readonly description!: pulumi.Output<string | undefined>;
+    public readonly dnsNameservers!: pulumi.Output<string[]>;
+    public readonly enableDhcp!: pulumi.Output<boolean>;
+    public readonly gatewayIp!: pulumi.Output<string>;
+    public readonly hostRoutes!: pulumi.Output<{ destinationCidr: string, nextHop: string }[] | undefined>;
+    public readonly ipVersion!: pulumi.Output<number | undefined>;
+    public /*out*/ readonly ipv6AddressMode!: pulumi.Output<string>;
+    public /*out*/ readonly ipv6RaMode!: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
+    public readonly networkId!: pulumi.Output<string>;
+    public readonly noGateway!: pulumi.Output<boolean | undefined>;
+    public readonly ntpServers!: pulumi.Output<string[] | undefined>;
+    public readonly region!: pulumi.Output<string>;
+    public /*out*/ readonly status!: pulumi.Output<string>;
+    public readonly tags!: pulumi.Output<{[key: string]: any} | undefined>;
+    public readonly tenantId!: pulumi.Output<string>;
 
     /**
      * Create a Subnet resource with the given unique name, arguments, and options.
@@ -46,7 +61,7 @@ export class Subnet extends pulumi.CustomResource {
     constructor(name: string, argsOrState?: SubnetArgs | SubnetState, opts?: pulumi.CustomResourceOptions) {
         let inputs: pulumi.Inputs = {};
         if (opts && opts.id) {
-            const state: SubnetState = argsOrState as SubnetState | undefined;
+            const state = argsOrState as SubnetState | undefined;
             inputs["allocationPools"] = state ? state.allocationPools : undefined;
             inputs["cidr"] = state ? state.cidr : undefined;
             inputs["description"] = state ? state.description : undefined;
@@ -61,6 +76,7 @@ export class Subnet extends pulumi.CustomResource {
             inputs["networkId"] = state ? state.networkId : undefined;
             inputs["noGateway"] = state ? state.noGateway : undefined;
             inputs["ntpServers"] = state ? state.ntpServers : undefined;
+            inputs["region"] = state ? state.region : undefined;
             inputs["status"] = state ? state.status : undefined;
             inputs["tags"] = state ? state.tags : undefined;
             inputs["tenantId"] = state ? state.tenantId : undefined;
@@ -80,17 +96,18 @@ export class Subnet extends pulumi.CustomResource {
             inputs["gatewayIp"] = args ? args.gatewayIp : undefined;
             inputs["hostRoutes"] = args ? args.hostRoutes : undefined;
             inputs["ipVersion"] = args ? args.ipVersion : undefined;
-            inputs["ipv6AddressMode"] = args ? args.ipv6AddressMode : undefined;
-            inputs["ipv6RaMode"] = args ? args.ipv6RaMode : undefined;
             inputs["name"] = args ? args.name : undefined;
             inputs["networkId"] = args ? args.networkId : undefined;
             inputs["noGateway"] = args ? args.noGateway : undefined;
             inputs["ntpServers"] = args ? args.ntpServers : undefined;
-            inputs["status"] = args ? args.status : undefined;
+            inputs["region"] = args ? args.region : undefined;
             inputs["tags"] = args ? args.tags : undefined;
             inputs["tenantId"] = args ? args.tenantId : undefined;
+            inputs["ipv6AddressMode"] = undefined /*out*/;
+            inputs["ipv6RaMode"] = undefined /*out*/;
+            inputs["status"] = undefined /*out*/;
         }
-        super("ecl:network/subnet:Subnet", name, inputs, opts);
+        super(Subnet.__pulumiType, name, inputs, opts);
     }
 }
 
@@ -112,6 +129,7 @@ export interface SubnetState {
     readonly networkId?: pulumi.Input<string>;
     readonly noGateway?: pulumi.Input<boolean>;
     readonly ntpServers?: pulumi.Input<pulumi.Input<string>[]>;
+    readonly region?: pulumi.Input<string>;
     readonly status?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
     readonly tenantId?: pulumi.Input<string>;
@@ -129,13 +147,11 @@ export interface SubnetArgs {
     readonly gatewayIp?: pulumi.Input<string>;
     readonly hostRoutes?: pulumi.Input<pulumi.Input<{ destinationCidr: pulumi.Input<string>, nextHop: pulumi.Input<string> }>[]>;
     readonly ipVersion?: pulumi.Input<number>;
-    readonly ipv6AddressMode?: pulumi.Input<string>;
-    readonly ipv6RaMode?: pulumi.Input<string>;
     readonly name?: pulumi.Input<string>;
     readonly networkId: pulumi.Input<string>;
     readonly noGateway?: pulumi.Input<boolean>;
     readonly ntpServers?: pulumi.Input<pulumi.Input<string>[]>;
-    readonly status?: pulumi.Input<string>;
+    readonly region?: pulumi.Input<string>;
     readonly tags?: pulumi.Input<{[key: string]: any}>;
     readonly tenantId?: pulumi.Input<string>;
 }
