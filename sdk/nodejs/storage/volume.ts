@@ -17,20 +17,6 @@ export class Volume extends pulumi.CustomResource {
         return new Volume(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:storage/volume:Volume';
-
-    /**
-     * Returns true if the given object is an instance of Volume.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Volume {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Volume.__pulumiType;
-    }
-
     public readonly availabilityZone!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly errorMessage!: pulumi.Output<string>;
@@ -80,7 +66,7 @@ export class Volume extends pulumi.CustomResource {
             inputs["throughput"] = args ? args.throughput : undefined;
             inputs["virtualStorageId"] = args ? args.virtualStorageId : undefined;
         }
-        super(Volume.__pulumiType, name, inputs, opts);
+        super("ecl:storage/volume:Volume", name, inputs, opts);
     }
 }
 

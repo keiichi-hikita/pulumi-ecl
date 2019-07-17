@@ -17,20 +17,6 @@ export class PublicIP extends pulumi.CustomResource {
         return new PublicIP(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/publicIP:PublicIP';
-
-    /**
-     * Returns true if the given object is an instance of PublicIP.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is PublicIP {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === PublicIP.__pulumiType;
-    }
-
     public /*out*/ readonly cidr!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly internetGwId!: pulumi.Output<string>;
@@ -74,7 +60,7 @@ export class PublicIP extends pulumi.CustomResource {
             inputs["tenantId"] = args ? args.tenantId : undefined;
             inputs["cidr"] = undefined /*out*/;
         }
-        super(PublicIP.__pulumiType, name, inputs, opts);
+        super("ecl:network/publicIP:PublicIP", name, inputs, opts);
     }
 }
 

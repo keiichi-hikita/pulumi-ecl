@@ -17,20 +17,6 @@ export class Subnet extends pulumi.CustomResource {
         return new Subnet(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/subnet:Subnet';
-
-    /**
-     * Returns true if the given object is an instance of Subnet.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Subnet {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Subnet.__pulumiType;
-    }
-
     public readonly allocationPools!: pulumi.Output<{ end: string, start: string }[]>;
     public readonly cidr!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string | undefined>;
@@ -107,7 +93,7 @@ export class Subnet extends pulumi.CustomResource {
             inputs["ipv6RaMode"] = undefined /*out*/;
             inputs["status"] = undefined /*out*/;
         }
-        super(Subnet.__pulumiType, name, inputs, opts);
+        super("ecl:network/subnet:Subnet", name, inputs, opts);
     }
 }
 

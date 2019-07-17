@@ -17,20 +17,6 @@ export class Tenant extends pulumi.CustomResource {
         return new Tenant(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:sss/tenant:Tenant';
-
-    /**
-     * Returns true if the given object is an instance of Tenant.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Tenant {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Tenant.__pulumiType;
-    }
-
     public readonly contractId!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string>;
     public /*out*/ readonly startTime!: pulumi.Output<string>;
@@ -74,7 +60,7 @@ export class Tenant extends pulumi.CustomResource {
             inputs["startTime"] = undefined /*out*/;
             inputs["tenantId"] = undefined /*out*/;
         }
-        super(Tenant.__pulumiType, name, inputs, opts);
+        super("ecl:sss/tenant:Tenant", name, inputs, opts);
     }
 }
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"getTenant.js","sourceRoot":"","sources":["../../sss/getTenant.ts"],"names":[],"mappings":";AAAA,wFAAwF;AACxF,iFAAiF;;AAEjF,yCAAyC;AAGzC,SAAgB,SAAS,CAAC,IAAmB,EAAE,IAA2B;IACtE,OAAO,MAAM,CAAC,OAAO,CAAC,MAAM,CAAC,6BAA6B,EAAE;QACxD,YAAY,EAAE,IAAI,CAAC,UAAU;KAChC,EAAE,IAAI,CAAC,CAAC;AACb,CAAC;AAJD,8BAIC"}

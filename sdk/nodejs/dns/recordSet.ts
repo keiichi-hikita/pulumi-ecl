@@ -17,20 +17,6 @@ export class RecordSet extends pulumi.CustomResource {
         return new RecordSet(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:dns/recordSet:RecordSet';
-
-    /**
-     * Returns true if the given object is an instance of RecordSet.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is RecordSet {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === RecordSet.__pulumiType;
-    }
-
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly name!: pulumi.Output<string>;
     public readonly record!: pulumi.Output<string>;
@@ -77,7 +63,7 @@ export class RecordSet extends pulumi.CustomResource {
             inputs["type"] = args ? args.type : undefined;
             inputs["zoneId"] = args ? args.zoneId : undefined;
         }
-        super(RecordSet.__pulumiType, name, inputs, opts);
+        super("ecl:dns/recordSet:RecordSet", name, inputs, opts);
     }
 }
 

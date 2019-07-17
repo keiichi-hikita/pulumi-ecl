@@ -17,20 +17,6 @@ export class ImageMember extends pulumi.CustomResource {
         return new ImageMember(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:imagestorages/imageMember:ImageMember';
-
-    /**
-     * Returns true if the given object is an instance of ImageMember.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is ImageMember {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === ImageMember.__pulumiType;
-    }
-
     public /*out*/ readonly createdAt!: pulumi.Output<string>;
     public readonly imageId!: pulumi.Output<string>;
     public readonly memberId!: pulumi.Output<string>;
@@ -74,7 +60,7 @@ export class ImageMember extends pulumi.CustomResource {
             inputs["status"] = undefined /*out*/;
             inputs["updatedAt"] = undefined /*out*/;
         }
-        super(ImageMember.__pulumiType, name, inputs, opts);
+        super("ecl:imagestorages/imageMember:ImageMember", name, inputs, opts);
     }
 }
 

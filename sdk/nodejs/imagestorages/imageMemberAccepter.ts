@@ -17,20 +17,6 @@ export class ImageMemberAccepter extends pulumi.CustomResource {
         return new ImageMemberAccepter(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:imagestorages/imageMemberAccepter:ImageMemberAccepter';
-
-    /**
-     * Returns true if the given object is an instance of ImageMemberAccepter.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is ImageMemberAccepter {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === ImageMemberAccepter.__pulumiType;
-    }
-
     public readonly imageMemberId!: pulumi.Output<string>;
     public readonly region!: pulumi.Output<string>;
     public readonly status!: pulumi.Output<string>;
@@ -62,7 +48,7 @@ export class ImageMemberAccepter extends pulumi.CustomResource {
             inputs["region"] = args ? args.region : undefined;
             inputs["status"] = args ? args.status : undefined;
         }
-        super(ImageMemberAccepter.__pulumiType, name, inputs, opts);
+        super("ecl:imagestorages/imageMemberAccepter:ImageMemberAccepter", name, inputs, opts);
     }
 }
 

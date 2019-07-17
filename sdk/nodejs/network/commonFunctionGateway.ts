@@ -17,20 +17,6 @@ export class CommonFunctionGateway extends pulumi.CustomResource {
         return new CommonFunctionGateway(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/commonFunctionGateway:CommonFunctionGateway';
-
-    /**
-     * Returns true if the given object is an instance of CommonFunctionGateway.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is CommonFunctionGateway {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === CommonFunctionGateway.__pulumiType;
-    }
-
     public readonly commonFunctionPoolId!: pulumi.Output<string>;
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly name!: pulumi.Output<string>;
@@ -68,7 +54,7 @@ export class CommonFunctionGateway extends pulumi.CustomResource {
             inputs["networkId"] = undefined /*out*/;
             inputs["subnetId"] = undefined /*out*/;
         }
-        super(CommonFunctionGateway.__pulumiType, name, inputs, opts);
+        super("ecl:network/commonFunctionGateway:CommonFunctionGateway", name, inputs, opts);
     }
 }
 

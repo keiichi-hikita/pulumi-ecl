@@ -17,20 +17,6 @@ export class Keypair extends pulumi.CustomResource {
         return new Keypair(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:compute/keypair:Keypair';
-
-    /**
-     * Returns true if the given object is an instance of Keypair.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Keypair {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Keypair.__pulumiType;
-    }
-
     public /*out*/ readonly fingerprint!: pulumi.Output<string>;
     public readonly name!: pulumi.Output<string>;
     public /*out*/ readonly privateKey!: pulumi.Output<string>;
@@ -62,7 +48,7 @@ export class Keypair extends pulumi.CustomResource {
             inputs["fingerprint"] = undefined /*out*/;
             inputs["privateKey"] = undefined /*out*/;
         }
-        super(Keypair.__pulumiType, name, inputs, opts);
+        super("ecl:compute/keypair:Keypair", name, inputs, opts);
     }
 }
 

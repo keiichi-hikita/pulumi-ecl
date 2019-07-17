@@ -17,20 +17,6 @@ export class VirtualStorage extends pulumi.CustomResource {
         return new VirtualStorage(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:storage/virtualStorage:VirtualStorage';
-
-    /**
-     * Returns true if the given object is an instance of VirtualStorage.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is VirtualStorage {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === VirtualStorage.__pulumiType;
-    }
-
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly errorMessage!: pulumi.Output<string>;
     public readonly hostRoutes!: pulumi.Output<{ destination: string, nexthop: string }[] | undefined>;
@@ -83,7 +69,7 @@ export class VirtualStorage extends pulumi.CustomResource {
             inputs["volumeTypeId"] = args ? args.volumeTypeId : undefined;
             inputs["volumeTypeName"] = args ? args.volumeTypeName : undefined;
         }
-        super(VirtualStorage.__pulumiType, name, inputs, opts);
+        super("ecl:storage/virtualStorage:VirtualStorage", name, inputs, opts);
     }
 }
 

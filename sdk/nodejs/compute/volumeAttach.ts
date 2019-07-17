@@ -17,20 +17,6 @@ export class VolumeAttach extends pulumi.CustomResource {
         return new VolumeAttach(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:compute/volumeAttach:VolumeAttach';
-
-    /**
-     * Returns true if the given object is an instance of VolumeAttach.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is VolumeAttach {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === VolumeAttach.__pulumiType;
-    }
-
     public readonly device!: pulumi.Output<string>;
     public readonly region!: pulumi.Output<string>;
     public readonly serverId!: pulumi.Output<string>;
@@ -65,7 +51,7 @@ export class VolumeAttach extends pulumi.CustomResource {
             inputs["serverId"] = args ? args.serverId : undefined;
             inputs["volumeId"] = args ? args.volumeId : undefined;
         }
-        super(VolumeAttach.__pulumiType, name, inputs, opts);
+        super("ecl:compute/volumeAttach:VolumeAttach", name, inputs, opts);
     }
 }
 

@@ -17,20 +17,6 @@ export class Port extends pulumi.CustomResource {
         return new Port(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/port:Port';
-
-    /**
-     * Returns true if the given object is an instance of Port.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Port {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Port.__pulumiType;
-    }
-
     public readonly adminStateUp!: pulumi.Output<boolean>;
     public /*out*/ readonly allFixedIps!: pulumi.Output<string[]>;
     public readonly allowedAddressPairs!: pulumi.Output<{ ipAddress: string, macAddress?: string }[] | undefined>;
@@ -104,7 +90,7 @@ export class Port extends pulumi.CustomResource {
             inputs["managedByService"] = undefined /*out*/;
             inputs["status"] = undefined /*out*/;
         }
-        super(Port.__pulumiType, name, inputs, opts);
+        super("ecl:network/port:Port", name, inputs, opts);
     }
 }
 

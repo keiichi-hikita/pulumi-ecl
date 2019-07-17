@@ -17,20 +17,6 @@ export class GatewayInterface extends pulumi.CustomResource {
         return new GatewayInterface(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/gatewayInterface:GatewayInterface';
-
-    /**
-     * Returns true if the given object is an instance of GatewayInterface.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is GatewayInterface {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === GatewayInterface.__pulumiType;
-    }
-
     public readonly awsGwId!: pulumi.Output<string | undefined>;
     public readonly azureGwId!: pulumi.Output<string | undefined>;
     public readonly description!: pulumi.Output<string | undefined>;
@@ -128,7 +114,7 @@ export class GatewayInterface extends pulumi.CustomResource {
             inputs["vpnGwId"] = args ? args.vpnGwId : undefined;
             inputs["vrid"] = args ? args.vrid : undefined;
         }
-        super(GatewayInterface.__pulumiType, name, inputs, opts);
+        super("ecl:network/gatewayInterface:GatewayInterface", name, inputs, opts);
     }
 }
 

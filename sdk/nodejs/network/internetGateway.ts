@@ -17,20 +17,6 @@ export class InternetGateway extends pulumi.CustomResource {
         return new InternetGateway(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/internetGateway:InternetGateway';
-
-    /**
-     * Returns true if the given object is an instance of InternetGateway.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is InternetGateway {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === InternetGateway.__pulumiType;
-    }
-
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly internetServiceId!: pulumi.Output<string>;
     public readonly name!: pulumi.Output<string>;
@@ -71,7 +57,7 @@ export class InternetGateway extends pulumi.CustomResource {
             inputs["region"] = args ? args.region : undefined;
             inputs["tenantId"] = args ? args.tenantId : undefined;
         }
-        super(InternetGateway.__pulumiType, name, inputs, opts);
+        super("ecl:network/internetGateway:InternetGateway", name, inputs, opts);
     }
 }
 

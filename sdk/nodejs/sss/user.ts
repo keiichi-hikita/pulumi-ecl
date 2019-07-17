@@ -17,20 +17,6 @@ export class User extends pulumi.CustomResource {
         return new User(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:sss/user:User';
-
-    /**
-     * Returns true if the given object is an instance of User.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is User {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === User.__pulumiType;
-    }
-
     public /*out*/ readonly brandId!: pulumi.Output<string>;
     public /*out*/ readonly contractId!: pulumi.Output<string>;
     public /*out*/ readonly contractOwner!: pulumi.Output<boolean>;
@@ -98,7 +84,7 @@ export class User extends pulumi.CustomResource {
             inputs["startTime"] = undefined /*out*/;
             inputs["userId"] = undefined /*out*/;
         }
-        super(User.__pulumiType, name, inputs, opts);
+        super("ecl:sss/user:User", name, inputs, opts);
     }
 }
 

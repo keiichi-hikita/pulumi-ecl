@@ -17,20 +17,6 @@ export class Zone extends pulumi.CustomResource {
         return new Zone(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:dns/zone:Zone';
-
-    /**
-     * Returns true if the given object is an instance of Zone.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Zone {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Zone.__pulumiType;
-    }
-
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly email!: pulumi.Output<string>;
     public readonly masters!: pulumi.Output<string[]>;
@@ -65,7 +51,7 @@ export class Zone extends pulumi.CustomResource {
             inputs["ttl"] = args ? args.ttl : undefined;
             inputs["type"] = args ? args.type : undefined;
         }
-        super(Zone.__pulumiType, name, inputs, opts);
+        super("ecl:dns/zone:Zone", name, inputs, opts);
     }
 }
 

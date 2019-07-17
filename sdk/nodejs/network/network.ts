@@ -17,20 +17,6 @@ export class Network extends pulumi.CustomResource {
         return new Network(name, <any>state, { ...opts, id: id });
     }
 
-    /** @internal */
-    public static readonly __pulumiType = 'ecl:network/network:Network';
-
-    /**
-     * Returns true if the given object is an instance of Network.  This is designed to work even
-     * when multiple copies of the Pulumi SDK have been loaded into the same process.
-     */
-    public static isInstance(obj: any): obj is Network {
-        if (obj === undefined || obj === null) {
-            return false;
-        }
-        return obj['__pulumiType'] === Network.__pulumiType;
-    }
-
     public readonly adminStateUp!: pulumi.Output<boolean>;
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly name!: pulumi.Output<string>;
@@ -77,7 +63,7 @@ export class Network extends pulumi.CustomResource {
             inputs["status"] = undefined /*out*/;
             inputs["subnets"] = undefined /*out*/;
         }
-        super(Network.__pulumiType, name, inputs, opts);
+        super("ecl:network/network:Network", name, inputs, opts);
     }
 }
 
